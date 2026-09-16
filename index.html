@@ -34,14 +34,17 @@
   </header>
 
   <!-- Navigation Tabs -->
-  <nav class="p-3 max-w-xl mx-auto flex gap-2">
-    <button onclick="switchTab('inventory')" id="tab-inventory" class="flex-1 py-2.5 rounded-xl text-xs font-bold transition-all bg-red-600 text-white shadow-lg shadow-red-600/20">
-      <i class="fa-solid fa-boxes-stacked mr-1"></i> Anbar Stoku
+  <nav class="p-3 max-w-xl mx-auto flex gap-1.5">
+    <button onclick="switchTab('inventory')" id="tab-inventory" class="flex-1 py-2.5 rounded-xl text-[10px] sm:text-xs font-bold transition-all bg-red-600 text-white shadow-lg shadow-red-600/20">
+      <i class="fa-solid fa-boxes-stacked mr-1"></i> Anbar
     </button>
-    <button onclick="switchTab('analytics')" id="tab-analytics" class="flex-1 py-2.5 rounded-xl text-xs font-bold transition-all bg-slate-800/80 text-slate-400 hover:text-white">
+    <button onclick="switchTab('vehicles')" id="tab-vehicles" class="flex-1 py-2.5 rounded-xl text-[10px] sm:text-xs font-bold transition-all bg-slate-800/80 text-slate-400 hover:text-white">
+      <i class="fa-solid fa-car-side mr-1"></i> Avtomobil
+    </button>
+    <button onclick="switchTab('analytics')" id="tab-analytics" class="flex-1 py-2.5 rounded-xl text-[10px] sm:text-xs font-bold transition-all bg-slate-800/80 text-slate-400 hover:text-white">
       <i class="fa-solid fa-chart-line mr-1"></i> Analitika
     </button>
-    <button onclick="switchTab('history')" id="tab-history" class="flex-1 py-2.5 rounded-xl text-xs font-bold transition-all bg-slate-800/80 text-slate-400 hover:text-white">
+    <button onclick="switchTab('history')" id="tab-history" class="flex-1 py-2.5 rounded-xl text-[10px] sm:text-xs font-bold transition-all bg-slate-800/80 text-slate-400 hover:text-white">
       <i class="fa-solid fa-receipt mr-1"></i> Tarixçə
     </button>
   </nav>
@@ -56,7 +59,6 @@
           <input type="text" id="searchInput" oninput="renderParts()" placeholder="Kod, Marka, Model, Mühərrik, İl, Açıqlama..."
             class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-red-500 text-white placeholder-slate-500 shadow-inner">
         </div>
-
         <div id="categoryFilters" class="flex gap-1.5 overflow-x-auto pb-1 text-xs no-scrollbar"></div>
       </div>
 
@@ -78,6 +80,42 @@
       <div id="partsList" class="space-y-3">
         <div class="text-center py-12 text-slate-500 text-sm"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Yüklənir...</div>
       </div>
+    </section>
+
+    <!-- ==================== TAB 1.5: AVTOMOBİLLƏR ==================== -->
+    <section id="section-vehicles" class="space-y-3 hidden">
+      <div class="glass rounded-xl p-3 flex justify-between items-center">
+        <div>
+          <p class="text-xs font-bold text-slate-200"><i class="fa-solid fa-warehouse text-red-500 mr-1.5"></i>Sökülən Avtomobillər</p>
+          <p class="text-[10px] text-slate-500 mt-0.5">Hər avtomobil üçün parametrlər bir dəfə yazılır</p>
+        </div>
+        <button onclick="openVehicleModal()" class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-2 rounded-xl font-bold shadow-lg shadow-red-600/30">
+          <i class="fa-solid fa-plus mr-1"></i> Yeni
+        </button>
+      </div>
+
+      <div class="grid grid-cols-3 gap-2">
+        <div class="glass rounded-xl p-2.5 text-center">
+          <p class="text-[10px] text-slate-400">Avtomobil</p>
+          <p id="statVehicleCount" class="text-sm font-bold text-white">0</p>
+        </div>
+        <div class="glass rounded-xl p-2.5 text-center">
+          <p class="text-[10px] text-slate-400">Detal Sayı</p>
+          <p id="statVehicleParts" class="text-sm font-bold text-emerald-400">0</p>
+        </div>
+        <div class="glass rounded-xl p-2.5 text-center">
+          <p class="text-[10px] text-slate-400">Ümumi Dəyər</p>
+          <p id="statVehicleValue" class="text-sm font-bold text-amber-400">$0</p>
+        </div>
+      </div>
+
+      <div class="relative">
+        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+        <input type="text" id="vehicleSearchInput" oninput="renderVehicles()" placeholder="Marka, model, nəsil, VIN, mühərrik..."
+          class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-red-500 text-white placeholder-slate-500 shadow-inner">
+      </div>
+
+      <div id="vehiclesList" class="space-y-3"></div>
     </section>
 
     <!-- ==================== TAB 2: ANALİTİKA ==================== -->
@@ -135,18 +173,34 @@
     <i class="fa-solid fa-plus"></i>
   </button>
 
-  <!-- Add/Edit Part Modal -->
+  <!-- ==================== PART ADD/EDIT MODAL ==================== -->
   <div id="partModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-4 max-h-[92vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b border-slate-800 pb-3">
         <h3 id="partModalTitle" class="font-bold text-base text-white flex items-center gap-2">
-          <i class="fa-solid fa-box-open text-red-500"></i> Yeni Ehtiyat Hissəsi Daxil Et
+          <i class="fa-solid fa-box-open text-red-500"></i> Yeni Ehtiyat Hissəsi
         </h3>
         <button onclick="closePartModal()" class="text-slate-400 text-lg"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
       <form id="partForm" onsubmit="savePart(event)" class="space-y-3 text-xs">
         <input type="hidden" id="partEditId" value="">
+        <input type="hidden" id="partVehicleId" value="">
+
+        <!-- VEHICLE PICKER -->
+        <div class="bg-slate-950/70 border border-red-900/30 rounded-xl p-3 space-y-2">
+          <div class="flex justify-between items-center">
+            <label class="block text-red-300 font-bold text-[11px] uppercase tracking-wider"><i class="fa-solid fa-car-side mr-1"></i>Avtomobildən Seç</label>
+            <button type="button" onclick="openVehicleModal(null, true)" class="text-[10px] bg-red-900/50 hover:bg-red-800 text-red-200 px-2 py-1 rounded-md border border-red-800/60 font-semibold">
+              <i class="fa-solid fa-plus mr-1"></i>Yeni avtomobil
+            </button>
+          </div>
+          <select id="partVehicleSelect" onchange="onPartVehicleChange()" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white text-xs focus:outline-none focus:border-red-500">
+            <option value="">— Manual daxil edəcəyəm —</option>
+          </select>
+          <p id="vehicleAutofillHint" class="text-[10px] text-slate-500 italic"></p>
+        </div>
+
         <div>
           <label class="block text-slate-400 mb-1">Fotoşəkil Çək / Yüklə</label>
           <input type="file" id="partImage" accept="image/*" capture="environment" onchange="previewImage(event)" class="w-full bg-slate-800 text-slate-300 rounded-xl p-2">
@@ -168,20 +222,18 @@
         <div class="grid grid-cols-2 gap-2">
           <div>
             <label class="block text-slate-400 mb-1">Marka & Model *</label>
-            <input type="text" id="partCar" required placeholder="məs: BMW G20 / Tesla Model 3" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+            <input type="text" id="partCar" required placeholder="məs: BMW G20" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
           </div>
           <div>
             <label class="block text-slate-400 mb-1">Mühərrik</label>
-            <input type="text" id="partEngine" placeholder="məs: 2.0 B48 / Dual Motor" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+            <input type="text" id="partEngine" placeholder="məs: 2.0 B48" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
           </div>
         </div>
 
         <div class="grid grid-cols-3 gap-2">
           <div>
             <label class="block text-slate-400 mb-1">İstehsal İli</label>
-            <select id="partYear" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
-              <option value="">Seçin...</option>
-            </select>
+            <select id="partYear" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></select>
           </div>
           <div>
             <label class="block text-slate-400 mb-1">Yürüş</label>
@@ -206,7 +258,7 @@
 
         <div>
           <label class="block text-slate-400 mb-1">Açıqlama / Yerləşdiyi Yer</label>
-          <textarea id="partDescription" rows="2" placeholder="məs: Qabaq sağ bufer tutacağı, ideal vəziyyətdə, Şelf A-3" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></textarea>
+          <textarea id="partDescription" rows="2" placeholder="məs: Şelf A-3" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></textarea>
         </div>
 
         <button type="submit" id="saveBtn" class="w-full bg-red-600 hover:bg-red-700 font-bold py-3 rounded-xl text-white transition-all text-sm shadow-lg shadow-red-600/30">
@@ -216,16 +268,114 @@
     </div>
   </div>
 
-  <!-- Sell Action Modal -->
+  <!-- ==================== VEHICLE ADD/EDIT MODAL ==================== -->
+  <div id="vehicleModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-4 max-h-[92vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+        <h3 id="vehicleModalTitle" class="font-bold text-base text-white flex items-center gap-2">
+          <i class="fa-solid fa-car-side text-red-500"></i> Yeni Avtomobil
+        </h3>
+        <button onclick="closeVehicleModal()" class="text-slate-400 text-lg"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form id="vehicleForm" onsubmit="saveVehicle(event)" class="space-y-3 text-xs">
+        <input type="hidden" id="vehicleEditId" value="">
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-slate-400 mb-1">Marka *</label>
+            <input type="text" id="vBrand" required placeholder="məs: BMW" list="brandDatalist" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+            <datalist id="brandDatalist"></datalist>
+          </div>
+          <div>
+            <label class="block text-slate-400 mb-1">Model *</label>
+            <input type="text" id="vModel" required placeholder="məs: 3 Series" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-slate-400 mb-1">Nəsil / Kod</label>
+            <input type="text" id="vGeneration" placeholder="məs: G20 / W213" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+          </div>
+          <div>
+            <label class="block text-slate-400 mb-1">VIN / Şassi</label>
+            <input type="text" id="vVin" placeholder="WBA..." class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white font-mono uppercase">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-slate-400 mb-1">İl (dan) *</label>
+            <select id="vYearFrom" required class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></select>
+          </div>
+          <div>
+            <label class="block text-slate-400 mb-1">İl (qədər)</label>
+            <select id="vYearTo" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-slate-400 mb-1">Mühərrik</label>
+            <input type="text" id="vEngine" placeholder="məs: 2.0 Turbo" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+          </div>
+          <div>
+            <label class="block text-slate-400 mb-1">Mühərrik Kodu</label>
+            <input type="text" id="vEngineCode" placeholder="məs: B48B20" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white font-mono">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2">
+          <div>
+            <label class="block text-slate-400 mb-1">Rəng</label>
+            <input type="text" id="vColor" placeholder="Qara" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+          </div>
+          <div>
+            <label class="block text-slate-400 mb-1">Yürüş</label>
+            <input type="text" id="vMileage" placeholder="45,000 mi" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+          </div>
+          <div>
+            <label class="block text-slate-400 mb-1">Gəlmə tarixi</label>
+            <input type="date" id="vArrivalDate" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-slate-400 mb-1">Qeyd</label>
+          <textarea id="vNotes" rows="2" placeholder="məs: Ön hissə zərbəli, arxa tərəf sağlam" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></textarea>
+        </div>
+
+        <button type="submit" id="saveVehicleBtn" class="w-full bg-red-600 hover:bg-red-700 font-bold py-3 rounded-xl text-white transition-all text-sm shadow-lg shadow-red-600/30">
+          Avtomobili Yadda Saxla
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== VEHICLE DETAILS MODAL ==================== -->
+  <div id="vehicleDetailModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-4 max-h-[92vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+        <h3 id="vehicleDetailTitle" class="font-bold text-base text-white flex items-center gap-2 min-w-0">
+          <i class="fa-solid fa-car-side text-red-500 flex-shrink-0"></i>
+          <span class="truncate">Avtomobil Detalları</span>
+        </h3>
+        <button onclick="closeVehicleDetail()" class="text-slate-400 text-lg flex-shrink-0"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div id="vehicleDetailBody" class="space-y-3"></div>
+    </div>
+  </div>
+
+  <!-- Sell Modal -->
   <div id="sellModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
     <div class="bg-slate-900 border border-slate-700 w-full max-w-sm rounded-2xl p-5 space-y-4">
       <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-        <h3 class="font-bold text-sm text-white"><i class="fa-solid fa-cash-register text-emerald-400 mr-2"></i>Satış Əməliyyatını Təsdiqlə</h3>
+        <h3 class="font-bold text-sm text-white"><i class="fa-solid fa-cash-register text-emerald-400 mr-2"></i>Satış Əməliyyatı</h3>
         <button onclick="closeSellModal()" class="text-slate-400 text-sm"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <p id="sellModalPartTitle" class="text-xs text-slate-300 font-semibold truncate"></p>
       <p id="sellModalStockInfo" class="text-[10px] text-slate-500"></p>
-
       <div class="space-y-3 text-xs">
         <div>
           <label class="block text-slate-400 mb-1">Faktiki Satış Qiyməti ($)</label>
@@ -236,7 +386,6 @@
           <input type="number" id="sellActualQty" value="1" min="1" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white font-semibold">
         </div>
       </div>
-
       <div class="flex gap-2">
         <button onclick="confirmSale()" id="confirmSaleBtn" class="flex-1 bg-emerald-600 hover:bg-emerald-700 py-2.5 rounded-xl font-bold text-white text-xs shadow-lg shadow-emerald-600/20">Satışı Qeydə Al</button>
         <button onclick="closeSellModal()" class="px-4 bg-slate-800 py-2.5 rounded-xl text-slate-400 text-xs">Ləğv Et</button>
@@ -271,16 +420,24 @@
   <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 bg-slate-800 border border-slate-700 text-white text-xs px-4 py-2.5 rounded-xl shadow-xl z-50 hidden max-w-[90vw] text-center"></div>
 
   <script>
-    let db = { parts: [], sales: [] };
+    let db = { parts: [], sales: [], vehicles: [] };
     let currentCategory = 'ALL';
     let base64Image = '';
     let activeSellPartId = null;
     let syncing = false;
+    let pendingVehicleReturn = false; // if vehicle modal opened from part modal
 
     const DEFAULT_CATEGORIES = ['Mühərrik', 'Asqı & Şassi', 'Ban & Eksteryer', 'Elektrik & Elektronika', 'Salun & İnteryer', 'Digər'];
+    const COMMON_BRANDS = ['BMW', 'Mercedes-Benz', 'Audi', 'Volkswagen', 'Toyota', 'Lexus', 'Tesla', 'Hyundai', 'Kia', 'Nissan', 'Ford', 'Chevrolet', 'Honda', 'Mazda', 'Land Rover', 'Porsche', 'Volvo', 'Renault', 'Peugeot', 'Skoda', 'Opel', 'Fiat', 'Mitsubishi', 'Subaru', 'Jeep', 'Dodge'];
 
     const getMasterKey = () => localStorage.getItem('TL_MASTER_KEY') || '';
     const getBinId = () => localStorage.getItem('TL_BIN_ID') || '';
+
+    function esc(str) {
+      const d = document.createElement('div');
+      d.innerText = str == null ? '' : str;
+      return d.innerHTML;
+    }
 
     function showToast(msg, isError) {
       const t = document.getElementById('toast');
@@ -290,35 +447,54 @@
       window._toastTimer = setTimeout(() => t.classList.add('hidden'), 2600);
     }
 
-    function esc(str) {
-      const d = document.createElement('div');
-      d.innerText = str == null ? '' : str;
-      return d.innerHTML;
-    }
-
     function getAllCategories() {
       const set = new Set(DEFAULT_CATEGORIES);
       db.parts.forEach(p => { if (p.category) set.add(p.category); });
       return Array.from(set);
     }
 
-    function populateYearSelect() {
-      const sel = document.getElementById('partYear');
-      const current = new Date().getFullYear();
-      let opts = '<option value="">Seçin...</option>';
-      for (let y = current + 1; y >= 1980; y--) opts += `<option value="${y}">${y}</option>`;
-      sel.innerHTML = opts;
+    function vehicleLabel(v) {
+      const gen = v.generation ? ` ${v.generation}` : '';
+      let yearRange = '';
+      if (v.yearFrom && v.yearTo && v.yearFrom !== v.yearTo) yearRange = ` ${v.yearFrom}-${v.yearTo}`;
+      else if (v.yearFrom) yearRange = ` ${v.yearFrom}`;
+      return `${v.brand} ${v.model}${gen}${yearRange}`;
     }
 
-    function populateCategoryDatalist() {
-      const dl = document.getElementById('categoryDatalist');
-      dl.innerHTML = getAllCategories().map(c => `<option value="${esc(c)}"></option>`).join('');
+    function populateYearSelects() {
+      const current = new Date().getFullYear() + 1;
+      let opts = '';
+      for (let y = current; y >= 1980; y--) opts += `<option value="${y}">${y}</option>`;
+
+      const partYear = document.getElementById('partYear');
+      partYear.innerHTML = '<option value="">—</option>' + opts;
+
+      const vFrom = document.getElementById('vYearFrom');
+      vFrom.innerHTML = '<option value="">Seçin...</option>' + opts;
+
+      const vTo = document.getElementById('vYearTo');
+      vTo.innerHTML = '<option value="">—</option>' + opts;
+    }
+
+    function populateDatalists() {
+      document.getElementById('categoryDatalist').innerHTML = getAllCategories().map(c => `<option value="${esc(c)}"></option>`).join('');
+      document.getElementById('brandDatalist').innerHTML = COMMON_BRANDS.map(b => `<option value="${esc(b)}"></option>`).join('');
+    }
+
+    function populatePartVehicleSelect() {
+      const sel = document.getElementById('partVehicleSelect');
+      const current = sel.value;
+      const list = [...(db.vehicles || [])].sort((a, b) => vehicleLabel(a).localeCompare(vehicleLabel(b)));
+      sel.innerHTML = '<option value="">— Manual daxil edəcəyəm —</option>' +
+        list.map(v => `<option value="${v.id}">${esc(vehicleLabel(v))}</option>`).join('');
+      if (current && list.some(v => v.id === current)) sel.value = current;
     }
 
     window.onload = () => {
       document.getElementById('masterKeyInput').value = getMasterKey();
       document.getElementById('binIdInput').value = getBinId();
-      populateYearSelect();
+      populateYearSelects();
+      populateDatalists();
       if (!getMasterKey() || !getBinId()) {
         document.getElementById('configCloseBtn').classList.add('hidden');
         openConfigModal();
@@ -328,21 +504,17 @@
       renderAnalyticsMonths();
     };
 
+    // ==== CONFIG ====
     function openConfigModal() { document.getElementById('configModal').classList.remove('hidden'); }
     function closeConfigModal() {
       if (!getMasterKey() || !getBinId()) return;
       document.getElementById('configModal').classList.add('hidden');
     }
-
     function saveConfig() {
       const key = document.getElementById('masterKeyInput').value.trim();
       const bin = document.getElementById('binIdInput').value.trim();
       const errEl = document.getElementById('configError');
-      if (!key || !bin) {
-        errEl.innerText = 'Hər iki xananı doldurun.';
-        errEl.classList.remove('hidden');
-        return;
-      }
+      if (!key || !bin) { errEl.innerText = 'Hər iki xananı doldurun.'; errEl.classList.remove('hidden'); return; }
       errEl.classList.add('hidden');
       localStorage.setItem('TL_MASTER_KEY', key);
       localStorage.setItem('TL_BIN_ID', bin);
@@ -351,28 +523,31 @@
       loadData();
     }
 
+    // ==== DATA ====
     async function loadData() {
       const partsList = document.getElementById('partsList');
-      partsList.innerHTML = `<div class="text-center py-12 text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Məlumatlar yüklənir...</div>`;
+      partsList.innerHTML = `<div class="text-center py-12 text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Yüklənir...</div>`;
       try {
-        const res = await fetch(`https://api.jsonbin.io/v3/b/${getBinId()}/latest`, {
-          headers: { 'X-Master-Key': getMasterKey() }
-        });
+        const res = await fetch(`https://api.jsonbin.io/v3/b/${getBinId()}/latest`, { headers: { 'X-Master-Key': getMasterKey() } });
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const json = await res.json();
 
         if (Array.isArray(json.record)) {
-          db = { parts: json.record, sales: [] };
+          db = { parts: json.record, sales: [], vehicles: [] };
         } else if (json.record && json.record.parts) {
-          db = { parts: json.record.parts || [], sales: json.record.sales || [] };
+          db = { parts: json.record.parts || [], sales: json.record.sales || [], vehicles: json.record.vehicles || [] };
         } else {
-          db = { parts: [], sales: [] };
+          db = { parts: [], sales: [], vehicles: [] };
         }
 
         db.parts.forEach(p => { if (typeof p.soldCount !== 'number') p.soldCount = 0; });
+        if (!db.vehicles) db.vehicles = [];
 
+        populateDatalists();
         renderCategoryFilters();
         renderParts();
+        renderVehicles();
+        populatePartVehicleSelect();
         renderAnalyticsMonths();
         renderSalesHistory();
       } catch (err) {
@@ -390,8 +565,11 @@
           body: JSON.stringify(db)
         });
         if (!res.ok) throw new Error('HTTP ' + res.status);
+        populateDatalists();
         renderCategoryFilters();
         renderParts();
+        renderVehicles();
+        populatePartVehicleSelect();
         renderAnalytics();
         renderSalesHistory();
         if (successMsg) showToast(successMsg, false);
@@ -399,53 +577,41 @@
       } catch (err) {
         showToast('Serverlə sinxronizasiyada xəta! Yenidən yoxlayın.', true);
         return false;
-      } finally {
-        syncing = false;
-      }
+      } finally { syncing = false; }
     }
 
-    // --- TAB SWITCHING ---
+    // ==== TABS ====
     function switchTab(tabName) {
-      ['inventory', 'analytics', 'history'].forEach(t => {
+      ['inventory', 'vehicles', 'analytics', 'history'].forEach(t => {
         document.getElementById(`section-${t}`).classList.add('hidden');
-        document.getElementById(`tab-${t}`).className = 'flex-1 py-2.5 rounded-xl text-xs font-bold transition-all bg-slate-800/80 text-slate-400 hover:text-white';
+        document.getElementById(`tab-${t}`).className = 'flex-1 py-2.5 rounded-xl text-[10px] sm:text-xs font-bold transition-all bg-slate-800/80 text-slate-400 hover:text-white';
       });
       document.getElementById(`section-${tabName}`).classList.remove('hidden');
-      document.getElementById(`tab-${tabName}`).className = 'flex-1 py-2.5 rounded-xl text-xs font-bold transition-all bg-red-600 text-white shadow-lg shadow-red-600/20';
+      document.getElementById(`tab-${tabName}`).className = 'flex-1 py-2.5 rounded-xl text-[10px] sm:text-xs font-bold transition-all bg-red-600 text-white shadow-lg shadow-red-600/20';
       if (tabName === 'analytics') renderAnalytics();
       if (tabName === 'history') renderSalesHistory();
+      if (tabName === 'vehicles') renderVehicles();
     }
 
-    // --- CATEGORY FILTERS (dynamic) ---
+    // ==== CATEGORY FILTERS ====
     function renderCategoryFilters() {
       const container = document.getElementById('categoryFilters');
       const cats = ['ALL', ...getAllCategories()];
-
-      // if current category no longer exists, reset
       if (currentCategory !== 'ALL' && !cats.includes(currentCategory)) currentCategory = 'ALL';
-
       container.innerHTML = cats.map(c => {
         const label = c === 'ALL' ? 'Hamısı' : c;
         const active = c === currentCategory;
         return `<button data-cat="${esc(c)}" class="cat-btn ${active ? 'bg-red-600 text-white' : 'bg-slate-800/80 text-slate-300'} px-3 py-1.5 rounded-lg whitespace-nowrap font-medium flex-shrink-0">${esc(label)}</button>`;
       }).join('');
-
-      container.querySelectorAll('.cat-btn').forEach(btn => {
-        btn.addEventListener('click', () => setCategoryFilter(btn.dataset.cat));
-      });
+      container.querySelectorAll('.cat-btn').forEach(btn => btn.addEventListener('click', () => setCategoryFilter(btn.dataset.cat)));
     }
 
-    function setCategoryFilter(cat) {
-      currentCategory = cat;
-      renderCategoryFilters();
-      renderParts();
-    }
+    function setCategoryFilter(cat) { currentCategory = cat; renderCategoryFilters(); renderParts(); }
 
-    // --- INVENTORY RENDER ---
+    // ==== PARTS RENDER ====
     function renderParts() {
       const partsList = document.getElementById('partsList');
       const search = document.getElementById('searchInput').value.toLowerCase();
-
       const filtered = db.parts.filter(item => {
         const matchesCat = currentCategory === 'ALL' || item.category === currentCategory;
         const matchesSearch = (item.code || '').toLowerCase().includes(search) ||
@@ -457,9 +623,9 @@
       });
 
       document.getElementById('statTotalItems').innerText = db.parts.length;
-      const totalQty = db.parts.reduce((sum, p) => sum + (p.quantity || 0), 0);
+      const totalQty = db.parts.reduce((s, p) => s + (p.quantity || 0), 0);
       document.getElementById('statTotalQty').innerText = `${totalQty} ədəd`;
-      const totalVal = db.parts.reduce((sum, p) => sum + ((p.sellPrice || 0) * (p.quantity || 0)), 0);
+      const totalVal = db.parts.reduce((s, p) => s + ((p.sellPrice || 0) * (p.quantity || 0)), 0);
       document.getElementById('statTotalValue').innerText = `$${totalVal.toLocaleString()}`;
 
       if (filtered.length === 0) {
@@ -467,28 +633,26 @@
         return;
       }
 
-      partsList.innerHTML = filtered.map((item) => `
+      partsList.innerHTML = filtered.map(item => {
+        const veh = item.vehicleId ? (db.vehicles || []).find(v => v.id === item.vehicleId) : null;
+        return `
         <div class="glass rounded-xl p-3 flex gap-3 relative border ${item.quantity === 0 ? 'border-red-900/50 bg-red-950/10' : 'border-slate-800'}">
           ${item.image ? `<img src="${item.image}" class="part-img w-20 h-20 sm:w-24 sm:h-24 rounded-xl object-cover border border-slate-700 flex-shrink-0 cursor-pointer" onclick="openEditModal('${item.id}')">`
                       : `<div class="part-img w-20 h-20 sm:w-24 sm:h-24 rounded-xl bg-slate-800 flex items-center justify-center text-slate-600 flex-shrink-0 cursor-pointer" onclick="openEditModal('${item.id}')"><i class="fa-solid fa-car text-2xl"></i></div>`}
-
           <div class="flex-1 min-w-0 space-y-1">
             <div class="flex justify-between items-start gap-1">
               <span class="bg-red-950 text-red-400 font-mono font-bold text-xs px-2 py-0.5 rounded-md border border-red-800/50 truncate">${esc(item.code)}</span>
               <span class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded-md whitespace-nowrap flex-shrink-0">${esc(item.category || 'Digər')}</span>
             </div>
-
             <h4 class="font-bold text-sm text-white truncate">${esc(item.car)} ${item.engine ? `<span class="text-slate-400 text-xs font-normal">(${esc(item.engine)})</span>` : ''}</h4>
-
+            ${veh ? `<button onclick="openVehicleDetail('${veh.id}')" class="text-[10px] text-red-300 hover:text-red-200 inline-flex items-center gap-1"><i class="fa-solid fa-link"></i>${esc(vehicleLabel(veh))} • bax</button>` : ''}
             <div class="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-slate-400">
               ${item.year ? `<span><i class="fa-regular fa-calendar text-[10px] mr-1 text-slate-500"></i>${esc(item.year)}</span>` : ''}
               ${item.mileage ? `<span><i class="fa-solid fa-gauge-high text-[10px] mr-1 text-slate-500"></i>${esc(item.mileage)}</span>` : ''}
               ${item.sellPrice ? `<span class="text-emerald-400 font-semibold">$${item.sellPrice}</span>` : ''}
-              <span class="text-slate-500">Satılıb: <b class="text-slate-300">${item.soldCount || 0} ədəd</b></span>
+              <span class="text-slate-500">Satılıb: <b class="text-slate-300">${item.soldCount || 0}</b></span>
             </div>
-
             <p class="text-xs text-slate-300 line-clamp-2">${esc(item.description || '')}</p>
-
             <div class="flex justify-between items-center pt-2 border-t border-slate-800/80 gap-1">
               <span class="text-xs font-bold whitespace-nowrap ${item.quantity > 0 ? 'text-emerald-400' : 'text-red-500'}">
                 ${item.quantity > 0 ? `Stok: ${item.quantity} ədəd` : 'STOKDA YOXDUR'}
@@ -502,11 +666,283 @@
               </div>
             </div>
           </div>
-        </div>
-      `).join('');
+        </div>`;
+      }).join('');
     }
 
-    // --- SALE LOGIC ---
+    // ==== VEHICLES ====
+    function renderVehicles() {
+      const list = document.getElementById('vehiclesList');
+      const search = (document.getElementById('vehicleSearchInput').value || '').toLowerCase();
+      const vehicles = (db.vehicles || []).filter(v => {
+        const hay = `${v.brand} ${v.model} ${v.generation||''} ${v.vin||''} ${v.engine||''} ${v.engineCode||''} ${v.color||''}`.toLowerCase();
+        return hay.includes(search);
+      }).sort((a, b) => vehicleLabel(a).localeCompare(vehicleLabel(b)));
+
+      // Stats
+      const totalParts = db.parts.length;
+      const totalVal = db.parts.reduce((s, p) => s + ((p.sellPrice || 0) * (p.quantity || 0)), 0);
+      document.getElementById('statVehicleCount').innerText = (db.vehicles || []).length;
+      document.getElementById('statVehicleParts').innerText = totalParts;
+      document.getElementById('statVehicleValue').innerText = `$${totalVal.toLocaleString()}`;
+
+      if (vehicles.length === 0) {
+        list.innerHTML = `<div class="text-center py-12 text-slate-500 text-sm">
+          <i class="fa-solid fa-car-side text-3xl mb-3 opacity-30 block"></i>
+          Hələ avtomobil əlavə edilməyib.<br>
+          <span class="text-xs">Yuxarıdaki <b class="text-red-400">"Yeni"</b> düyməsinə basın.</span>
+        </div>`;
+        return;
+      }
+
+      list.innerHTML = vehicles.map(v => {
+        const vParts = db.parts.filter(p => p.vehicleId === v.id);
+        const pCount = vParts.length;
+        const qtySum = vParts.reduce((s, p) => s + (p.quantity || 0), 0);
+        const valSum = vParts.reduce((s, p) => s + ((p.sellPrice || 0) * (p.quantity || 0)), 0);
+        const soldSum = vParts.reduce((s, p) => s + (p.soldCount || 0), 0);
+
+        return `
+        <div class="glass rounded-xl p-3.5 space-y-2.5 border border-slate-800 hover:border-red-900/50 transition-all">
+          <div class="flex justify-between items-start gap-2">
+            <div class="min-w-0 flex-1">
+              <h4 class="font-bold text-white text-sm truncate">${esc(vehicleLabel(v))}</h4>
+              <div class="flex flex-wrap gap-x-3 gap-y-0.5 text-[10px] text-slate-400 mt-1">
+                ${v.engine ? `<span><i class="fa-solid fa-engine text-slate-500 mr-1"></i>${esc(v.engine)}${v.engineCode ? ` (${esc(v.engineCode)})` : ''}</span>` : ''}
+                ${v.color ? `<span><i class="fa-solid fa-palette text-slate-500 mr-1"></i>${esc(v.color)}</span>` : ''}
+                ${v.mileage ? `<span><i class="fa-solid fa-gauge-high text-slate-500 mr-1"></i>${esc(v.mileage)}</span>` : ''}
+              </div>
+              ${v.vin ? `<p class="text-[10px] text-slate-500 font-mono mt-0.5 truncate">VIN: ${esc(v.vin)}</p>` : ''}
+            </div>
+            <div class="flex gap-1 flex-shrink-0">
+              <button onclick="openVehicleModal('${v.id}')" class="text-slate-400 hover:text-white p-1.5 text-xs"><i class="fa-solid fa-pen"></i></button>
+              <button onclick="deleteVehicle('${v.id}')" class="text-slate-500 hover:text-red-400 p-1.5 text-xs"><i class="fa-solid fa-trash"></i></button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-3 gap-1.5 text-center">
+            <div class="bg-slate-950/60 rounded-lg p-1.5 border border-slate-800">
+              <p class="text-[9px] text-slate-500 uppercase">Detal</p>
+              <p class="text-xs font-bold text-white">${pCount}</p>
+            </div>
+            <div class="bg-slate-950/60 rounded-lg p-1.5 border border-slate-800">
+              <p class="text-[9px] text-slate-500 uppercase">Stok</p>
+              <p class="text-xs font-bold text-emerald-400">${qtySum} ədəd</p>
+            </div>
+            <div class="bg-slate-950/60 rounded-lg p-1.5 border border-slate-800">
+              <p class="text-[9px] text-slate-500 uppercase">Dəyər</p>
+              <p class="text-xs font-bold text-amber-400">$${valSum.toLocaleString()}</p>
+            </div>
+          </div>
+
+          ${v.notes ? `<p class="text-[11px] text-slate-400 italic line-clamp-2">"${esc(v.notes)}"</p>` : ''}
+
+          <div class="flex gap-2 pt-1">
+            <button onclick="openVehicleDetail('${v.id}')" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white text-xs py-2 rounded-lg font-semibold border border-slate-700">
+              <i class="fa-solid fa-list mr-1"></i>Detallara bax (${pCount})
+            </button>
+            <button onclick="openAddModalForVehicle('${v.id}')" class="flex-1 bg-red-600 hover:bg-red-700 text-white text-xs py-2 rounded-lg font-semibold shadow-md shadow-red-600/20">
+              <i class="fa-solid fa-plus mr-1"></i>Detal əlavə et
+            </button>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function openVehicleModal(id, fromPartModal) {
+      pendingVehicleReturn = !!fromPartModal;
+      document.getElementById('vehicleForm').reset();
+      document.getElementById('vehicleEditId').value = id || '';
+      document.getElementById('vehicleModalTitle').innerHTML = id
+        ? '<i class="fa-solid fa-pen text-red-500"></i> Avtomobili Redaktə Et'
+        : '<i class="fa-solid fa-car-side text-red-500"></i> Yeni Avtomobil';
+      document.getElementById('saveVehicleBtn').innerText = id ? 'Dəyişiklikləri Yadda Saxla' : 'Avtomobili Yadda Saxla';
+
+      if (id) {
+        const v = (db.vehicles || []).find(x => x.id === id);
+        if (v) {
+          document.getElementById('vBrand').value = v.brand || '';
+          document.getElementById('vModel').value = v.model || '';
+          document.getElementById('vGeneration').value = v.generation || '';
+          document.getElementById('vVin').value = v.vin || '';
+          document.getElementById('vYearFrom').value = v.yearFrom || '';
+          document.getElementById('vYearTo').value = v.yearTo || '';
+          document.getElementById('vEngine').value = v.engine || '';
+          document.getElementById('vEngineCode').value = v.engineCode || '';
+          document.getElementById('vColor').value = v.color || '';
+          document.getElementById('vMileage').value = v.mileage || '';
+          document.getElementById('vArrivalDate').value = v.arrivalDate || '';
+          document.getElementById('vNotes').value = v.notes || '';
+        }
+      } else {
+        document.getElementById('vArrivalDate').value = new Date().toISOString().slice(0, 10);
+      }
+      document.getElementById('vehicleModal').classList.remove('hidden');
+    }
+
+    function closeVehicleModal() {
+      document.getElementById('vehicleModal').classList.add('hidden');
+      pendingVehicleReturn = false;
+    }
+
+    async function saveVehicle(e) {
+      e.preventDefault();
+      const btn = document.getElementById('saveVehicleBtn');
+      const editId = document.getElementById('vehicleEditId').value;
+      btn.disabled = true; btn.innerText = 'Yadda saxlanılır...';
+
+      const data = {
+        brand: document.getElementById('vBrand').value.trim(),
+        model: document.getElementById('vModel').value.trim(),
+        generation: document.getElementById('vGeneration').value.trim(),
+        vin: document.getElementById('vVin').value.trim().toUpperCase(),
+        yearFrom: document.getElementById('vYearFrom').value,
+        yearTo: document.getElementById('vYearTo').value,
+        engine: document.getElementById('vEngine').value.trim(),
+        engineCode: document.getElementById('vEngineCode').value.trim(),
+        color: document.getElementById('vColor').value.trim(),
+        mileage: document.getElementById('vMileage').value.trim(),
+        arrivalDate: document.getElementById('vArrivalDate').value,
+        notes: document.getElementById('vNotes').value.trim()
+      };
+
+      let newId = editId;
+      let ok;
+      if (editId) {
+        const v = db.vehicles.find(x => x.id === editId);
+        if (v) Object.assign(v, data);
+        ok = await syncData('Avtomobil yeniləndi ✓');
+      } else {
+        newId = Date.now().toString();
+        db.vehicles.push({ id: newId, createdAt: new Date().toISOString(), ...data });
+        ok = await syncData('Avtomobil əlavə olundu ✓');
+      }
+
+      btn.disabled = false;
+      btn.innerText = editId ? 'Dəyişiklikləri Yadda Saxla' : 'Avtomobili Yadda Saxla';
+      if (ok) {
+        closeVehicleModal();
+        if (pendingVehicleReturn && !editId) {
+          // came from part modal → select new vehicle and reopen part modal
+          openAddModal();
+          setTimeout(() => {
+            const sel = document.getElementById('partVehicleSelect');
+            if (sel) { sel.value = newId; onPartVehicleChange(); }
+          }, 50);
+        }
+      }
+    }
+
+    async function deleteVehicle(id) {
+      const vParts = db.parts.filter(p => p.vehicleId === id);
+      let msg = 'Bu avtomobili silməyə əminsiniz?';
+      if (vParts.length > 0) msg = `Bu avtomobilə bağlı ${vParts.length} detal var. Silinsin? (Detallar silinməyəcək, sadəcə əlaqə kəsiləcək.)`;
+      if (!confirm(msg)) return;
+
+      const backupVehicles = db.vehicles;
+      const backupPartsLinks = db.parts.map(p => p.vehicleId);
+
+      db.vehicles = db.vehicles.filter(v => v.id !== id);
+      db.parts.forEach(p => { if (p.vehicleId === id) p.vehicleId = ''; });
+
+      const ok = await syncData('Avtomobil silindi');
+      if (!ok) {
+        db.vehicles = backupVehicles;
+        db.parts.forEach((p, i) => p.vehicleId = backupPartsLinks[i]);
+      }
+    }
+
+    function onPartVehicleChange() {
+      const sel = document.getElementById('partVehicleSelect');
+      const hint = document.getElementById('vehicleAutofillHint');
+      const vId = sel.value;
+      document.getElementById('partVehicleId').value = vId;
+
+      if (!vId) {
+        hint.innerText = '';
+        return;
+      }
+      const v = db.vehicles.find(x => x.id === vId);
+      if (!v) return;
+
+      // Auto-fill fields
+      document.getElementById('partCar').value = `${v.brand} ${v.model}${v.generation ? ' ' + v.generation : ''}`.trim();
+      if (v.engine) document.getElementById('partEngine').value = v.engine;
+      if (v.yearFrom) document.getElementById('partYear').value = v.yearFrom;
+      if (v.mileage) document.getElementById('partMileage').value = v.mileage;
+
+      hint.innerHTML = `<i class="fa-solid fa-check-circle text-emerald-500 mr-1"></i>Avtomatik dolduruldu. İstəsəniz redaktə edə bilərsiniz.`;
+    }
+
+    function openVehicleDetail(id) {
+      const v = (db.vehicles || []).find(x => x.id === id);
+      if (!v) return;
+      const vParts = db.parts.filter(p => p.vehicleId === id);
+      const qtySum = vParts.reduce((s, p) => s + (p.quantity || 0), 0);
+      const valSum = vParts.reduce((s, p) => s + ((p.sellPrice || 0) * (p.quantity || 0)), 0);
+      const soldSum = vParts.reduce((s, p) => s + (p.soldCount || 0), 0);
+      const costSum = vParts.reduce((s, p) => s + ((p.buyPrice || 0) * (p.quantity || 0)), 0);
+
+      document.getElementById('vehicleDetailTitle').innerHTML = `<i class="fa-solid fa-car-side text-red-500 flex-shrink-0"></i><span class="truncate">${esc(vehicleLabel(v))}</span>`;
+
+      const rowsHtml = vParts.length === 0
+        ? `<p class="text-center text-slate-500 text-xs py-6">Bu avtomobilə hələ detal əlavə edilməyib.</p>`
+        : vParts.map(p => `
+          <div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2.5 flex justify-between items-start gap-2">
+            <div class="min-w-0">
+              <p class="font-bold text-white text-xs truncate">${esc(p.code)} <span class="text-slate-500 font-normal">• ${esc(p.category)}</span></p>
+              <p class="text-[10px] text-slate-400 mt-0.5 line-clamp-1">${esc(p.description || '')}</p>
+              <p class="text-[10px] text-slate-500 mt-0.5">Stok: ${p.quantity} ədəd • Satılıb: ${p.soldCount || 0}</p>
+            </div>
+            <div class="text-right flex-shrink-0">
+              <p class="text-xs font-bold text-emerald-400">$${p.sellPrice || 0}</p>
+              ${p.buyPrice ? `<p class="text-[10px] text-slate-500">Maya: $${p.buyPrice}</p>` : ''}
+            </div>
+          </div>`).join('');
+
+      document.getElementById('vehicleDetailBody').innerHTML = `
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          ${v.vin ? `<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2 col-span-2"><p class="text-[9px] text-slate-500 uppercase">VIN</p><p class="font-mono text-white text-[11px] break-all">${esc(v.vin)}</p></div>` : ''}
+          ${v.engine ? `<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2"><p class="text-[9px] text-slate-500 uppercase">Mühərrik</p><p class="text-white text-[11px]">${esc(v.engine)}${v.engineCode ? ` <span class="text-slate-400 font-mono">(${esc(v.engineCode)})</span>` : ''}</p></div>` : ''}
+          ${v.color ? `<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2"><p class="text-[9px] text-slate-500 uppercase">Rəng</p><p class="text-white text-[11px]">${esc(v.color)}</p></div>` : ''}
+          ${v.mileage ? `<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2"><p class="text-[9px] text-slate-500 uppercase">Yürüş</p><p class="text-white text-[11px]">${esc(v.mileage)}</p></div>` : ''}
+          ${v.arrivalDate ? `<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2"><p class="text-[9px] text-slate-500 uppercase">Gəlmə</p><p class="text-white text-[11px]">${esc(v.arrivalDate)}</p></div>` : ''}
+        </div>
+        ${v.notes ? `<div class="bg-yellow-950/20 border border-yellow-900/40 rounded-lg p-2.5"><p class="text-[9px] text-yellow-500 uppercase mb-1">Qeyd</p><p class="text-[11px] text-slate-300 italic">${esc(v.notes)}</p></div>` : ''}
+
+        <div class="grid grid-cols-4 gap-1.5 text-center">
+          <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800"><p class="text-[9px] text-slate-500">Detal</p><p class="text-sm font-bold text-white">${vParts.length}</p></div>
+          <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800"><p class="text-[9px] text-slate-500">Stok</p><p class="text-sm font-bold text-emerald-400">${qtySum}</p></div>
+          <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800"><p class="text-[9px] text-slate-500">Satılıb</p><p class="text-sm font-bold text-blue-400">${soldSum}</p></div>
+          <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800"><p class="text-[9px] text-slate-500">Dəyər</p><p class="text-sm font-bold text-amber-400">$${valSum.toLocaleString()}</p></div>
+        </div>
+
+        <div class="border-t border-slate-800 pt-2">
+          <p class="text-[10px] uppercase text-slate-500 font-bold tracking-wider mb-2">Bu avtomobilin detalları</p>
+          <div class="space-y-1.5 max-h-[40vh] overflow-y-auto pr-1">${rowsHtml}</div>
+        </div>
+
+        <div class="flex gap-2 pt-1">
+          <button onclick="closeVehicleDetail();openAddModalForVehicle('${v.id}')" class="flex-1 bg-red-600 hover:bg-red-700 text-white text-xs py-2.5 rounded-xl font-bold">
+            <i class="fa-solid fa-plus mr-1"></i> Bu avtomobilə detal əlavə et
+          </button>
+          <button onclick="closeVehicleDetail();openVehicleModal('${v.id}')" class="px-4 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs py-2.5 rounded-xl font-semibold border border-slate-700">
+            <i class="fa-solid fa-pen"></i>
+          </button>
+        </div>
+      `;
+      document.getElementById('vehicleDetailModal').classList.remove('hidden');
+    }
+
+    function closeVehicleDetail() { document.getElementById('vehicleDetailModal').classList.add('hidden'); }
+
+    function openAddModalForVehicle(vehicleId) {
+      openAddModal();
+      const sel = document.getElementById('partVehicleSelect');
+      if (sel) { sel.value = vehicleId; onPartVehicleChange(); }
+    }
+
+    // ==== SALE ====
     function promptSell(partId) {
       const part = db.parts.find(p => p.id === partId);
       if (!part) return;
@@ -524,11 +960,9 @@
     async function confirmSale() {
       const part = db.parts.find(p => p.id === activeSellPartId);
       if (!part) return;
-
       const price = parseFloat(document.getElementById('sellActualPrice').value) || 0;
       const qty = parseInt(document.getElementById('sellActualQty').value) || 1;
-
-      if (qty > part.quantity) { showToast('Stokda olan miqdardan daha çox satış qeyd edilə bilməz!', true); return; }
+      if (qty > part.quantity) { showToast('Stokda olan miqdardan çox satış qeyd edilə bilməz!', true); return; }
       if (qty < 1) { showToast('Say ən az 1 olmalıdır.', true); return; }
 
       const btn = document.getElementById('confirmSaleBtn');
@@ -538,19 +972,11 @@
       part.soldCount = (part.soldCount || 0) + qty;
 
       const saleRecord = {
-        id: Date.now().toString(),
-        partId: part.id,
-        code: part.code,
-        car: part.car,
-        category: part.category,
-        qty: qty,
-        sellPrice: price,
-        buyPrice: part.buyPrice || 0,
+        id: Date.now().toString(), partId: part.id, code: part.code, car: part.car,
+        category: part.category, qty, sellPrice: price, buyPrice: part.buyPrice || 0,
         profit: (price - (part.buyPrice || 0)) * qty,
-        date: new Date().toISOString(),
-        returned: false
+        date: new Date().toISOString(), returned: false
       };
-
       if (!db.sales) db.sales = [];
       db.sales.unshift(saleRecord);
 
@@ -564,7 +990,6 @@
       closeSellModal();
     }
 
-    // --- RETURN SOLD GOODS ---
     async function returnSale(saleId) {
       const sale = db.sales.find(s => s.id === saleId);
       if (!sale || sale.returned) return;
@@ -589,7 +1014,7 @@
       }
     }
 
-    // --- ANALYTICS ---
+    // ==== ANALYTICS ====
     function renderAnalyticsMonths() {
       const select = document.getElementById('analyticsMonthSelect');
       const prevValue = select.value;
@@ -605,9 +1030,9 @@
       const selectedMonth = document.getElementById('analyticsMonthSelect').value || new Date().toISOString().slice(0, 7);
       const monthlySales = (db.sales || []).filter(s => s.date && s.date.startsWith(selectedMonth) && !s.returned);
 
-      const totalRev = monthlySales.reduce((sum, s) => sum + (s.sellPrice * s.qty), 0);
-      const totalProfit = monthlySales.reduce((sum, s) => sum + (s.profit || 0), 0);
-      const totalUnits = monthlySales.reduce((sum, s) => sum + s.qty, 0);
+      const totalRev = monthlySales.reduce((s, x) => s + (x.sellPrice * x.qty), 0);
+      const totalProfit = monthlySales.reduce((s, x) => s + (x.profit || 0), 0);
+      const totalUnits = monthlySales.reduce((s, x) => s + x.qty, 0);
       const margin = totalRev > 0 ? ((totalProfit / totalRev) * 100).toFixed(1) : 0;
 
       document.getElementById('analyticsRevenue').innerText = `$${totalRev.toLocaleString()}`;
@@ -627,64 +1052,62 @@
             </div>
           </div>
           <span class="bg-emerald-950 text-emerald-400 font-bold px-2 py-0.5 rounded border border-emerald-800/40 flex-shrink-0">${item.soldCount || 0} ədəd</span>
-        </div>
-      `).join('') : `<p class="text-slate-500 text-center py-4">Hələ satış qeydə alınmayıb.</p>`;
+        </div>`).join('') : `<p class="text-slate-500 text-center py-4">Hələ satış qeydə alınmayıb.</p>`;
 
       const leastSold = [...db.parts].filter(p => p.quantity > 0).sort((a, b) => (a.soldCount || 0) - (b.soldCount || 0)).slice(0, 5);
       const leastSoldList = document.getElementById('leastSoldList');
-      leastSoldList.innerHTML = leastSold.length ? leastSold.map((item) => `
+      leastSoldList.innerHTML = leastSold.length ? leastSold.map(item => `
         <div class="flex justify-between items-center bg-slate-900 p-2 rounded-lg border border-slate-800 gap-2">
           <div class="min-w-0">
             <p class="font-bold text-slate-300 truncate">${esc(item.code)} <span class="text-slate-500 font-normal">(${esc(item.car)})</span></p>
             <p class="text-[10px] text-slate-500">Stokda: ${item.quantity} ədəd</p>
           </div>
           <span class="bg-slate-800 text-slate-400 font-medium px-2 py-0.5 rounded text-[10px] flex-shrink-0">${item.soldCount || 0} satış</span>
-        </div>
-      `).join('') : `<p class="text-slate-500 text-center py-4">Stokda hissə yoxdur.</p>`;
+        </div>`).join('') : `<p class="text-slate-500 text-center py-4">Stokda hissə yoxdur.</p>`;
     }
 
-    // --- SALES HISTORY ---
+    // ==== SALES HISTORY ====
     function renderSalesHistory() {
       const container = document.getElementById('salesHistoryList');
       const sales = db.sales || [];
       document.getElementById('salesCountBadge').innerText = `${sales.length} əməliyyat`;
-
       if (sales.length === 0) {
         container.innerHTML = `<div class="text-center py-10 text-slate-500 text-xs">Hələ ki heç bir satış qeydə alınmayıb.</div>`;
         return;
       }
-
       container.innerHTML = sales.map(s => {
         const d = new Date(s.date);
         const dateStr = `${d.getDate().toString().padStart(2,'0')}.${(d.getMonth()+1).toString().padStart(2,'0')}.${d.getFullYear()} ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;
         const returnedStyle = s.returned ? 'opacity-60 border-red-900/40 bg-red-950/10' : '';
         return `
-          <div class="glass p-3 rounded-xl flex justify-between items-center text-xs gap-2 ${returnedStyle}">
-            <div class="space-y-0.5 min-w-0 flex-1">
-              <p class="font-bold text-white truncate ${s.returned ? 'line-through text-slate-400' : ''}">${esc(s.code)} <span class="text-slate-400 font-normal">(${esc(s.car)})</span></p>
-              <p class="text-[10px] text-slate-500"><i class="fa-regular fa-clock mr-1"></i>${dateStr} • ${s.qty} ədəd</p>
-              ${s.returned ? `<p class="text-[10px] text-red-400 font-semibold"><i class="fa-solid fa-rotate-left mr-1"></i>Geri qaytarılıb</p>` : ''}
-            </div>
-            <div class="text-right flex-shrink-0 flex flex-col items-end gap-1">
-              <p class="font-black ${s.returned ? 'text-slate-500 line-through' : 'text-emerald-400'}">+$${(s.sellPrice * s.qty).toLocaleString()}</p>
-              ${!s.returned && s.profit ? `<p class="text-[10px] text-blue-400 font-semibold">Qazanc: +$${s.profit.toLocaleString()}</p>` : ''}
-              ${!s.returned ? `<button onclick="returnSale('${s.id}')" class="bg-red-900/60 hover:bg-red-800 text-red-200 text-[10px] px-2 py-0.5 rounded-md border border-red-800/60 font-semibold"><i class="fa-solid fa-rotate-left mr-1"></i>Qaytar</button>` : ''}
-            </div>
+        <div class="glass p-3 rounded-xl flex justify-between items-center text-xs gap-2 ${returnedStyle}">
+          <div class="space-y-0.5 min-w-0 flex-1">
+            <p class="font-bold text-white truncate ${s.returned ? 'line-through text-slate-400' : ''}">${esc(s.code)} <span class="text-slate-400 font-normal">(${esc(s.car)})</span></p>
+            <p class="text-[10px] text-slate-500"><i class="fa-regular fa-clock mr-1"></i>${dateStr} • ${s.qty} ədəd</p>
+            ${s.returned ? `<p class="text-[10px] text-red-400 font-semibold"><i class="fa-solid fa-rotate-left mr-1"></i>Geri qaytarılıb</p>` : ''}
           </div>
-        `;
+          <div class="text-right flex-shrink-0 flex flex-col items-end gap-1">
+            <p class="font-black ${s.returned ? 'text-slate-500 line-through' : 'text-emerald-400'}">+$${(s.sellPrice * s.qty).toLocaleString()}</p>
+            ${!s.returned && s.profit ? `<p class="text-[10px] text-blue-400 font-semibold">Qazanc: +$${s.profit.toLocaleString()}</p>` : ''}
+            ${!s.returned ? `<button onclick="returnSale('${s.id}')" class="bg-red-900/60 hover:bg-red-800 text-red-200 text-[10px] px-2 py-0.5 rounded-md border border-red-800/60 font-semibold"><i class="fa-solid fa-rotate-left mr-1"></i>Qaytar</button>` : ''}
+          </div>
+        </div>`;
       }).join('');
     }
 
-    // --- MODAL & PART ACTIONS ---
+    // ==== PART MODAL ====
     function openAddModal() {
       document.getElementById('partForm').reset();
       document.getElementById('partEditId').value = '';
-      document.getElementById('partModalTitle').innerHTML = '<i class="fa-solid fa-box-open text-red-500"></i> Yeni Ehtiyat Hissəsi Daxil Et';
+      document.getElementById('partVehicleId').value = '';
+      document.getElementById('partModalTitle').innerHTML = '<i class="fa-solid fa-box-open text-red-500"></i> Yeni Ehtiyat Hissəsi';
       document.getElementById('saveBtn').innerText = 'Stoka Əlavə Et';
       document.getElementById('partQuantity').value = 1;
       base64Image = '';
       document.getElementById('imgPreview').classList.add('hidden');
-      populateCategoryDatalist();
+      document.getElementById('vehicleAutofillHint').innerText = '';
+      populatePartVehicleSelect();
+      document.getElementById('partVehicleSelect').value = '';
       document.getElementById('partModal').classList.remove('hidden');
     }
 
@@ -706,9 +1129,13 @@
       document.getElementById('partDescription').value = part.description || '';
       base64Image = part.image || '';
       const preview = document.getElementById('imgPreview');
-      if (base64Image) { preview.src = base64Image; preview.classList.remove('hidden'); }
-      else preview.classList.add('hidden');
-      populateCategoryDatalist();
+      if (base64Image) { preview.src = base64Image; preview.classList.remove('hidden'); } else preview.classList.add('hidden');
+
+      populatePartVehicleSelect();
+      document.getElementById('partVehicleSelect').value = part.vehicleId || '';
+      document.getElementById('partVehicleId').value = part.vehicleId || '';
+      document.getElementById('vehicleAutofillHint').innerText = part.vehicleId ? 'Bu detal bir avtomobilə bağlıdır.' : '';
+
       document.getElementById('partModal').classList.remove('hidden');
     }
 
@@ -732,8 +1159,7 @@
           ctx.drawImage(img, 0, 0, width, height);
           base64Image = canvas.toDataURL('image/jpeg', 0.55);
           const preview = document.getElementById('imgPreview');
-          preview.src = base64Image;
-          preview.classList.remove('hidden');
+          preview.src = base64Image; preview.classList.remove('hidden');
         };
       };
       reader.readAsDataURL(file);
@@ -759,7 +1185,8 @@
         buyPrice: parseFloat(document.getElementById('partBuyPrice').value) || 0,
         sellPrice: parseFloat(document.getElementById('partSellPrice').value) || 0,
         description: document.getElementById('partDescription').value.trim(),
-        image: base64Image
+        image: base64Image,
+        vehicleId: document.getElementById('partVehicleId').value || ''
       };
 
       let ok;
@@ -785,21 +1212,19 @@
       }
     }
 
-    // --- CSV EXPORT ---
+    // ==== CSV ====
     function exportCSV() {
-      let csvContent = "data:text/csv;charset=utf-8,";
-      csvContent += "Detal Kodu,Kateqoriya,Marka Model,Muherrik,Istehsal Ili,Yurus,Stok Sayi,Alis Qiymeti,Satis Qiymeti,Satilan Say\n";
+      let csv = "data:text/csv;charset=utf-8,";
+      csv += "Detal Kodu,Kateqoriya,Avtomobil,Marka Model,Muherrik,Istehsal Ili,Yurus,Stok Sayi,Alis Qiymeti,Satis Qiymeti,Satilan Say\n";
       db.parts.forEach(p => {
-        const clean = v => (v || '').toString().replace(/"/g, '""');
-        csvContent += `"${clean(p.code)}","${clean(p.category)}","${clean(p.car)}","${clean(p.engine)}","${clean(p.year)}","${clean(p.mileage)}",${p.quantity},${p.buyPrice || 0},${p.sellPrice || 0},${p.soldCount || 0}\n`;
+        const v = p.vehicleId ? (db.vehicles || []).find(x => x.id === p.vehicleId) : null;
+        const clean = x => (x || '').toString().replace(/"/g, '""');
+        csv += `"${clean(p.code)}","${clean(p.category)}","${clean(v ? vehicleLabel(v) : '')}","${clean(p.car)}","${clean(p.engine)}","${clean(p.year)}","${clean(p.mileage)}",${p.quantity},${p.buyPrice || 0},${p.sellPrice || 0},${p.soldCount || 0}\n`;
       });
-      const encodedUri = encodeURI(csvContent);
       const link = document.createElement("a");
-      link.setAttribute("href", encodedUri);
+      link.setAttribute("href", encodeURI(csv));
       link.setAttribute("download", `TeslaLand_Stok_${new Date().toISOString().slice(0,10)}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      document.body.appendChild(link); link.click(); document.body.removeChild(link);
     }
   </script>
 </body>
