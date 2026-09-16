@@ -28,19 +28,14 @@ input,textarea{-webkit-user-select:text;user-select:text}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .scale-in{animation:scaleIn .25s cubic-bezier(.4,0,.2,1)}
 @keyframes scaleIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
-.slide-up{animation:slideUp .3s cubic-bezier(.4,0,.2,1)}
-@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
 .pulse-badge{animation:pulseBadge 2s infinite}
 @keyframes pulseBadge{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.85;transform:scale(1.08)}}
-.shimmer{background:linear-gradient(90deg,rgba(255,255,255,.02) 0%,rgba(255,255,255,.08) 50%,rgba(255,255,255,.02) 100%);background-size:200% 100%;animation:shimmer 1.6s infinite}
-@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 .kpi-card{background:linear-gradient(135deg,rgba(30,41,59,.6),rgba(15,23,42,.85));border:1px solid rgba(255,255,255,.06);transition:all .2s}
 .kpi-card:hover{border-color:rgba(239,68,68,.3);transform:translateY(-2px)}
 .chart-wrap{position:relative;height:220px;width:100%}
 ::-webkit-scrollbar{width:6px;height:6px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:rgba(148,163,184,.3);border-radius:3px}
-::-webkit-scrollbar-thumb:hover{background:rgba(148,163,184,.5)}
 .condition-new{background:rgba(16,185,129,.15);color:#34d399;border:1px solid rgba(16,185,129,.3)}
 .condition-used{background:rgba(148,163,184,.15);color:#94a3b8;border:1px solid rgba(148,163,184,.3)}
 .condition-refurb{background:rgba(59,130,246,.15);color:#60a5fa;border:1px solid rgba(59,130,246,.3)}
@@ -55,44 +50,34 @@ input,textarea{-webkit-user-select:text;user-select:text}
 .photo-tile:hover img{transform:scale(1.06)}
 .photo-tile::after{content:'\f00e';font-family:'Font Awesome 6 Free';font-weight:900;position:absolute;right:6px;bottom:6px;color:#fff;background:rgba(0,0,0,.55);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;opacity:0;transition:opacity .2s;pointer-events:none}
 .photo-tile:hover::after{opacity:1}
-.status-chip{display:inline-flex;align-items:center;gap:.25rem;padding:.15rem .5rem;border-radius:.375rem;font-size:.625rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em}
-.tab-btn{position:relative;overflow:hidden}
-.tab-btn.active{background:linear-gradient(135deg,#dc2626,#b91c1c);color:#fff;box-shadow:0 4px 16px rgba(239,68,68,.35)}
-.act-item{padding:.6rem .75rem;border-radius:.5rem;background:rgba(15,23,42,.5);border:1px solid rgba(30,41,59,.6);display:flex;align-items:center;gap:.5rem;font-size:.7rem;transition:border-color .2s}
-.act-item:hover{border-color:rgba(239,68,68,.4)}
-.divider-dashed{border-top:1px dashed rgba(148,163,184,.3)}
-@media print{
-  body *{visibility:hidden}
-  .print-area,.print-area *{visibility:visible}
-  .print-area{position:absolute;left:0;top:0;width:100%;color:#000!important;background:#fff!important}
-}
-.flash-success{animation:flashGreen 1s ease}
-@keyframes flashGreen{0%{background:rgba(16,185,129,.3)}100%{background:transparent}}
-.barcode-display{font-family:'Courier New',monospace;letter-spacing:.15em;font-weight:700}
-.sticky-header{position:sticky;top:56px;z-index:20;background:rgba(11,15,25,.95);backdrop-filter:blur(12px);padding:.5rem 0;margin:0 -.5rem;border-bottom:1px solid rgba(30,41,59,.5)}
 .insight-card{background:linear-gradient(135deg,rgba(30,41,59,.8),rgba(15,23,42,.9));border:1px solid rgba(255,255,255,.06);border-radius:1rem;padding:1rem;position:relative;overflow:hidden}
 .insight-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--accent,#ef4444)}
 .insight-card.green{--accent:#10b981}
 .insight-card.blue{--accent:#3b82f6}
 .insight-card.amber{--accent:#f59e0b}
 .insight-card.purple{--accent:#8b5cf6}
-.target-bar{height:6px;background:rgba(30,41,59,.9);border-radius:99px;overflow:hidden;position:relative}
+.target-bar{height:6px;background:rgba(30,41,59,.9);border-radius:99px;overflow:hidden}
 .target-bar-fill{height:100%;background:linear-gradient(90deg,#ef4444,#f59e0b,#10b981);border-radius:99px;transition:width .6s ease}
-.sales-slider{display:flex;gap:.5rem;overflow-x:auto;padding-bottom:.5rem;scroll-snap-type:x mandatory}
-.sales-slider>*{scroll-snap-align:start;flex-shrink:0}
-.quick-chip{display:inline-flex;align-items:center;gap:.3rem;padding:.35rem .65rem;background:rgba(30,41,59,.9);border:1px solid rgba(100,116,139,.3);border-radius:99px;font-size:.7rem;font-weight:600;color:#cbd5e1;cursor:pointer;transition:all .15s;white-space:nowrap}
-.quick-chip:hover{background:rgba(239,68,68,.2);border-color:rgba(239,68,68,.5);color:#fca5a5}
-.mini-stat{padding:.75rem .5rem;text-align:center;border-radius:.75rem;background:rgba(15,23,42,.6);border:1px solid rgba(30,41,59,.6)}
-.mini-stat-label{font-size:.6rem;color:#64748b;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
-.mini-stat-value{font-size:.875rem;font-weight:800;margin-top:.15rem}
-@media(max-width:380px){.part-img{width:4.5rem;height:4.5rem}}
-.float-in{animation:floatIn .3s ease}
-@keyframes floatIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.tab-btn.active{background:linear-gradient(135deg,#dc2626,#b91c1c);color:#fff;box-shadow:0 4px 16px rgba(239,68,68,.35)}
+@media print{body *{visibility:hidden}.print-area,.print-area *{visibility:visible}.print-area{position:absolute;left:0;top:0;width:100%;color:#000!important;background:#fff!important}}
+.keypad-btn{background:rgba(30,41,59,.95);border:1px solid rgba(100,116,139,.3);border-radius:.75rem;font-size:1.25rem;font-weight:700;color:#fff;padding:.75rem 0;transition:all .1s;user-select:none}
+.keypad-btn:hover{background:rgba(239,68,68,.2);border-color:rgba(239,68,68,.5);color:#fca5a5}
+.keypad-btn:active{transform:scale(.95);background:rgba(239,68,68,.4)}
+.code-dot{width:3rem;height:3.5rem;border-radius:.75rem;border:2px solid rgba(100,116,139,.5);background:rgba(15,23,42,.6);display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:700;transition:all .15s}
+.code-dot.filled{border-color:#dc2626;background:rgba(127,29,29,.3);color:#fff}
+.code-dot.error{border-color:#ef4444;background:rgba(239,68,68,.2);animation:shake .4s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+@keyframes flashGreen{0%{background:rgba(16,185,129,.3)}100%{background:transparent}}
+.flash-success{animation:flashGreen 1s ease}
+.ai-btn{background:linear-gradient(135deg,#8b5cf6,#6d28d9);box-shadow:0 4px 12px rgba(139,92,246,.3)}
+.ai-btn:hover{background:linear-gradient(135deg,#a78bfa,#7c3aed)}
+.wave{display:inline-block;animation:wave 1.5s infinite}
+@keyframes wave{0%,60%,100%{transform:rotate(0)}10%,30%{transform:rotate(14deg)}20%{transform:rotate(-8deg)}}
 </style>
 </head>
 <body class="pb-24">
 
-<!-- ================= HEADER ================= -->
+<!-- HEADER -->
 <header class="sticky top-0 z-40 glass px-3 py-2.5 border-b border-slate-800">
   <div class="max-w-7xl mx-auto flex justify-between items-center gap-2">
     <div class="flex items-center gap-2 min-w-0">
@@ -103,19 +88,18 @@ input,textarea{-webkit-user-select:text;user-select:text}
       </div>
     </div>
     <div class="flex gap-0.5 flex-shrink-0 items-center">
-      <button onclick="openCommandPalette()" class="text-slate-400 hover:text-white p-2 text-sm" title="Əmrlər (Ctrl+K)"><i class="fa-solid fa-terminal text-base"></i></button>
+      <button onclick="openCommandPalette()" class="text-slate-400 hover:text-white p-2 text-sm" title="Əmrlər"><i class="fa-solid fa-terminal text-base"></i></button>
       <button id="alertBell" onclick="openAlertsModal()" class="relative text-slate-400 hover:text-amber-400 p-2 text-sm">
         <i class="fa-solid fa-bell text-base"></i>
         <span id="alertBadge" class="hidden absolute -top-0.5 -right-0.5 bg-red-600 text-white text-[8px] font-bold w-4 h-4 rounded-full flex items-center justify-center pulse-badge">0</span>
       </button>
-      <button onclick="openScanner()" class="text-slate-400 hover:text-white p-2 text-sm hidden sm:block" title="Barkod oxu"><i class="fa-solid fa-barcode text-base"></i></button>
       <button onclick="exportCSV()" class="text-slate-400 hover:text-white p-2 text-sm hidden sm:block" title="CSV"><i class="fa-solid fa-file-csv text-base"></i></button>
       <button onclick="openConfigModal()" class="text-slate-400 hover:text-white p-2 text-sm" title="Ayarlar"><i class="fa-solid fa-gear text-base"></i></button>
     </div>
   </div>
 </header>
 
-<!-- ================= NAVIGATION ================= -->
+<!-- NAVIGATION -->
 <nav class="px-3 pt-3 pb-1">
   <div class="max-w-7xl mx-auto flex gap-1.5 overflow-x-auto no-scrollbar">
     <button onclick="switchTab('dashboard')" data-tab="dashboard" class="tab-btn active flex-1 min-w-fit py-2 px-3 rounded-xl text-[10px] sm:text-xs font-bold whitespace-nowrap"><i class="fa-solid fa-gauge-high mr-1"></i>Panel</button>
@@ -131,7 +115,6 @@ input,textarea{-webkit-user-select:text;user-select:text}
 
 <!-- ============ DASHBOARD ============ -->
 <section id="section-dashboard" class="space-y-4">
-  <!-- HERO: Xalis Real Qazanc -->
   <div class="premium-card rounded-2xl p-5 relative overflow-hidden">
     <div class="absolute -top-8 -right-8 w-40 h-40 bg-red-600/10 rounded-full blur-3xl"></div>
     <div class="relative">
@@ -144,7 +127,6 @@ input,textarea{-webkit-user-select:text;user-select:text}
     </div>
   </div>
 
-  <!-- Bu Ay Xülasəsi -->
   <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
     <div class="kpi-card rounded-xl p-3">
       <p class="text-[9px] text-slate-500 uppercase tracking-wider font-bold">Bu Ay Satış</p>
@@ -168,7 +150,6 @@ input,textarea{-webkit-user-select:text;user-select:text}
     </div>
   </div>
 
-  <!-- Aylıq Hədəf -->
   <div class="glass rounded-2xl p-4">
     <div class="flex justify-between items-center mb-2">
       <div>
@@ -181,9 +162,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
     <p id="targetRemaining" class="text-[10px] text-slate-500 mt-1.5"></p>
   </div>
 
-  <!-- Biznes Xülasəsi: 2 sütun -->
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
-    <!-- AVTOMOBİL BİZNESİ -->
     <div class="insight-card blue">
       <div class="flex items-center gap-2 mb-3">
         <div class="w-8 h-8 rounded-lg bg-blue-600/20 flex items-center justify-center"><i class="fa-solid fa-car-side text-blue-400 text-sm"></i></div>
@@ -196,7 +175,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
         <div class="flex justify-between"><span class="text-slate-400">Avtomobillərə xərc:</span><span id="dashCarInvested" class="text-white font-mono font-bold">₼0</span></div>
         <div class="flex justify-between"><span class="text-slate-400">Detal satışından:</span><span id="dashCarRecovered" class="text-emerald-400 font-mono font-bold">₼0</span></div>
         <div class="flex justify-between"><span class="text-slate-400">Qalan stok dəyəri:</span><span id="dashCarStock" class="text-amber-400 font-mono font-bold">₼0</span></div>
-        <div class="divider-dashed pt-2 flex justify-between items-center">
+        <div class="pt-2 border-t border-slate-800 flex justify-between items-center">
           <span class="text-slate-300 font-bold text-[11px]">Nəticə:</span>
           <span id="dashCarNet" class="font-mono font-black text-sm">₼0</span>
         </div>
@@ -204,7 +183,6 @@ input,textarea{-webkit-user-select:text;user-select:text}
       </div>
     </div>
 
-    <!-- YERLİ BAZAR BİZNESİ -->
     <div class="insight-card green">
       <div class="flex items-center gap-2 mb-3">
         <div class="w-8 h-8 rounded-lg bg-emerald-600/20 flex items-center justify-center"><i class="fa-solid fa-shop text-emerald-400 text-sm"></i></div>
@@ -217,7 +195,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
         <div class="flex justify-between"><span class="text-slate-400">Maya xərci:</span><span id="dashLocalCost" class="text-white font-mono font-bold">₼0</span></div>
         <div class="flex justify-between"><span class="text-slate-400">Satış gəliri:</span><span id="dashLocalRevenue" class="text-emerald-400 font-mono font-bold">₼0</span></div>
         <div class="flex justify-between"><span class="text-slate-400">Qalan stok:</span><span id="dashLocalStock" class="text-amber-400 font-mono font-bold">₼0</span></div>
-        <div class="divider-dashed pt-2 flex justify-between items-center">
+        <div class="pt-2 border-t border-slate-800 flex justify-between items-center">
           <span class="text-slate-300 font-bold text-[11px]">Xalis qazanc:</span>
           <span id="dashLocalNet" class="font-mono font-black text-sm text-emerald-400">₼0</span>
         </div>
@@ -225,7 +203,6 @@ input,textarea{-webkit-user-select:text;user-select:text}
     </div>
   </div>
 
-  <!-- Qrafiklər -->
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
     <div class="glass rounded-2xl p-4">
       <div class="flex justify-between items-center mb-3">
@@ -242,15 +219,11 @@ input,textarea{-webkit-user-select:text;user-select:text}
     </div>
   </div>
 
-  <!-- Avtomobil ROI -->
   <div class="glass rounded-2xl p-4">
-    <div class="flex justify-between items-center mb-3">
-      <h3 class="text-xs font-bold text-white uppercase tracking-wider"><i class="fa-solid fa-trophy text-amber-400 mr-1.5"></i>Avtomobil ROI Müqayisəsi</h3>
-    </div>
+    <h3 class="text-xs font-bold text-white uppercase tracking-wider mb-3"><i class="fa-solid fa-trophy text-amber-400 mr-1.5"></i>Avtomobil ROI Müqayisəsi</h3>
     <div class="chart-wrap" style="height:280px"><canvas id="chartVehicleROI"></canvas></div>
   </div>
 
-  <!-- Aşağı Stok + Son Fəaliyyət -->
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
     <div class="glass rounded-2xl p-4">
       <div class="flex justify-between items-center border-b border-slate-800 pb-2 mb-3">
@@ -266,15 +239,6 @@ input,textarea{-webkit-user-select:text;user-select:text}
       <div id="dashActivity" class="space-y-1.5 text-xs max-h-60 overflow-y-auto"></div>
     </div>
   </div>
-
-  <!-- Son Satışlar Slider -->
-  <div class="glass rounded-2xl p-4">
-    <div class="flex justify-between items-center mb-3">
-      <h3 class="text-xs font-bold text-white uppercase tracking-wider"><i class="fa-solid fa-bolt text-red-400 mr-1.5"></i>Son Satışlar</h3>
-      <button onclick="switchTab('history')" class="text-[10px] text-red-400 hover:text-red-300 font-bold">Hamısı →</button>
-    </div>
-    <div id="dashRecentSales" class="sales-slider"></div>
-  </div>
 </section>
 
 <!-- ============ ANBAR ============ -->
@@ -284,9 +248,8 @@ input,textarea{-webkit-user-select:text;user-select:text}
       <div class="relative flex-1">
         <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-sm"></i>
         <input type="text" id="searchInput" oninput="renderParts()" placeholder="Elantra ön bufer, B48 mühərrik..." class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-9 pr-9 py-2.5 text-sm focus:outline-none focus:border-red-500 text-white placeholder-slate-500">
-        <button onclick="startVoiceSearch('searchInput')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-400 p-0.5" title="Səslə axtar"><i class="fa-solid fa-microphone text-sm"></i></button>
+        <button onclick="startVoiceSearch('searchInput')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-400 p-0.5"><i class="fa-solid fa-microphone text-sm"></i></button>
       </div>
-      <button onclick="openScanner()" class="bg-slate-900 border border-slate-800 rounded-xl px-3 text-slate-400 hover:text-white hover:border-red-500"><i class="fa-solid fa-barcode"></i></button>
     </div>
     <div class="flex gap-1.5 overflow-x-auto pb-1 text-xs no-scrollbar">
       <select id="sortParts" onchange="renderParts()" class="bg-slate-900 border border-slate-800 rounded-lg px-2 py-1.5 text-[10px] text-white focus:outline-none focus:border-red-500 flex-shrink-0">
@@ -347,7 +310,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
     <div class="kpi-card rounded-xl p-2 text-center"><p class="text-[9px] text-slate-500 font-bold">CƏMİ</p><p id="custCount" class="text-sm font-bold text-white mt-0.5">0</p></div>
     <div class="kpi-card rounded-xl p-2 text-center"><p class="text-[9px] text-slate-500 font-bold">VIP</p><p id="custVipCount" class="text-sm font-bold text-amber-400 mt-0.5">0</p></div>
     <div class="kpi-card rounded-xl p-2 text-center"><p class="text-[9px] text-slate-500 font-bold">BORC</p><p id="custCredit" class="text-sm font-bold text-red-400 mt-0.5">₼0</p></div>
-    <div class="kpi-card rounded-xl p-2 text-center"><p class="text-[9px] text-slate-500 font-bold">AKTİV</p><p id="custActiveCount" class="text-sm font-bold text-emerald-400 mt-0.5">0</p></div>
+    <div class="kpi-card rounded-xl p-2 text-center"><p class="text-[9px] text-slate-500 font-bold">QAYT.</p><p id="custReturns" class="text-sm font-bold text-purple-400 mt-0.5">0</p></div>
   </div>
 
   <div class="relative">
@@ -422,10 +385,9 @@ input,textarea{-webkit-user-select:text;user-select:text}
 
 </main>
 
-<!-- ================= FAB ================= -->
 <button onclick="openAddModal()" class="fixed bottom-6 right-6 bg-gradient-to-br from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white w-14 h-14 rounded-full shadow-xl shadow-red-600/50 flex items-center justify-center text-xl hover:scale-105 active:scale-95 transition-all z-30 premium-glow"><i class="fa-solid fa-plus"></i></button>
 
-<!-- ================= CODE MODAL (AUTO-SUBMIT) ================= -->
+<!-- ============ CODE MODAL (FIXED - KEYPAD) ============ -->
 <div id="codeModal" class="fixed inset-0 bg-black/95 z-[80] hidden flex items-center justify-center p-4">
   <div class="bg-slate-900 border border-slate-700 w-full max-w-xs rounded-2xl p-5 space-y-4 scale-in">
     <div class="text-center">
@@ -433,17 +395,89 @@ input,textarea{-webkit-user-select:text;user-select:text}
       <h3 class="font-bold text-white text-sm">Təhlükəsizlik Kodu</h3>
       <p id="codeModalAction" class="text-[11px] text-slate-400 mt-0.5">Kod daxil edin</p>
     </div>
+
     <div class="flex gap-2 justify-center" id="codeDigitsWrap"></div>
-    <input type="password" id="codeInput" inputmode="numeric" maxlength="4" autocomplete="off" class="opacity-0 absolute -z-10" oninput="handleCodeInput(event)">
-    <p id="codeError" class="text-[11px] text-red-400 text-center hidden"><i class="fa-solid fa-circle-exclamation mr-1"></i>Yanlış kod!</p>
-    <div class="flex gap-2">
-      <button onclick="openCodeKeyboard()" class="flex-1 bg-slate-800 py-2.5 rounded-xl text-slate-300 text-xs font-bold"><i class="fa-solid fa-keyboard mr-1"></i>Klaviatura</button>
-      <button onclick="closeCodeModal()" class="px-4 bg-slate-800 py-2.5 rounded-xl text-slate-400 text-xs">Ləğv</button>
+
+    <div class="grid grid-cols-3 gap-2 mt-2">
+      <button type="button" onclick="appendCodeDigit('1')" class="keypad-btn">1</button>
+      <button type="button" onclick="appendCodeDigit('2')" class="keypad-btn">2</button>
+      <button type="button" onclick="appendCodeDigit('3')" class="keypad-btn">3</button>
+      <button type="button" onclick="appendCodeDigit('4')" class="keypad-btn">4</button>
+      <button type="button" onclick="appendCodeDigit('5')" class="keypad-btn">5</button>
+      <button type="button" onclick="appendCodeDigit('6')" class="keypad-btn">6</button>
+      <button type="button" onclick="appendCodeDigit('7')" class="keypad-btn">7</button>
+      <button type="button" onclick="appendCodeDigit('8')" class="keypad-btn">8</button>
+      <button type="button" onclick="appendCodeDigit('9')" class="keypad-btn">9</button>
+      <button type="button" onclick="clearCodeInput()" class="keypad-btn text-sm"><i class="fa-solid fa-xmark"></i></button>
+      <button type="button" onclick="appendCodeDigit('0')" class="keypad-btn">0</button>
+      <button type="button" onclick="backspaceCode()" class="keypad-btn text-sm"><i class="fa-solid fa-delete-left"></i></button>
     </div>
+
+    <p id="codeError" class="text-[11px] text-red-400 text-center hidden"><i class="fa-solid fa-circle-exclamation mr-1"></i>Yanlış kod! Yenidən yoxla.</p>
+
+    <button onclick="closeCodeModal()" class="w-full bg-slate-800 py-2.5 rounded-xl text-slate-400 text-xs font-bold">Ləğv et</button>
   </div>
 </div>
 
-<!-- ================= PHOTO LIGHTBOX ================= -->
+<!-- ============ AI PROMPT MODAL ============ -->
+<div id="aiModal" class="fixed inset-0 bg-black/90 z-[75] hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+  <div class="bg-slate-900 border border-purple-800/50 w-full max-w-lg rounded-t-2xl sm:rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
+    <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+      <h3 class="font-bold text-base text-white flex items-center gap-2">
+        <i class="fa-solid fa-wand-magic-sparkles text-purple-400 wave"></i>
+        AI Reklam Mətni
+      </h3>
+      <button onclick="closeAIModal()" class="text-slate-400 text-lg"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1">
+      <button onclick="setAITemplate('instagram')" id="aiTplInstagram" class="flex-shrink-0 px-3 py-1.5 rounded-lg text-[10px] font-bold bg-purple-600 text-white">📸 Instagram</button>
+      <button onclick="setAITemplate('facebook')" id="aiTplFacebook" class="flex-shrink-0 px-3 py-1.5 rounded-lg text-[10px] font-bold bg-slate-800 text-slate-300">📘 Facebook</button>
+      <button onclick="setAITemplate('tiktok')" id="aiTplTiktok" class="flex-shrink-0 px-3 py-1.5 rounded-lg text-[10px] font-bold bg-slate-800 text-slate-300">🎵 TikTok</button>
+      <button onclick="setAITemplate('whatsapp')" id="aiTplWhatsapp" class="flex-shrink-0 px-3 py-1.5 rounded-lg text-[10px] font-bold bg-slate-800 text-slate-300">💬 WhatsApp</button>
+      <button onclick="setAITemplate('seo')" id="aiTplSeo" class="flex-shrink-0 px-3 py-1.5 rounded-lg text-[10px] font-bold bg-slate-800 text-slate-300">🔍 SEO/Açar söz</button>
+    </div>
+
+    <div id="aiPartPreview" class="bg-slate-950/60 border border-slate-800 rounded-xl p-3 text-xs space-y-1"></div>
+
+    <div>
+      <div class="flex justify-between items-center mb-1.5">
+        <label class="text-[11px] text-slate-400 font-bold uppercase tracking-wider">Prompt:</label>
+        <span id="aiPromptLen" class="text-[10px] text-slate-500"></span>
+      </div>
+      <textarea id="aiPromptText" rows="12" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-slate-200 font-mono leading-relaxed focus:outline-none focus:border-purple-500 resize-none"></textarea>
+    </div>
+
+    <div id="aiChatUrlWarn" class="hidden bg-amber-950/30 border border-amber-900/40 rounded-lg p-2.5 text-[11px] text-amber-300">
+      <i class="fa-solid fa-circle-exclamation mr-1"></i>Chat linki təyin edilməyib. Ayarlar → Mağaza & AI bölməsində qeyd edin.
+    </div>
+
+    <div class="grid grid-cols-2 gap-2">
+      <button onclick="copyAIPrompt()" class="bg-purple-600 hover:bg-purple-500 text-white py-3 rounded-xl font-bold text-xs shadow-lg shadow-purple-600/30">
+        <i class="fa-solid fa-copy mr-1"></i>Kopyala
+      </button>
+      <button onclick="openAIChat()" id="aiOpenBtn" class="bg-gradient-to-br from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white py-3 rounded-xl font-bold text-xs shadow-lg shadow-emerald-600/30">
+        <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>Chat aç
+      </button>
+    </div>
+
+    <div class="grid grid-cols-3 gap-2">
+      <button onclick="shareAIText()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 py-2 rounded-lg font-bold text-[10px] border border-slate-700">
+        <i class="fa-solid fa-share mr-1"></i>Paylaş
+      </button>
+      <button onclick="openAIWhatsApp()" class="bg-green-800 hover:bg-green-700 text-white py-2 rounded-lg font-bold text-[10px]">
+        <i class="fa-brands fa-whatsapp mr-1"></i>WhatsApp
+      </button>
+      <button onclick="copyAIPromptAndOpen()" class="bg-blue-800 hover:bg-blue-700 text-white py-2 rounded-lg font-bold text-[10px]">
+        <i class="fa-solid fa-bolt mr-1"></i>Tez aç
+      </button>
+    </div>
+
+    <p class="text-[10px] text-slate-500 text-center italic">Prompt avtomatik kopyalanır — chat açıldıqda Ctrl+V ilə yapışdırın</p>
+  </div>
+</div>
+
+<!-- ============ PHOTO LIGHTBOX ============ -->
 <div id="lightbox" class="fixed inset-0 bg-black/98 z-[90] hidden flex items-center justify-center fade-in">
   <button onclick="closeLightbox()" class="absolute top-4 right-4 w-11 h-11 bg-white/10 hover:bg-white/20 rounded-full text-white flex items-center justify-center backdrop-blur z-10"><i class="fa-solid fa-xmark text-xl"></i></button>
   <button onclick="lightboxPrev()" id="lightboxPrevBtn" class="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 bg-white/10 hover:bg-white/20 rounded-full text-white flex items-center justify-center backdrop-blur z-10"><i class="fa-solid fa-chevron-left text-xl"></i></button>
@@ -453,7 +487,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
   <div id="lightboxCaption" class="absolute top-6 left-1/2 -translate-x-1/2 bg-white/10 px-4 py-1.5 rounded-full text-white text-xs backdrop-blur max-w-[80vw] truncate"></div>
 </div>
 
-<!-- ================= PART MODAL ================= -->
+<!-- ============ PART MODAL ============ -->
 <div id="partModal" class="fixed inset-0 bg-black/85 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
   <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
     <div class="flex justify-between items-center border-b border-slate-800 pb-3">
@@ -504,48 +538,26 @@ input,textarea{-webkit-user-select:text;user-select:text}
       </div>
 
       <div class="grid grid-cols-2 gap-2">
-        <div>
-          <label class="block text-slate-400 mb-1">Marka & Model *</label>
-          <input type="text" id="partCar" required placeholder="BMW G20" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
-        </div>
-        <div>
-          <label class="block text-slate-400 mb-1">Mühərrik</label>
-          <input type="text" id="partEngine" placeholder="2.0 B48" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
-        </div>
+        <div><label class="block text-slate-400 mb-1">Marka & Model *</label><input type="text" id="partCar" required placeholder="BMW G20" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></div>
+        <div><label class="block text-slate-400 mb-1">Mühərrik</label><input type="text" id="partEngine" placeholder="2.0 B48" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></div>
       </div>
 
       <div class="grid grid-cols-3 gap-2">
-        <div>
-          <label class="block text-slate-400 mb-1">İl</label>
-          <select id="partYear" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></select>
-        </div>
-        <div>
-          <label class="block text-slate-400 mb-1">Yürüş</label>
-          <input type="text" id="partMileage" placeholder="45,000" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
-        </div>
-        <div>
-          <label class="block text-slate-400 mb-1">Stok *</label>
-          <input type="number" id="partQuantity" value="1" min="0" required class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
-        </div>
+        <div><label class="block text-slate-400 mb-1">İl</label><select id="partYear" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></select></div>
+        <div><label class="block text-slate-400 mb-1">Yürüş</label><input type="text" id="partMileage" placeholder="45,000" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></div>
+        <div><label class="block text-slate-400 mb-1">Stok *</label><input type="number" id="partQuantity" value="1" min="0" required class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></div>
       </div>
 
       <div class="grid grid-cols-3 gap-2">
-        <div>
-          <label class="block text-slate-400 mb-1">Vəziyyət</label>
+        <div><label class="block text-slate-400 mb-1">Vəziyyət</label>
           <select id="partCondition" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
             <option value="used">İşlənmiş</option>
             <option value="new">Yeni</option>
             <option value="refurb">Bərpa</option>
           </select>
         </div>
-        <div>
-          <label class="block text-slate-400 mb-1">Min. Stok</label>
-          <input type="number" id="partMinStock" value="1" min="0" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
-        </div>
-        <div>
-          <label class="block text-slate-400 mb-1">Rəf / Yer</label>
-          <input type="text" id="partLocation" placeholder="A-3" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
-        </div>
+        <div><label class="block text-slate-400 mb-1">Min. Stok</label><input type="number" id="partMinStock" value="1" min="0" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></div>
+        <div><label class="block text-slate-400 mb-1">Rəf / Yer</label><input type="text" id="partLocation" placeholder="A-3" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></div>
       </div>
 
       <div id="buyPriceWrap" class="bg-blue-950/40 border border-blue-900/40 rounded-xl p-2.5 hidden">
@@ -570,7 +582,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
   </div>
 </div>
 
-<!-- ================= VEHICLE MODAL ================= -->
+<!-- ============ VEHICLE MODAL ============ -->
 <div id="vehicleModal" class="fixed inset-0 bg-black/85 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
   <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
     <div class="flex justify-between items-center border-b border-slate-800 pb-3">
@@ -614,7 +626,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
   </div>
 </div>
 
-<!-- ================= SELL MODAL ================= -->
+<!-- ============ SELL MODAL ============ -->
 <div id="sellModal" class="fixed inset-0 bg-black/85 z-50 hidden flex items-center justify-center p-4">
   <div class="bg-slate-900 border border-slate-700 w-full max-w-sm rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
     <div class="flex justify-between items-center border-b border-slate-800 pb-2">
@@ -658,7 +670,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
   </div>
 </div>
 
-<!-- ================= PART DETAIL ================= -->
+<!-- ============ PART DETAIL ============ -->
 <div id="partDetailModal" class="fixed inset-0 bg-black/85 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
   <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
     <div class="flex justify-between items-center border-b border-slate-800 pb-3">
@@ -669,7 +681,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
   </div>
 </div>
 
-<!-- ================= VEHICLE DETAIL ================= -->
+<!-- ============ VEHICLE DETAIL ============ -->
 <div id="vehicleDetailModal" class="fixed inset-0 bg-black/85 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
   <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
     <div class="flex justify-between items-center border-b border-slate-800 pb-3">
@@ -680,7 +692,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
   </div>
 </div>
 
-<!-- ================= CUSTOMER DETAIL ================= -->
+<!-- ============ CUSTOMER DETAIL ============ -->
 <div id="customerDetailModal" class="fixed inset-0 bg-black/85 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
   <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
     <div class="flex justify-between items-center border-b border-slate-800 pb-3">
@@ -691,7 +703,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
   </div>
 </div>
 
-<!-- ================= RETURN MODAL ================= -->
+<!-- ============ RETURN MODAL ============ -->
 <div id="returnModal" class="fixed inset-0 bg-black/95 z-[70] hidden flex items-center justify-center p-4">
   <div class="bg-slate-900 border border-slate-700 w-full max-w-sm rounded-2xl p-5 space-y-3 scale-in">
     <h3 class="font-bold text-base text-white flex items-center gap-2"><i class="fa-solid fa-rotate-left text-red-500"></i>Geri Qaytarma</h3>
@@ -714,7 +726,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
   </div>
 </div>
 
-<!-- ================= RECEIPT ================= -->
+<!-- ============ RECEIPT ============ -->
 <div id="receiptModal" class="fixed inset-0 bg-black/95 z-[70] hidden flex items-center justify-center p-4 overflow-y-auto">
   <div class="w-full max-w-sm space-y-3">
     <div id="receiptContent" class="bg-white text-black rounded-2xl p-5 scale-in">
@@ -729,7 +741,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
   </div>
 </div>
 
-<!-- ================= ALERTS ================= -->
+<!-- ============ ALERTS ============ -->
 <div id="alertsModal" class="fixed inset-0 bg-black/85 z-[70] hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
   <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
     <div class="flex justify-between items-center border-b border-slate-800 pb-3">
@@ -740,16 +752,32 @@ input,textarea{-webkit-user-select:text;user-select:text}
   </div>
 </div>
 
-<!-- ================= CONFIG ================= -->
+<!-- ============ CONFIG ============ -->
 <div id="configModal" class="fixed inset-0 bg-black/85 z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
   <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-2xl p-5 space-y-3 my-8 scale-in">
     <h3 class="font-bold text-base text-white flex items-center gap-2"><i class="fa-solid fa-gear text-red-500"></i>Ayarlar</h3>
     <div class="space-y-3 text-xs">
+
       <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3 space-y-2">
         <p class="text-[11px] font-bold text-slate-300 uppercase tracking-wider">JSONBin Bağlantı</p>
         <div><label class="block text-slate-400 mb-1 text-[10px]">X-Master-Key</label><input type="password" id="masterKeyInput" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></div>
         <div><label class="block text-slate-400 mb-1 text-[10px]">Bin ID</label><input type="text" id="binIdInput" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></div>
         <p id="configError" class="text-[11px] text-red-400 hidden"></p>
+      </div>
+
+      <div class="bg-purple-950/30 border border-purple-900/40 rounded-xl p-3 space-y-2">
+        <p class="text-[11px] font-bold text-purple-300 uppercase tracking-wider"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Mağaza & AI</p>
+        <div><label class="block text-slate-400 mb-1 text-[10px]">Mağaza adı</label><input type="text" id="storeNameInput" placeholder="TeslaLand" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></div>
+        <div><label class="block text-slate-400 mb-1 text-[10px]">Ünvan / Yerləşmə</label><input type="text" id="storeLocationInput" placeholder="Bakı, Binəqədi..." class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></div>
+        <div class="grid grid-cols-2 gap-2">
+          <div><label class="block text-slate-400 mb-1 text-[10px]">Telefon</label><input type="tel" id="storePhoneInput" placeholder="050-XXX-XX-XX" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></div>
+          <div><label class="block text-slate-400 mb-1 text-[10px]">WhatsApp</label><input type="tel" id="storeWhatsappInput" placeholder="994XXXXXXXXX" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></div>
+        </div>
+        <div>
+          <label class="block text-slate-400 mb-1 text-[10px]">AI Chat linki (ChatGPT / Gemini)</label>
+          <input type="url" id="aiChatUrlInput" placeholder="https://chat.openai.com/  və ya  https://gemini.google.com/app" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white text-[11px]">
+          <p class="text-[10px] text-purple-300/70 mt-1">ChatGPT: chat.openai.com | Gemini: gemini.google.com/app</p>
+        </div>
       </div>
 
       <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3 space-y-2">
@@ -768,20 +796,12 @@ input,textarea{-webkit-user-select:text;user-select:text}
       </div>
 
       <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3 space-y-2">
-        <p class="text-[11px] font-bold text-slate-300 uppercase tracking-wider">Tema</p>
-        <div class="flex gap-2">
-          <button onclick="setTheme('dark')" id="themeDarkBtn" class="flex-1 py-2 rounded-lg font-bold text-[11px] bg-slate-800 text-white border border-slate-700"><i class="fa-solid fa-moon mr-1"></i>Tünd</button>
-          <button onclick="setTheme('light')" id="themeLightBtn" class="flex-1 py-2 rounded-lg font-bold text-[11px] bg-slate-800 text-slate-400 border border-slate-700"><i class="fa-solid fa-sun mr-1"></i>İşıqlı</button>
-        </div>
-      </div>
-
-      <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3 space-y-2">
         <p class="text-[11px] font-bold text-slate-300 uppercase tracking-wider">Fəaliyyət Jurnalı</p>
         <button onclick="openActivityLog()" class="w-full bg-slate-700 hover:bg-slate-600 text-white py-2 rounded-lg font-bold text-[11px]"><i class="fa-solid fa-list mr-1"></i>Jurnalı aç</button>
       </div>
 
-      <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3 space-y-2">
-        <p class="text-[11px] font-bold text-slate-300 uppercase tracking-wider">Təhlükəli Zona</p>
+      <div class="bg-red-950/30 border border-red-900/40 rounded-xl p-3 space-y-2">
+        <p class="text-[11px] font-bold text-red-300 uppercase tracking-wider">Təhlükəli Zona</p>
         <button onclick="clearAllData()" class="w-full bg-red-900/60 hover:bg-red-800 text-red-200 py-2 rounded-lg font-bold text-[11px] border border-red-800/50"><i class="fa-solid fa-trash mr-1"></i>Bütün məlumatları sil</button>
       </div>
     </div>
@@ -792,7 +812,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
   </div>
 </div>
 
-<!-- ================= EXPENSE MODAL ================= -->
+<!-- ============ EXPENSE MODAL ============ -->
 <div id="expenseModal" class="fixed inset-0 bg-black/95 z-[70] hidden flex items-center justify-center p-4">
   <div class="bg-slate-900 border border-slate-700 w-full max-w-sm rounded-2xl p-5 space-y-3 scale-in">
     <h3 class="font-bold text-base text-white flex items-center gap-2"><i class="fa-solid fa-money-bill-wave text-red-500"></i>Xərc Əlavə Et</h3>
@@ -820,7 +840,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
   </div>
 </div>
 
-<!-- ================= TARGET MODAL ================= -->
+<!-- ============ TARGET MODAL ============ -->
 <div id="targetModal" class="fixed inset-0 bg-black/95 z-[70] hidden flex items-center justify-center p-4">
   <div class="bg-slate-900 border border-slate-700 w-full max-w-xs rounded-2xl p-5 space-y-3 scale-in">
     <h3 class="font-bold text-base text-white flex items-center gap-2"><i class="fa-solid fa-bullseye text-emerald-500"></i>Aylıq Hədəf</h3>
@@ -832,7 +852,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
   </div>
 </div>
 
-<!-- ================= ACTIVITY LOG ================= -->
+<!-- ============ ACTIVITY LOG ============ -->
 <div id="activityModal" class="fixed inset-0 bg-black/85 z-[70] hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
   <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
     <div class="flex justify-between items-center border-b border-slate-800 pb-3">
@@ -843,31 +863,13 @@ input,textarea{-webkit-user-select:text;user-select:text}
   </div>
 </div>
 
-<!-- ================= COMMAND PALETTE ================= -->
+<!-- ============ COMMAND PALETTE ============ -->
 <div id="cmdPalette" class="fixed inset-0 bg-black/90 z-[85] hidden flex items-start justify-center p-4 pt-20">
   <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-2xl overflow-hidden scale-in">
     <div class="p-3 border-b border-slate-800">
       <input type="text" id="cmdInput" placeholder="Əmr axtar..." class="w-full bg-transparent text-white text-sm focus:outline-none" oninput="filterCommands()" onkeydown="handleCmdKey(event)">
     </div>
     <div id="cmdList" class="max-h-80 overflow-y-auto p-2"></div>
-  </div>
-</div>
-
-<!-- ================= SCANNER ================= -->
-<div id="scannerModal" class="fixed inset-0 bg-black z-[85] hidden">
-  <div class="h-full flex flex-col">
-    <div class="flex justify-between items-center p-3 border-b border-slate-800 bg-slate-900">
-      <h3 class="font-bold text-sm text-white"><i class="fa-solid fa-barcode mr-2"></i>Barkod / QR Oxu</h3>
-      <button onclick="closeScanner()" class="text-slate-400 text-lg"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div class="flex-1 flex items-center justify-center p-4">
-      <div class="text-center">
-        <i class="fa-solid fa-camera text-5xl text-slate-600 mb-4"></i>
-        <p class="text-slate-400 text-sm mb-4">Barkod oxumaq üçün kameranı istifadə edin</p>
-        <button onclick="startScanner()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-bold text-sm">Kameranı Aç</button>
-        <div id="scannerStatus" class="text-slate-500 text-xs mt-4"></div>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -880,24 +882,28 @@ input,textarea{-webkit-user-select:text;user-select:text}
 let db = {
   parts: [], sales: [], vehicles: [], expenses: [],
   customCategories: [], customers: [], activityLog: [],
-  settings: { theme: 'dark', target: 0, secretCode: '0990' }
+  settings: { theme:'dark', target:0, secretCode:'0990', storeName:'TeslaLand', storeLocation:'', storePhone:'', storeWhatsapp:'', aiChatUrl:'' }
 };
-let currentCategory = 'ALL';
-let stockFilter = 'all';
-let sourceFilter = 'all';
-let base64Images = [];
-let activeSellPartId = null;
-let activeReturnSaleId = null;
-let activeReceiptSale = null;
-let syncing = false;
-let pendingVehicleReturn = false;
-let currentPartSource = 'vehicle';
-let expandedVehicles = new Set();
-let currentPaymentStatus = 'paid';
-let lightboxImages = [], lightboxIndex = 0, lightboxCaption = '';
-let codeInputValue = '';
+let currentCategory='ALL';
+let stockFilter='all';
+let sourceFilter='all';
+let base64Images=[];
+let activeSellPartId=null;
+let activeReturnSaleId=null;
+let activeReceiptSale=null;
+let syncing=false;
+let pendingVehicleReturn=false;
+let currentPartSource='vehicle';
+let expandedVehicles=new Set();
+let currentPaymentStatus='paid';
+let lightboxImages=[], lightboxIndex=0, lightboxCaption='';
+let codeInputValue='';
+let codeCallback=null;
+let codeLocked=false; // prevent double-trigger
+let activeAIPartId=null;
+let currentAITemplate='instagram';
 let chartSales30, chartCategories, chartDaily, chartMonthly, chartVehicleROI, chartExpenses;
-let commandItems = [];
+let commandItems=[];
 
 const DEFAULT_CATEGORIES = ['Mühərrik','Asqı & Şassi','Ban & Eksteryer','Elektrik & Elektronika','Salun & İnteryer','Parkradar','Bufer','İşıq','Sükan','Əyləc','Digər'];
 const COMMON_BRANDS = ['BMW','Mercedes-Benz','Audi','Volkswagen','Toyota','Lexus','Tesla','Hyundai','Kia','Nissan','Ford','Chevrolet','Honda','Mazda','Land Rover','Porsche','Volvo','Renault','Peugeot','Skoda','Opel','Fiat','Mitsubishi','Subaru','Jeep','Dodge','Lada'];
@@ -925,7 +931,7 @@ function showToast(msg,isError){
   window._toastTimer=setTimeout(()=>t.classList.add('hidden'),2800);
 }
 function logActivity(action, details){
-  if(!db.activityLog) db.activityLog = [];
+  if(!db.activityLog) db.activityLog=[];
   db.activityLog.unshift({id:Date.now().toString()+'x'+Math.random().toString(36).slice(2,6),action,details:details||'',date:new Date().toISOString()});
   if(db.activityLog.length > 200) db.activityLog = db.activityLog.slice(0,200);
 }
@@ -936,8 +942,9 @@ function matchesQuery(query, fields){
   const haystack=fields.filter(Boolean).map(f=>String(f).toLowerCase()).join(' ');
   return words.every(w=>haystack.includes(w));
 }
-function isStandalonePWA(){
-  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone || document.referrer.includes('android-app://');
+function getConditionText(cond){
+  const map = {new:'Yeni',used:'İşlənmiş',refurb:'Bərpa olunmuş'};
+  return map[cond] || 'İşlənmiş';
 }
 
 /* ============================================
@@ -947,93 +954,352 @@ function applyTheme(){
   const theme = (db.settings && db.settings.theme) || 'dark';
   if(theme === 'light') document.documentElement.classList.add('light');
   else document.documentElement.classList.remove('light');
-  const db_ = document.getElementById('themeDarkBtn');
-  const lb = document.getElementById('themeLightBtn');
-  if(db_ && lb){
-    if(theme === 'light'){
-      db_.className='flex-1 py-2 rounded-lg font-bold text-[11px] bg-slate-800 text-slate-400 border border-slate-700';
-      lb.className='flex-1 py-2 rounded-lg font-bold text-[11px] bg-amber-600 text-white border border-amber-500';
-    } else {
-      db_.className='flex-1 py-2 rounded-lg font-bold text-[11px] bg-slate-800 text-white border border-slate-700';
-      lb.className='flex-1 py-2 rounded-lg font-bold text-[11px] bg-slate-800 text-slate-400 border border-slate-700';
-    }
-  }
-}
-function setTheme(t){
-  if(!db.settings) db.settings={};
-  db.settings.theme=t;
-  applyTheme();
-  if(getMasterKey() && getBinId()) syncData(null, true);
 }
 
 /* ============================================
-   CODE MODAL (AUTO-SUBMIT)
+   CODE MODAL - FIXED
 ============================================ */
-let codeCallback = null;
 const getSecretCode = () => (db.settings && db.settings.secretCode) || '0990';
 
 function requireCode(actionName, callback){
   codeCallback = callback;
   codeInputValue = '';
+  codeLocked = false;
   document.getElementById('codeModalAction').innerText = actionName || 'Bu əməliyyat üçün kod lazımdır';
   document.getElementById('codeError').classList.add('hidden');
   renderCodeDigits();
   document.getElementById('codeModal').classList.remove('hidden');
-  setTimeout(()=>document.getElementById('codeInput').focus(), 100);
 }
+
 function closeCodeModal(){
   document.getElementById('codeModal').classList.add('hidden');
   codeCallback = null;
   codeInputValue = '';
+  codeLocked = false;
 }
-function renderCodeDigits(){
+
+function renderCodeDigits(error){
   const wrap = document.getElementById('codeDigitsWrap');
   wrap.innerHTML = [0,1,2,3].map(i=>{
     const filled = i < codeInputValue.length;
-    return `<div class="w-12 h-14 rounded-xl border-2 ${filled?'border-red-500 bg-red-950/30':'border-slate-700 bg-slate-800'} flex items-center justify-center text-2xl font-mono text-white transition-all">${filled?'•':''}</div>`;
+    return `<div class="code-dot ${filled?'filled':''} ${error?'error':''}">${filled?'•':''}</div>`;
   }).join('');
 }
-function handleCodeInput(e){
-  const val = (e.target.value || '').replace(/\D/g,'').slice(0,4);
-  codeInputValue = val;
-  e.target.value = val;
+
+function appendCodeDigit(d){
+  if(codeLocked) return;
+  if(codeInputValue.length >= 4) return;
+  codeInputValue += d;
   renderCodeDigits();
-  if(val.length === 4){
-    // AUTO-SUBMIT
-    setTimeout(()=>submitCode(), 80);
+  if(codeInputValue.length === 4){
+    // Wait a tick to let UI update, then verify
+    setTimeout(()=>verifyCode(), 150);
   }
 }
-function openCodeKeyboard(){
-  document.getElementById('codeInput').focus();
+
+function backspaceCode(){
+  if(codeLocked) return;
+  codeInputValue = codeInputValue.slice(0, -1);
+  renderCodeDigits();
 }
-function submitCode(){
-  if(codeInputValue.length !== 4){ showToast('Kod 4 rəqəm olmalıdır', true); return; }
-  if(codeInputValue === getSecretCode()){
+
+function clearCodeInput(){
+  if(codeLocked) return;
+  codeInputValue = '';
+  renderCodeDigits();
+}
+
+function verifyCode(){
+  if(codeLocked) return;
+  const secret = getSecretCode();
+  if(codeInputValue === secret){
+    // SUCCESS
+    codeLocked = true;
+    renderCodeDigits(false);
     const cb = codeCallback;
     codeCallback = null;
-    document.getElementById('codeModal').classList.add('hidden');
-    codeInputValue = '';
-    if(cb) cb();
+    setTimeout(()=>{
+      document.getElementById('codeModal').classList.add('hidden');
+      codeInputValue = '';
+      codeLocked = false;
+      if(cb) cb();
+    }, 180);
   } else {
+    // ERROR
+    codeLocked = true;
+    renderCodeDigits(true);
     document.getElementById('codeError').classList.remove('hidden');
-    codeInputValue = '';
-    document.getElementById('codeInput').value = '';
-    renderCodeDigits();
-    document.getElementById('codeInput').focus();
-    setTimeout(()=>document.getElementById('codeError').classList.add('hidden'), 1800);
+    if(navigator.vibrate) navigator.vibrate([100,50,100]);
+    setTimeout(()=>{
+      codeInputValue = '';
+      codeLocked = false;
+      renderCodeDigits(false);
+      document.getElementById('codeError').classList.add('hidden');
+    }, 900);
   }
 }
+
 function changeSecretCode(){
-  const val = document.getElementById('newSecretCode').value.trim();
-  if(!val || val.length !== 4 || !/^\d{4}$/.test(val)){
-    showToast('Kod 4 rəqəm olmalıdır!', true);
+  const val=document.getElementById('newSecretCode').value.trim();
+  if(!val || val.length!==4 || !/^\d{4}$/.test(val)){
+    showToast('Kod 4 rəqəm olmalıdır!',true);
     return;
   }
-  if(!db.settings) db.settings = {};
+  if(!db.settings) db.settings={};
   db.settings.secretCode = val;
-  document.getElementById('newSecretCode').value = '';
+  document.getElementById('newSecretCode').value='';
   logActivity('Kod dəyişdirildi');
   syncData('Kod dəyişdirildi ✓');
+}
+
+// Physical keyboard support for code
+document.addEventListener('keydown',(e)=>{
+  const codeModal = document.getElementById('codeModal');
+  if(codeModal.classList.contains('hidden')) return;
+  if(/^[0-9]$/.test(e.key)){
+    e.preventDefault();
+    appendCodeDigit(e.key);
+  } else if(e.key === 'Backspace'){
+    e.preventDefault();
+    backspaceCode();
+  } else if(e.key === 'Escape'){
+    closeCodeModal();
+  }
+});
+
+/* ============================================
+   AI AD GENERATOR
+============================================ */
+function openAIPrompt(partId){
+  activeAIPartId = partId;
+  currentAITemplate = 'instagram';
+  updateAITemplateButtons();
+  buildAIPromptUI();
+  document.getElementById('aiModal').classList.remove('hidden');
+}
+function closeAIModal(){document.getElementById('aiModal').classList.add('hidden');activeAIPartId=null;}
+
+function setAITemplate(tpl){
+  currentAITemplate = tpl;
+  updateAITemplateButtons();
+  buildAIPromptUI();
+}
+function updateAITemplateButtons(){
+  const tpls = ['instagram','facebook','tiktok','whatsapp','seo'];
+  tpls.forEach(t=>{
+    const btn = document.getElementById('aiTpl'+t.charAt(0).toUpperCase()+t.slice(1));
+    if(!btn) return;
+    if(t===currentAITemplate) btn.className = 'flex-shrink-0 px-3 py-1.5 rounded-lg text-[10px] font-bold bg-purple-600 text-white';
+    else btn.className = 'flex-shrink-0 px-3 py-1.5 rounded-lg text-[10px] font-bold bg-slate-800 text-slate-300';
+  });
+}
+
+function buildAIPromptUI(){
+  const p = db.parts.find(x=>x.id===activeAIPartId);
+  if(!p) return;
+  const s = db.settings || {};
+  const storeName = s.storeName || 'TeslaLand';
+  const storeLocation = s.storeLocation || '';
+  const storePhone = s.storePhone || '';
+  const storeWhatsapp = s.storeWhatsapp || '';
+
+  document.getElementById('aiPartPreview').innerHTML = `
+    <p class="text-white font-bold text-sm">${esc(p.car)} ${p.engine?'<span class="text-slate-400 font-normal">('+esc(p.engine)+')</span>':''}</p>
+    <div class="flex flex-wrap gap-2 text-[10px] text-slate-400 mt-1">
+      <span>${esc(p.category)}</span>
+      ${p.year?'<span>• '+esc(p.year)+'</span>':''}
+      <span>• ${getConditionText(p.condition)}</span>
+      ${p.code?'<span class="font-mono">• '+esc(p.code)+'</span>':''}
+    </div>
+    ${p.description?'<p class="text-[11px] text-slate-300 mt-1 italic">'+esc(p.description)+'</p>':''}
+  `;
+
+  let prompt = '';
+
+  if(currentAITemplate === 'instagram'){
+    prompt = `Salam! Mən "${storeName}" ehtiyat hissəsi mağazasından yazıram.
+
+Aşağıdakı detal üçün İnstagram postu hazırlamağını xahiş edirəm.
+
+📦 DETAL MƏLUMATLARI:
+━━━━━━━━━━━━━━━━━━━━
+• Kateqoriya: ${p.category}
+• Avtomobil: ${p.car}
+${p.engine ? '• Mühərrik: ' + p.engine : ''}
+${p.year ? '• İstehsal ili: ' + p.year : ''}
+• Vəziyyət: ${getConditionText(p.condition)}
+${p.code ? '• Orijinal kod: ' + p.code : ''}
+${p.description ? '• Əlavə qeyd: ' + p.description : ''}
+
+🏪 MAĞAZA MƏLUMATLARI:
+━━━━━━━━━━━━━━━━━━━━
+• Ad: ${storeName}
+${storeLocation ? '• Yerləşmə: ' + storeLocation : ''}
+${storePhone ? '• Əlaqə: ' + storePhone : ''}
+
+✨ TƏLƏBLƏR:
+━━━━━━━━━━━━━━━━━━━━
+1. Instagram üçün CƏLBedici başlıq (1 cümlə, güclü)
+2. 3-5 cümləlik post mətni (Azərbaycan dilində, təbii dil)
+3. 7-10 hashtag (#elantra #bufer #ehtiyathisse kimi — Azərbaycan + ingilis qarışıq)
+4. 8-12 ədəd emoji paylaşdır ki, mətn canlı görünsün
+5. Detalın hansı problemin həll etdiyini izah et
+6. Alıcının marağını çəkən CTA (Call-to-action) yaz
+7. ⚠️ QİYMƏT QEYD ETMƏ — müştəri soruşacaq
+8. Kod/əlaqə üçün yer burax
+
+Sadəcə hazır mətni ver, izahat yazma. Başla!`;
+  }
+
+  else if(currentAITemplate === 'facebook'){
+    prompt = `Salam! "${storeName}" ehtiyat hissəsi mağazası üçün Facebook postu hazırlamağını istəyirəm.
+
+📦 DETAL:
+• Növ: ${p.category}
+• Avtomobil: ${p.car}
+${p.engine ? '• Mühərrik: ' + p.engine : ''}
+${p.year ? '• İl: ' + p.year : ''}
+• Vəziyyət: ${getConditionText(p.condition)}
+${p.code ? '• Kod: ' + p.code : ''}
+${p.description ? '• Qeyd: ' + p.description : ''}
+
+🏪 MAĞAZA:
+• ${storeName}
+${storeLocation ? '• ' + storeLocation : ''}
+${storePhone ? '• ' + storePhone : ''}
+
+📝 TƏLƏBLƏR:
+1. Facebook üçün satış yönümlü post (3-5 cümlə, daha uzun və izahlı)
+2. Başlıq + əsas mətn + CTA
+3. Alıcını inandıracaq ton — peşəkar, etibarlı
+4. Emoji istifadə et (5-7)
+5. Qiymət QEYD ETMƏ
+6. Azərbaycan dilində, təbii
+
+Sadəcə mətn, başqa şey yazma. Başla!`;
+  }
+
+  else if(currentAITemplate === 'tiktok'){
+    prompt = `"${storeName}" üçün TikTok video skripti hazırla.
+
+📦 DETAL: ${p.car} — ${p.category}${p.engine ? ' (' + p.engine + ')' : ''}${p.year ? ', ' + p.year : ''}
+${p.description ? '• ' + p.description : ''}
+
+📱 TƏLƏBLƏR:
+1. 15-30 saniyəlik TikTok video skripti (Azərbaycan dilində)
+2. Hook (ilk 3 saniyə — diqqət çəkən)
+3. Əsas məzmun (10-20 saniyə)
+4. CTA (sonda — "Bizə yaz" kimi)
+5. Vizual ideyalar (kadrlar)
+6. Trend səslər/musiqi təklifi
+7. Hashtag-lər: #avto #ehtiyathisse #bakı #avtomobil + 7 dənə
+8. Qiymət QEYD ETMƏ
+
+Sadəcə skript, başqa izahat yox. Başla!`;
+  }
+
+  else if(currentAITemplate === 'whatsapp'){
+    prompt = `Müştəri üçün WhatsApp mesajı hazırla. Qısa, satış yönümlü, mehriban.
+
+📦 DETAL: ${p.car}${p.engine ? ' (' + p.engine + ')' : ''} — ${p.category}${p.year ? ', ' + p.year : ''}
+${p.code ? 'Kod: ' + p.code : ''}
+${p.description ? 'Qeyd: ' + p.description : ''}
+
+🏪 ${storeName}${storeLocation ? ' • ' + storeLocation : ''}${storePhone ? ' • ' + storePhone : ''}
+
+📝 TƏLƏBLƏR:
+1. 3-4 cümləlik WhatsApp mesajı
+2. Salamlaşma + detal təqdimatı + CTA
+3. 2-3 emoji
+4. Müştəriyə hörmətli, mehriban ton
+5. Qiymət QEYD ETMƏ — "qiymət üçün yaz" de
+6. Azərbaycan dilində
+
+Sadəcə mesaj mətni. Başla!`;
+  }
+
+  else if(currentAITemplate === 'seo'){
+    prompt = `Aşağıdakı ehtiyat hissəsi üçün SEO/axtarış optimallaşdırma məlumatları hazırla.
+
+📦 DETAL:
+• ${p.car}
+${p.engine ? '• Mühərrik: ' + p.engine : ''}
+${p.year ? '• İl: ' + p.year : ''}
+• Kateqoriya: ${p.category}
+${p.code ? '• Kod: ' + p.code : ''}
+${p.description ? '• ' + p.description : ''}
+
+🎯 TƏLƏBLƏR:
+1. 15-20 açar söz (Azərbaycan dilində, axtarış üçün real istifadə olunan)
+2. Google/Instagram/TikTok axtarışında tapılma ehtimalı yüksək sözlər
+3. Uzun quyruqlu (long-tail) 5 açar ifadə
+4. İngilis dilində 5-7 əlavə açar söz (beynəlxalq müştəri üçün)
+5. Title tag (60 simvol)
+6. Meta description (160 simvol)
+7. Müştərinin hansı sözlərlə axtaracağını proqnozlaşdır
+
+Sadəcə siyahı şəklində ver. Başla!`;
+  }
+
+  document.getElementById('aiPromptText').value = prompt;
+  document.getElementById('aiPromptLen').innerText = prompt.length + ' simvol';
+
+  const chatUrl = (db.settings && db.settings.aiChatUrl) || '';
+  if(!chatUrl){
+    document.getElementById('aiChatUrlWarn').classList.remove('hidden');
+    document.getElementById('aiOpenBtn').disabled = true;
+    document.getElementById('aiOpenBtn').classList.add('opacity-50');
+  } else {
+    document.getElementById('aiChatUrlWarn').classList.add('hidden');
+    document.getElementById('aiOpenBtn').disabled = false;
+    document.getElementById('aiOpenBtn').classList.remove('opacity-50');
+  }
+}
+
+async function copyAIPrompt(){
+  const text = document.getElementById('aiPromptText').value;
+  try{
+    await navigator.clipboard.writeText(text);
+    showToast('<i class="fa-solid fa-check mr-1 text-emerald-400"></i>Prompt kopyalandı!');
+  }catch(e){
+    const ta = document.getElementById('aiPromptText');
+    ta.select();
+    document.execCommand('copy');
+    showToast('<i class="fa-solid fa-check mr-1 text-emerald-400"></i>Kopyalandı!');
+  }
+}
+
+async function copyAIPromptAndOpen(){
+  await copyAIPrompt();
+  setTimeout(()=>openAIChat(), 400);
+}
+
+function openAIChat(){
+  const chatUrl = (db.settings && db.settings.aiChatUrl) || '';
+  if(!chatUrl){showToast('Əvvəlcə Ayarlar → AI Chat linki təyin edin', true); return;}
+  // Copy prompt first
+  copyAIPrompt();
+  setTimeout(()=>{
+    window.open(chatUrl, '_blank');
+  }, 300);
+}
+
+async function shareAIText(){
+  const text = document.getElementById('aiPromptText').value;
+  if(navigator.share){
+    try{
+      await navigator.share({title:'AI Prompt', text});
+    }catch(e){}
+  } else {
+    await copyAIPrompt();
+  }
+}
+
+function openAIWhatsApp(){
+  const text = document.getElementById('aiPromptText').value;
+  const phone = ((db.settings && db.settings.storeWhatsapp) || '').replace(/[^0-9]/g,'');
+  const url = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(text)}` : `https://wa.me/?text=${encodeURIComponent(text)}`;
+  window.open(url, '_blank');
 }
 
 /* ============================================
@@ -1058,10 +1324,7 @@ function renderLightbox(){
 }
 function lightboxNext(){lightboxIndex = (lightboxIndex+1) % lightboxImages.length; renderLightbox();}
 function lightboxPrev(){lightboxIndex = (lightboxIndex-1+lightboxImages.length) % lightboxImages.length; renderLightbox();}
-function closeLightbox(){
-  document.getElementById('lightbox').classList.add('hidden');
-  document.body.style.overflow = '';
-}
+function closeLightbox(){document.getElementById('lightbox').classList.add('hidden'); document.body.style.overflow = '';}
 document.addEventListener('keydown',(e)=>{
   if(!document.getElementById('lightbox').classList.contains('hidden')){
     if(e.key === 'Escape') closeLightbox();
@@ -1071,7 +1334,7 @@ document.addEventListener('keydown',(e)=>{
 });
 
 /* ============================================
-   FINANCIAL LOGIC (NEW - SEPARATED)
+   FINANCIAL LOGIC
 ============================================ */
 function computeFinance(){
   const parts = db.parts || [];
@@ -1079,16 +1342,14 @@ function computeFinance(){
   const vehicles = db.vehicles || [];
   const expenses = db.expenses || [];
 
-  // === CAR BUSINESS ===
   const carInvested = vehicles.reduce((s,v)=>s + (Number(v.purchasePrice)||0) + (Number(v.additionalCosts)||0), 0);
   const carSales = sales.filter(s=>!s.returned && s.source==='vehicle');
   const carRecovered = carSales.reduce((s,x)=>s + (x.sellPrice*x.qty) - (x.discount||0), 0);
   const carSoldUnits = carSales.reduce((s,x)=>s+x.qty, 0);
   const carStockValue = parts.filter(p=>p.source==='vehicle').reduce((s,p)=>s + (p.sellPrice||0)*(p.quantity||0), 0);
-  const carNet = carRecovered + carStockValue - carInvested; // Potential
+  const carNet = carRecovered + carStockValue - carInvested;
   const carRealizedNet = carRecovered - carInvested;
 
-  // === LOCAL BUSINESS ===
   const localSales = sales.filter(s=>!s.returned && s.source==='local');
   const localRevenue = localSales.reduce((s,x)=>s + (x.sellPrice*x.qty) - (x.discount||0), 0);
   const localCost = localSales.reduce((s,x)=>s + (x.buyPrice||0)*x.qty, 0);
@@ -1096,7 +1357,6 @@ function computeFinance(){
   const localStockValue = parts.filter(p=>p.source==='local').reduce((s,p)=>s + (p.sellPrice||0)*(p.quantity||0), 0);
   const localNet = localRevenue - localCost;
 
-  // === TOTAL ===
   const totalStockValue = carStockValue + localStockValue;
   const totalRevenue = carRecovered + localRevenue;
   const totalCost = carInvested + localCost;
@@ -1129,7 +1389,7 @@ function registerCategory(name){
   if(!name)return;
   const trimmed=name.trim();
   if(!trimmed)return;
-  if(!db.customCategories)db.customCategories=[];
+  if(!db.customCategories) db.customCategories=[];
   const lc=trimmed.toLowerCase();
   if(!getAllCategories().some(c=>c.toLowerCase()===lc)) db.customCategories.push(trimmed);
 }
@@ -1165,7 +1425,7 @@ function registerCustomer(name, phone){
 function getCustomerStats(name){
   if(!name)return null;
   const lc=name.toLowerCase().trim();
-  // INCLUDING returned (so history shows them)
+  // ALL sales including returned
   const allSales=(db.sales||[]).filter(s=>s.customerName && s.customerName.toLowerCase().trim()===lc);
   const activeSales=allSales.filter(s=>!s.returned);
   const returnedSales=allSales.filter(s=>s.returned);
@@ -1182,7 +1442,7 @@ function getCustomerStats(name){
 }
 function getCustomerTier(name){
   const s=getCustomerStats(name);
-  if(!s||s.count===0) return {label:'—',cls:'bg-slate-800 text-slate-400'};
+  if(!s || s.count===0) return {label:'—',cls:'bg-slate-800 text-slate-400'};
   if(s.total>=5000) return {label:'Platinum',cls:'tier-platinum'};
   if(s.total>=2000) return {label:'Gold',cls:'tier-gold'};
   if(s.total>=500) return {label:'Silver',cls:'tier-silver'};
@@ -1409,14 +1669,12 @@ function getAlerts(){
     if(p.quantity === 0) out.push({type:'out', msg:`${p.code||'—'} — ${p.car}`, sub:'Stok bitib', partId:p.id});
     else if((p.quantity||0) <= (p.minStock||1)) out.push({type:'low', msg:`${p.code||'—'} — ${p.car}`, sub:`Az qalıb (${p.quantity} ədəd)`, partId:p.id});
   });
-  // Credit sales
   (db.sales||[]).filter(s=>!s.returned && (s.paymentStatus==='credit'||s.paymentStatus==='partial')).forEach(s=>{
     const due = s.paymentStatus==='credit'
       ? (s.sellPrice*s.qty-(s.discount||0))
       : Math.max(0, s.sellPrice*s.qty-(s.discount||0)-(s.paidAmount||0));
     if(due>0) out.push({type:'credit', msg:`${s.customerName||'Müştəri'} — ${fmt(due)} borc`, sub:`${s.code||'—'} • ${shortDate(s.date)}`});
   });
-  // Dead stock
   const deadStock = db.parts.filter(p=>p.quantity>0 && daysBetween(p.createdAt) >= DEAD_STOCK_DAYS && (p.soldCount||0)===0);
   if(deadStock.length > 0) out.push({type:'dead', msg:`${deadStock.length} detal ölü stok`, sub:`${DEAD_STOCK_DAYS}+ gündür satılmır`});
   return out;
@@ -1533,16 +1791,12 @@ async function loadData(){
       customCategories: data.customCategories||[],
       customers: data.customers||[],
       activityLog: data.activityLog||[],
-      settings: data.settings||{theme:'dark',target:0,secretCode:'0990'}
+      settings: data.settings||{theme:'dark',target:0,secretCode:'0990',storeName:'TeslaLand',storeLocation:'',storePhone:'',storeWhatsapp:'',aiChatUrl:''}
     };
-    // Migration
     db.parts.forEach(p=>{
       if(typeof p.soldCount!=='number') p.soldCount=0;
       if(!p.source) p.source=p.vehicleId?'vehicle':'local';
-      if(!Array.isArray(p.images)){
-        p.images = p.image ? [p.image] : [];
-        delete p.image;
-      }
+      if(!Array.isArray(p.images)){p.images = p.image ? [p.image] : []; delete p.image;}
       if(!p.condition) p.condition='used';
       if(typeof p.minStock!=='number') p.minStock=1;
       if(!p.location) p.location='';
@@ -1554,6 +1808,13 @@ async function loadData(){
       if(!s.source) s.source = s.vehicleId ? 'vehicle' : 'local';
     });
     if(!db.settings.secretCode) db.settings.secretCode='0990';
+    if(!db.settings.aiChatUrl) db.settings.aiChatUrl='';
+    // Load settings into config form
+    document.getElementById('storeNameInput').value = db.settings.storeName || '';
+    document.getElementById('storeLocationInput').value = db.settings.storeLocation || '';
+    document.getElementById('storePhoneInput').value = db.settings.storePhone || '';
+    document.getElementById('storeWhatsappInput').value = db.settings.storeWhatsapp || '';
+    document.getElementById('aiChatUrlInput').value = db.settings.aiChatUrl || '';
     applyTheme();
     renderAll();
   } catch(err) {
@@ -1664,7 +1925,6 @@ function renderParts(){
   const partsList=document.getElementById('partsList');
   const search=document.getElementById('searchInput').value;
   const sort=document.getElementById('sortParts').value;
-  const fin = computeFinance();
 
   let filtered=db.parts.filter(item=>{
     const matchesCat=currentCategory==='ALL'||item.category===currentCategory;
@@ -1693,7 +1953,6 @@ function renderParts(){
   const totalVal=db.parts.reduce((s,p)=>s+((p.sellPrice||0)*(p.quantity||0)),0);
   document.getElementById('statTotalValue').innerText=fmt(totalVal);
 
-  // Profit of filtered (local only for accuracy)
   const profitAmt = filtered.filter(p=>p.source==='local').reduce((s,p)=>s+((p.sellPrice||0)-(p.buyPrice||0))*(p.quantity||0),0);
   document.getElementById('statProfit').innerText = fmt(profitAmt);
 
@@ -1711,6 +1970,7 @@ function renderParts(){
     const stockColor = isOut ? 'text-red-500' : isLow ? 'text-amber-400' : 'text-emerald-400';
     const daysOld = daysBetween(item.createdAt);
     const isDead = daysOld >= DEAD_STOCK_DAYS && (item.soldCount||0)===0 && item.quantity>0;
+    const salesCount = (db.sales||[]).filter(s=>s.partId===item.id && !s.returned).reduce((s,x)=>s+x.qty,0);
 
     return `
     <div class="glass glass-hover rounded-xl p-3 flex gap-3 relative ${isOut?'border-red-900/40 bg-red-950/5':''}">
@@ -1741,6 +2001,7 @@ function renderParts(){
             ${isOut?'<i class="fa-solid fa-ban mr-0.5"></i>YOXDUR':isLow?`<i class="fa-solid fa-triangle-exclamation mr-0.5"></i>${item.quantity} ədəd`:`<i class="fa-solid fa-check mr-0.5"></i>${item.quantity} ədəd`}
           </span>
           <div class="flex gap-1 flex-shrink-0">
+            <button onclick="openAIPrompt('${item.id}')" class="ai-btn text-white text-[10px] px-2 py-1 rounded-md font-bold flex items-center gap-0.5" title="AI Reklam"><i class="fa-solid fa-wand-magic-sparkles"></i> AI</button>
             <button onclick="promptSell('${item.id}')" ${item.quantity<=0?'disabled':''} class="bg-emerald-600 hover:bg-emerald-500 disabled:opacity-30 text-white text-[10px] px-2 py-1 rounded-md font-bold shadow shadow-emerald-600/20"><i class="fa-solid fa-cart-shopping"></i> Sat</button>
             <button onclick="openEditModal('${item.id}')" class="bg-slate-800 hover:bg-slate-700 text-white text-[10px] px-1.5 py-1 rounded-md border border-slate-700"><i class="fa-solid fa-pen"></i></button>
             <button onclick="deletePart('${item.id}')" class="text-slate-500 hover:text-red-400 p-1"><i class="fa-solid fa-trash text-[11px]"></i></button>
@@ -1779,7 +2040,7 @@ function openPartDetail(id){
     const ret=s.returned?'opacity-60 line-through':'';
     const daysAgo = daysBetween(s.date);
     const warranty = !s.returned && daysAgo <= 30 ? `<span class="text-[9px] text-emerald-400"><i class="fa-solid fa-shield-halved mr-0.5"></i>Zəmanət ${30-daysAgo}g</span>` : '';
-    return `<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2 flex justify-between items-start gap-2">
+    return `<div class="bg-slate-950/60 border ${s.returned?'border-red-900/40':''} rounded-lg p-2 flex justify-between items-start gap-2">
       <div class="min-w-0">
         <p class="text-[11px] font-bold text-white truncate ${ret}">${esc(s.customerName||'Qeyd yoxdur')}</p>
         <p class="text-[10px] text-slate-500 mt-0.5">${shortDate(s.date)} • ${s.qty} ədəd${s.returned?' • <span class="text-red-400">Qaytarılıb</span>':''}</p>
@@ -1810,8 +2071,8 @@ function openPartDetail(id){
       <div class="flex justify-between"><span class="text-slate-400">Ümumi gəlir:</span><span class="text-emerald-400 font-bold">${fmt(totalRevenue)}</span></div>
       ${part.source==='local'&&part.buyPrice?`<div class="flex justify-between"><span class="text-slate-400">Ümumi maya:</span><span class="text-red-400 font-bold">${fmt(totalCost)}</span></div>`:''}
       ${part.source==='local'&&part.buyPrice?`<div class="flex justify-between border-t border-slate-800 pt-1"><span class="text-slate-300 font-bold">Xalis qazanc:</span><span class="text-blue-400 font-bold">${fmt(totalProfit)}</span></div>`:''}
-      ${part.source==='vehicle'?`<p class="text-[10px] text-slate-500 italic">Avtomobil detalı — gəlir avtomobil mayasına yazılır.</p>`:''}
     </div>
+    <button onclick="closePartDetail();openAIPrompt('${part.id}')" class="ai-btn w-full text-white text-xs py-3 rounded-xl font-bold flex items-center justify-center gap-1.5"><i class="fa-solid fa-wand-magic-sparkles wave"></i>AI Reklam Mətni Yarat</button>
     <div class="border-t border-slate-800 pt-2">
       <p class="text-[10px] uppercase text-slate-500 font-bold tracking-wider mb-2">Satış Tarixçəsi (${sales.length})</p>
       <div class="space-y-1.5 max-h-[40vh] overflow-y-auto pr-1">${salesHtml}</div>
@@ -2255,7 +2516,7 @@ async function _doConfirmSale(){
 }
 
 /* ============================================
-   RETURN (with UNDO)
+   RETURN + UNDO
 ============================================ */
 function returnSale(saleId){
   activeReturnSaleId=saleId;
@@ -2292,7 +2553,6 @@ async function _doReturnSale(){
   }
 }
 
-// UNDO RETURN
 function undoSaleReturn(saleId){
   requireCode('Qaytarmanı ləğv et', ()=>_doUndoSaleReturn(saleId));
 }
@@ -2323,7 +2583,6 @@ async function _doUndoSaleReturn(saleId){
   }
 }
 
-// HARD DELETE (removes from customer history completely)
 function hardDeleteSale(saleId){
   requireCode('Satışı tamamilə sil', ()=>_doHardDeleteSale(saleId));
 }
@@ -2352,10 +2611,15 @@ async function _doHardDeleteSale(saleId){
 ============================================ */
 function showReceipt(sale){
   const receiptNo = sale.id.slice(-6).toUpperCase();
+  const settings = db.settings || {};
+  const storeName = settings.storeName || 'TeslaLand';
+  const storeLocation = settings.storeLocation || '';
+  const storePhone = settings.storePhone || '';
   document.getElementById('receiptBody').innerHTML = `
     <div class="text-center border-b-2 border-dashed border-gray-400 pb-3">
-      <div class="bg-black text-white inline-block px-3 py-1 rounded-lg font-black text-lg tracking-wider">TeslaLand</div>
-      <p class="text-[10px] text-gray-600 mt-1">Ehtiyat Hissəsi Mağazası</p>
+      <div class="bg-black text-white inline-block px-3 py-1 rounded-lg font-black text-lg tracking-wider">${esc(storeName)}</div>
+      ${storeLocation?`<p class="text-[10px] text-gray-600 mt-1">${esc(storeLocation)}</p>`:''}
+      ${storePhone?`<p class="text-[10px] text-gray-600">${esc(storePhone)}</p>`:''}
     </div>
     <div class="text-center text-[10px] text-gray-600 py-2 border-b border-dashed border-gray-400">
       <p>Çek №: <b>${receiptNo}</b></p>
@@ -2392,43 +2656,21 @@ function closeReceipt(){document.getElementById('receiptModal').classList.add('h
 
 function printReceipt(){
   const content = document.getElementById('receiptContent').innerHTML;
-  const css = `body{font-family:system-ui,sans-serif;color:#000;background:#fff;padding:20px;max-width:400px;margin:0 auto}*{box-sizing:border-box}.border-b-2{border-bottom:2px dashed #999;padding-bottom:12px}.border-b{border-bottom:1px dashed #999}.py-2{padding:8px 0}hr{margin:8px 0}.flex{display:flex}.justify-between{justify-content:space-between}.text-center{text-align:center}.text-\\[11px\\]{font-size:11px}.text-\\[10px\\]{font-size:10px}.font-black{font-weight:900}.font-bold{font-weight:700}.text-base{font-size:16px}.text-lg{font-size:18px}.text-red-600{color:#dc2626}.italic{font-style:italic}.text-gray-600{color:#666}.text-gray-700{color:#555}.mt-1{margin-top:4px}.mt-2{margin-top:8px}.inline-block{display:inline-block}.px-3{padding-left:12px;padding-right:12px}.py-1{padding-top:4px;padding-bottom:4px}.rounded-lg{border-radius:8px}.bg-black{background:#000}.text-white{color:#fff}.tracking-wider{letter-spacing:.05em}`;
+  const css = `body{font-family:system-ui,sans-serif;color:#000;background:#fff;padding:20px;max-width:400px;margin:0 auto}*{box-sizing:border-box}.border-b-2{border-bottom:2px dashed #999;padding-bottom:12px}.border-b{border-bottom:1px dashed #999}.py-2{padding:8px 0}.flex{display:flex}.justify-between{justify-content:space-between}.text-center{text-align:center}.text-\\[11px\\]{font-size:11px}.text-\\[10px\\]{font-size:10px}.font-black{font-weight:900}.font-bold{font-weight:700}.text-base{font-size:16px}.text-lg{font-size:18px}.text-red-600{color:#dc2626}.italic{font-style:italic}.text-gray-600{color:#666}.text-gray-700{color:#555}.mt-1{margin-top:4px}.inline-block{display:inline-block}.px-3{padding-left:12px;padding-right:12px}.py-1{padding-top:4px;padding-bottom:4px}.rounded-lg{border-radius:8px}.bg-black{background:#000}.text-white{color:#fff}.tracking-wider{letter-spacing:.05em}`;
   const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Çek</title><style>${css}</style></head><body>${content}</body></html>`;
-
-  // Try iframe approach first (works in iOS PWA)
   const iframe = document.createElement('iframe');
-  iframe.style.position = 'fixed';
-  iframe.style.right = '0';
-  iframe.style.bottom = '0';
-  iframe.style.width = '0';
-  iframe.style.height = '0';
-  iframe.style.border = '0';
+  iframe.style.position = 'fixed'; iframe.style.right='0'; iframe.style.bottom='0'; iframe.style.width='0'; iframe.style.height='0'; iframe.style.border='0';
   document.body.appendChild(iframe);
   try{
     const doc = iframe.contentWindow.document;
-    doc.open();
-    doc.write(html);
-    doc.close();
+    doc.open(); doc.write(html); doc.close();
     setTimeout(()=>{
-      try{
-        iframe.contentWindow.focus();
-        iframe.contentWindow.print();
-      } catch(e){
-        // fallback: open in new tab
-        const blob = new Blob([html], {type:'text/html'});
-        const url = URL.createObjectURL(blob);
-        const w = window.open(url, '_blank');
-        if(!w) showToast('Çap üçün popup icazəsi lazımdır', true);
-        setTimeout(()=>URL.revokeObjectURL(url), 5000);
-      }
-      setTimeout(()=>document.body.removeChild(iframe), 1500);
-    }, 300);
+      try{ iframe.contentWindow.focus(); iframe.contentWindow.print(); }
+      catch(e){ const blob = new Blob([html],{type:'text/html'}); const url = URL.createObjectURL(blob); window.open(url,'_blank'); setTimeout(()=>URL.revokeObjectURL(url),5000); }
+      setTimeout(()=>document.body.removeChild(iframe),1500);
+    },300);
   } catch(e){
-    const blob = new Blob([html], {type:'text/html'});
-    const url = URL.createObjectURL(blob);
-    const w = window.open(url, '_blank');
-    if(!w) showToast('Çap üçün popup icazəsi lazımdır', true);
-    setTimeout(()=>URL.revokeObjectURL(url), 5000);
+    const blob = new Blob([html],{type:'text/html'}); const url = URL.createObjectURL(blob); window.open(url,'_blank'); setTimeout(()=>URL.revokeObjectURL(url),5000);
     document.body.removeChild(iframe);
   }
 }
@@ -2454,11 +2696,8 @@ function shareText(){
   if(!activeReceiptSale) return;
   const s=activeReceiptSale;
   const text = `TeslaLand Çek\nMüştəri: ${s.customerName||'—'}\nDetal: ${s.code||'—'} (${s.car})\nYekun: ₼${fmtN(s.sellPrice*s.qty-(s.discount||0))}`;
-  if(navigator.share){
-    navigator.share({title:'TeslaLand Çek', text}).catch(()=>{});
-  } else {
-    navigator.clipboard.writeText(text).then(()=>showToast('Kopyalandı ✓'));
-  }
+  if(navigator.share){navigator.share({title:'TeslaLand Çek', text}).catch(()=>{});}
+  else {navigator.clipboard.writeText(text).then(()=>showToast('Kopyalandı ✓'));}
 }
 
 function printPartLabel(partId){
@@ -2472,7 +2711,6 @@ function printPartLabel(partId){
     .meta{font-size:11px;color:#555;margin-bottom:4px}
     .price{font-size:22px;font-weight:900;text-align:right;color:#dc2626;margin-top:6px}
     .barcode{font-family:'Courier New',monospace;letter-spacing:4px;font-size:11px;text-align:center;margin-top:6px;padding-top:6px;border-top:1px dashed #999}
-    @media print{.no-print{display:none}}
     .no-print{text-align:center;margin:10px}
     .no-print button{padding:8px 16px;background:#dc2626;color:#fff;border:0;border-radius:6px;font-weight:700;cursor:pointer}
   </style></head><body>
@@ -2486,7 +2724,7 @@ function printPartLabel(partId){
     </div>
     <div class="no-print"><button onclick="window.print()">Çap et</button></div>
   </body></html>`;
-  const blob = new Blob([html], {type:'text/html'});
+  const blob = new Blob([html],{type:'text/html'});
   const url = URL.createObjectURL(blob);
   const w = window.open(url, '_blank');
   if(!w) showToast('Popup icazəsi lazımdır', true);
@@ -2523,7 +2761,6 @@ function renderDashboard(){
   const totalPartsCount = (db.parts||[]).reduce((s,p)=>s+(p.quantity||0),0);
   document.getElementById('dashStockValueSub').innerText = `${totalPartsCount} ədəd`;
 
-  // Car business
   document.getElementById('dashCarInvested').innerText = fmt(fin.carInvested);
   document.getElementById('dashCarRecovered').innerText = fmt(fin.carRecovered);
   document.getElementById('dashCarStock').innerText = fmt(fin.carStockValue);
@@ -2531,14 +2768,12 @@ function renderDashboard(){
   document.getElementById('dashCarNet').className = `font-mono font-black text-sm ${fin.carRealizedNet>=0?'text-emerald-400':'text-red-400'}`;
   document.getElementById('dashCarStatus').innerText = fin.carInvested===0 ? 'Hələ avtomobil yoxdur' : `Potensial (stokla): ${fin.carNet>=0?'+':''}${fmt(fin.carNet)}`;
 
-  // Local business
   document.getElementById('dashLocalCost').innerText = fmt(fin.localCost);
   document.getElementById('dashLocalRevenue').innerText = fmt(fin.localRevenue);
   document.getElementById('dashLocalStock').innerText = fmt(fin.localStockValue);
   document.getElementById('dashLocalNet').innerText = (fin.localNet>=0?'+':'') + fmt(fin.localNet);
   document.getElementById('dashLocalNet').className = `font-mono font-black text-sm ${fin.localNet>=0?'text-emerald-400':'text-red-400'}`;
 
-  // Target
   const target = (db.settings && db.settings.target) || 0;
   document.getElementById('targetCurrent').innerText = fmt(monthRevenue);
   document.getElementById('targetGoal').innerText = fmt(target);
@@ -2557,7 +2792,6 @@ function renderDashboard(){
   renderChartVehicleROI();
   renderLowStock();
   renderDashActivity();
-  renderRecentSales();
 }
 
 function renderChartSales30(){
@@ -2615,10 +2849,7 @@ function renderChartVehicleROI(){
     chartVehicleROI=new Chart(ctx,{type:'bar',data:{labels:['Avtomobil yoxdur'],datasets:[{data:[0],backgroundColor:'#334155'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#64748b',font:{size:9}}},y:{ticks:{color:'#64748b',font:{size:9}}}}}});
     return;
   }
-  const labels=vehicles.map(v=>{
-    const lbl=vehicleLabel(v);
-    return lbl.length>22 ? lbl.slice(0,20)+'…' : lbl;
-  });
+  const labels=vehicles.map(v=>{const lbl=vehicleLabel(v); return lbl.length>22 ? lbl.slice(0,20)+'…' : lbl;});
   const invested=vehicles.map(v=>vehicleTotalCost(v));
   const recovered=vehicles.map(v=>vehicleRecovered(v.id));
   const stockVal=vehicles.map(v=>vehicleStockValue(v.id));
@@ -2677,24 +2908,6 @@ function renderDashActivity(){
   `).join('');
 }
 
-function renderRecentSales(){
-  const container=document.getElementById('dashRecentSales');
-  const sales=(db.sales||[]).filter(s=>!s.returned).slice(0,8);
-  if(sales.length===0){container.innerHTML=`<p class="text-slate-500 text-xs py-4">Hələ satış yoxdur</p>`;return}
-  container.innerHTML=sales.map(s=>{
-    const isLocal=s.source==='local';
-    return `<div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3 w-48 flex-shrink-0">
-      <div class="flex justify-between items-start">
-        <span class="text-[9px] font-bold ${isLocal?'text-blue-400':'text-emerald-400'} uppercase">${isLocal?'Yerli':'Avto'}</span>
-        <span class="text-[9px] text-slate-500">${shortDate(s.date)}</span>
-      </div>
-      <p class="text-xs font-bold text-white mt-1 truncate">${esc(s.code||'—')}</p>
-      <p class="text-[10px] text-slate-500 truncate">${esc(s.customerName||'—')}</p>
-      <p class="text-sm font-black text-emerald-400 mt-1">+${fmt(s.sellPrice*s.qty-(s.discount||0))}</p>
-    </div>`;
-  }).join('');
-}
-
 /* ============================================
    FINANCE TAB
 ============================================ */
@@ -2714,7 +2927,6 @@ function renderAnalyticsMonths(){
 function renderFinance(){
   const selectedMonth=document.getElementById('analyticsMonthSelect').value || new Date().toISOString().slice(0,7);
   const monthlySales=(db.sales||[]).filter(s=>s.date && s.date.startsWith(selectedMonth) && !s.returned);
-  const monthlyExpenses=(db.expenses||[]).filter(e=>e.date && e.date.startsWith(selectedMonth));
 
   const localSales=monthlySales.filter(s=>s.source==='local');
   const vehSales=monthlySales.filter(s=>s.source==='vehicle');
@@ -2832,7 +3044,7 @@ function renderDeadStock(){
 }
 
 /* ============================================
-   CUSTOMERS TAB
+   CUSTOMERS TAB - FIXED
 ============================================ */
 function renderCustomersTab(){
   const container=document.getElementById('customersGrid');
@@ -2844,28 +3056,40 @@ function renderCustomersTab(){
   const allStats = getAllCustomers().map(c=>({...c, stats:getCustomerStats(c.name)})).filter(c=>c.stats);
   const totalCredit = allStats.reduce((s,c)=>s+(c.stats.credit||0),0);
   const vipCount = allStats.filter(c=>c.stats.total>=2000).length;
-  const activeCount = allStats.filter(c=>c.stats.count>0).length;
+  const returnsTotal = allStats.reduce((s,c)=>s+(c.stats.returnedCount||0),0);
 
-  document.getElementById('custCount').innerText = allStats.length;
+  document.getElementById('custCount').innerText = allStats.filter(c=>c.stats.count>0 || c.stats.returnedCount>0).length;
   document.getElementById('custVipCount').innerText = vipCount;
   document.getElementById('custCredit').innerText = fmt(totalCredit);
-  document.getElementById('custActiveCount').innerText = activeCount;
+  document.getElementById('custReturns').innerText = returnsTotal;
 
   if(customers.length===0){
     container.innerHTML=`<div class="col-span-full text-center py-12 text-slate-500 text-sm"><i class="fa-solid fa-users text-3xl opacity-30 mb-3 block"></i>Hələ müştəri yoxdur.</div>`;
     return;
   }
 
+  // FIX: Include customers with only returned sales
   const enriched=customers.map(c=>{
     const stats=getCustomerStats(c.name);
     const tier=getCustomerTier(c.name);
     return {...c, stats, tier};
-  }).filter(c=>c.stats && c.stats.count>0).sort((a,b)=>b.stats.total-a.stats.total);
+  }).filter(c=>c.stats && (c.stats.count>0 || c.stats.returnedCount>0))
+    .sort((a,b)=>{
+      // Sort by total desc, but returned-only customers go below
+      if(a.stats.total !== b.stats.total) return b.stats.total - a.stats.total;
+      return b.stats.returnedCount - a.stats.returnedCount;
+    });
+
+  if(enriched.length===0){
+    container.innerHTML=`<div class="col-span-full text-center py-12 text-slate-500 text-sm"><i class="fa-solid fa-users text-3xl opacity-30 mb-3 block"></i>Uyğun müştəri tapılmadı.</div>`;
+    return;
+  }
 
   container.innerHTML=enriched.map(c=>{
     const dateStr=c.stats.lastDate?shortDate(c.stats.lastDate):'';
+    const isReturnOnly = c.stats.count === 0 && c.stats.returnedCount > 0;
     return `
-      <div class="glass glass-hover rounded-xl p-3.5 border border-slate-800 transition-all cursor-pointer" onclick="openCustomerDetail('${esc(c.name).replace(/'/g,"&#39;")}')">
+      <div class="glass glass-hover rounded-xl p-3.5 border ${isReturnOnly?'border-red-900/40':'border-slate-800'} transition-all cursor-pointer" onclick="openCustomerDetail('${esc(c.name).replace(/'/g,"&#39;")}')">
         <div class="flex justify-between items-start gap-2">
           <div class="flex items-center gap-2 min-w-0 flex-1">
             <div class="w-10 h-10 rounded-full ${c.tier.cls} flex items-center justify-center flex-shrink-0 font-bold">${esc(c.name.charAt(0).toUpperCase())}</div>
@@ -2895,8 +3119,9 @@ function openCustomerDetail(name){
   if(!stats) return;
   const customer=getAllCustomers().find(c=>c.name.toLowerCase()===name.toLowerCase());
   const tier=getCustomerTier(name);
-  // ALL SALES (including returned) — show the complete picture
-  const sales=(db.sales||[]).filter(s=>s.customerName && s.customerName.toLowerCase()===name.toLowerCase());
+  // ALL sales including returned — sorted newest first
+  const sales=(db.sales||[]).filter(s=>s.customerName && s.customerName.toLowerCase()===name.toLowerCase())
+    .sort((a,b)=>new Date(b.date)-new Date(a.date));
 
   document.getElementById('customerDetailTitle').innerHTML=`<i class="fa-solid fa-user text-blue-500 flex-shrink-0"></i><span class="truncate">${esc(name)}</span>`;
 
@@ -2905,11 +3130,14 @@ function openCustomerDetail(name){
     const isLocal=s.source==='local';
     const total=s.sellPrice*s.qty-(s.discount||0);
     const ret=s.returned?'line-through opacity-50':'';
-    return `<div class="bg-slate-950/60 border ${s.returned?'border-red-900/40':''} rounded-lg p-2.5 flex justify-between items-start gap-2">
-      <div class="min-w-0">
+    return `<div class="bg-slate-950/60 border ${s.returned?'border-red-900/50 bg-red-950/10':''} rounded-lg p-2.5 flex justify-between items-start gap-2">
+      <div class="min-w-0 flex-1">
         <p class="font-bold text-white text-xs ${ret} truncate">${esc(s.code||'—')} <span class="text-slate-500 font-normal">(${esc(s.car)})</span></p>
         <p class="text-[10px] text-slate-500 mt-0.5">${ds} • ${s.qty} ədəd • <span class="${isLocal?'text-blue-400':'text-emerald-400'}">${isLocal?'Yerli':'Avto'}</span></p>
-        ${s.returned?`<p class="text-[10px] text-red-400 font-semibold mt-0.5"><i class="fa-solid fa-rotate-left mr-1"></i>Qaytarıb${s.returnReason?' • '+esc(s.returnReason):''}</p>`:''}
+        ${s.returned?`<div class="mt-1 bg-red-950/40 border border-red-900/40 rounded-md p-1.5">
+          <p class="text-[10px] text-red-400 font-bold"><i class="fa-solid fa-rotate-left mr-1"></i>QAYTARIB${s.returnReason?' • '+esc(s.returnReason):''}</p>
+          ${s.returnNote?`<p class="text-[9px] text-slate-400 italic mt-0.5">"${esc(s.returnNote)}"</p>`:''}
+        </div>`:''}
         ${s.paymentStatus!=='paid' && !s.returned?`<p class="text-[10px] text-amber-400 mt-0.5"><i class="fa-solid fa-hand-holding-dollar mr-1"></i>Borc: ${fmt(s.dueAmount||0)}</p>`:''}
       </div>
       <p class="text-xs font-bold ${s.returned?'text-slate-500 line-through':'text-emerald-400'} flex-shrink-0">${fmt(total)}</p>
@@ -2927,6 +3155,7 @@ function openCustomerDetail(name){
     ${customer && customer.phone ? `<div class="bg-blue-950/30 border border-blue-900/40 rounded-lg p-2.5 flex justify-between items-center">
       <a href="tel:${esc(customer.phone)}" class="text-blue-200 font-mono text-sm flex-1"><i class="fa-solid fa-phone mr-1.5"></i>${esc(customer.phone)}</a>
       <a href="tel:${esc(customer.phone)}" class="bg-blue-600 hover:bg-blue-500 text-white text-[10px] px-3 py-1.5 rounded-lg font-bold"><i class="fa-solid fa-phone mr-1"></i>Zəng</a>
+      <a href="https://wa.me/${(customer.phone||'').replace(/[^0-9]/g,'')}" target="_blank" class="bg-green-600 hover:bg-green-500 text-white text-[10px] px-3 py-1.5 rounded-lg font-bold ml-1"><i class="fa-brands fa-whatsapp"></i></a>
     </div>`:''}
     <div class="grid grid-cols-4 gap-1.5 text-center">
       <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800"><p class="text-[9px] text-slate-500 uppercase">Alış</p><p class="text-sm font-bold text-white">${stats.count}</p></div>
@@ -2960,12 +3189,11 @@ function renderSalesHistory(){
   const returnsCount=allSales.filter(s=>s.returned).length;
   const creditsTotal=allSales.filter(s=>!s.returned && (s.paymentStatus==='credit'||s.paymentStatus==='partial'))
     .reduce((sum,s)=>sum + Math.max(0, (s.sellPrice*s.qty-(s.discount||0)) - (s.paidAmount||0)), 0);
-  const periodCount = allSales.length;
 
   document.getElementById('histSalesCount').innerText=allSales.filter(s=>!s.returned).length;
   document.getElementById('histReturnsCount').innerText=returnsCount;
   document.getElementById('histCreditCount').innerText=fmtN(creditsTotal);
-  document.getElementById('histPeriodCount').innerText=periodCount;
+  document.getElementById('histPeriodCount').innerText=allSales.length;
 
   if(sales.length===0){
     container.innerHTML=`<div class="col-span-full text-center py-10 text-slate-500 text-xs">${allSales.length===0?'Hələ satış yoxdur.':'Uyğun nəticə yoxdur.'}</div>`;
@@ -2980,7 +3208,6 @@ function renderSalesHistory(){
     const total=s.sellPrice*s.qty-(s.discount||0);
     const payLabel=s.paymentStatus==='paid'?'✓ Tam':s.paymentStatus==='partial'?'◐ Qismən':'⚠ Borclu';
     const payColor=s.paymentStatus==='paid'?'text-emerald-400':s.paymentStatus==='partial'?'text-amber-400':'text-red-400';
-    const daysAgo=daysBetween(s.date);
 
     return `
     <div class="glass p-3 rounded-xl text-xs ${returnedStyle}">
@@ -2998,7 +3225,7 @@ function renderSalesHistory(){
         <div class="text-right flex-shrink-0 flex flex-col items-end gap-1">
           <p class="font-black ${s.returned?'text-slate-500 line-through':'text-emerald-400'}">+${fmt(total)}</p>
           ${!s.returned && isLocal && s.profit?`<p class="text-[10px] text-blue-400 font-semibold">Qazanc: +${fmt(s.profit)}</p>`:''}
-          ${!s.returned && !isLocal ? `<p class="text-[10px] text-blue-300 font-semibold"><i class="fa-solid fa-car-side text-[8px] mr-0.5"></i>Avto satışı</p>`:''}
+          ${!s.returned && !isLocal ? `<p class="text-[10px] text-blue-300 font-semibold"><i class="fa-solid fa-car-side text-[8px] mr-0.5"></i>Avto</p>`:''}
           <div class="flex gap-1">
             ${!s.returned?`<button onclick="event.stopPropagation();showReceiptById('${s.id}')" class="bg-blue-900/60 hover:bg-blue-800 text-blue-200 text-[10px] px-1.5 py-0.5 rounded-md border border-blue-800/60" title="Çek"><i class="fa-solid fa-receipt"></i></button>`:''}
             ${!s.returned?`<button onclick="returnSale('${s.id}')" class="bg-red-900/60 hover:bg-red-800 text-red-200 text-[10px] px-1.5 py-0.5 rounded-md border border-red-800/60" title="Qaytar"><i class="fa-solid fa-rotate-left"></i></button>`:''}
@@ -3185,7 +3412,14 @@ async function saveTarget(){
 ============================================ */
 function openConfigModal(bypass){
   if(bypass){document.getElementById('configModal').classList.remove('hidden');return}
-  requireCode('Ayarları aç', ()=>{document.getElementById('configModal').classList.remove('hidden')});
+  requireCode('Ayarları aç', ()=>{
+    document.getElementById('storeNameInput').value = (db.settings&&db.settings.storeName)||'';
+    document.getElementById('storeLocationInput').value = (db.settings&&db.settings.storeLocation)||'';
+    document.getElementById('storePhoneInput').value = (db.settings&&db.settings.storePhone)||'';
+    document.getElementById('storeWhatsappInput').value = (db.settings&&db.settings.storeWhatsapp)||'';
+    document.getElementById('aiChatUrlInput').value = (db.settings&&db.settings.aiChatUrl)||'';
+    document.getElementById('configModal').classList.remove('hidden');
+  });
 }
 function closeConfigModal(){if(!getMasterKey()||!getBinId()) return; document.getElementById('configModal').classList.add('hidden')}
 function saveConfig(){
@@ -3196,6 +3430,13 @@ function saveConfig(){
   errEl.classList.add('hidden');
   localStorage.setItem('TL_MASTER_KEY',key);
   localStorage.setItem('TL_BIN_ID',bin);
+  // Save settings
+  if(!db.settings) db.settings={};
+  db.settings.storeName = document.getElementById('storeNameInput').value.trim() || 'TeslaLand';
+  db.settings.storeLocation = document.getElementById('storeLocationInput').value.trim();
+  db.settings.storePhone = document.getElementById('storePhoneInput').value.trim();
+  db.settings.storeWhatsapp = document.getElementById('storeWhatsappInput').value.trim();
+  db.settings.aiChatUrl = document.getElementById('aiChatUrlInput').value.trim();
   document.getElementById('configCloseBtn').classList.remove('hidden');
   closeConfigModal();
   loadData();
@@ -3225,7 +3466,7 @@ function restoreData(event){
         parts: data.parts||[], sales:data.sales||[], vehicles:data.vehicles||[],
         expenses:data.expenses||[], customCategories:data.customCategories||[],
         customers:data.customers||[], activityLog:data.activityLog||[],
-        settings:data.settings||{theme:'dark',target:0,secretCode:'0990'}
+        settings:data.settings||{theme:'dark',target:0,secretCode:'0990',storeName:'TeslaLand',aiChatUrl:''}
       };
       logActivity('Backup bərpa', file.name);
       applyTheme();
@@ -3240,7 +3481,7 @@ async function clearAllData(){
   requireCode('Bütün məlumatları sil', async ()=>{
     if(!confirm('BÜTÜN məlumatlar silinəcək! Əminsiniz?')) return;
     if(!confirm('Son xəbərdarlıq: Bu geri qaytarıla bilməz!')) return;
-    db={parts:[],sales:[],vehicles:[],expenses:[],customCategories:[],customers:[],activityLog:[],settings:{theme:'dark',target:0,secretCode:getSecretCode()}};
+    db={parts:[],sales:[],vehicles:[],expenses:[],customCategories:[],customers:[],activityLog:[],settings:{theme:'dark',target:0,secretCode:getSecretCode(),storeName:'TeslaLand',aiChatUrl:''}};
     await syncData('Bütün məlumatlar silindi');
   });
 }
@@ -3340,59 +3581,30 @@ function handleCmdKey(e){
 }
 
 /* ============================================
-   SCANNER (simple, no external lib)
-============================================ */
-let scannerStream = null;
-function openScanner(){document.getElementById('scannerModal').classList.remove('hidden')}
-function closeScanner(){
-  document.getElementById('scannerModal').classList.add('hidden');
-  if(scannerStream){scannerStream.getTracks().forEach(t=>t.stop());scannerStream=null;}
-  document.getElementById('scannerStatus').innerText='';
-}
-async function startScanner(){
-  try{
-    const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
-    scannerStream=stream;
-    document.getElementById('scannerStatus').innerHTML='<span class="text-emerald-400">Kamera açıldı ✓</span><br>Barkod oxuma hazırdır (native dəstək tələb olunur)';
-    showToast('Barkod oxuma brauzer dəstəyindən asılıdır', false);
-  }catch(e){
-    document.getElementById('scannerStatus').innerHTML='<span class="text-red-400">Kamera icazəsi verilmədi</span>';
-  }
-}
-
-/* ============================================
    KEYBOARD SHORTCUTS
 ============================================ */
 function initKeyboardShortcuts(){
   document.addEventListener('keydown',(e)=>{
-    // Ctrl+K command palette
+    // Skip code modal
+    if(!document.getElementById('codeModal').classList.contains('hidden')) return;
     if((e.ctrlKey||e.metaKey) && e.key==='k'){
       e.preventDefault();
       openCommandPalette();
       return;
     }
-    // Skip if inside inputs
     if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.tagName==='SELECT') return;
     if(e.key==='/'){e.preventDefault();switchTab('inventory');setTimeout(()=>document.getElementById('searchInput').focus(),100);}
     else if(e.key==='n'||e.key==='N'){e.preventDefault();openAddModal();}
     else if(e.key==='Escape'){
       document.querySelectorAll('.fixed.inset-0:not(.hidden)').forEach(el=>{
         if(el.id==='lightbox') closeLightbox();
+        else if(el.id==='codeModal'){/* don't close code modal via escape? actually close */ closeCodeModal();}
         else el.classList.add('hidden');
       });
       closeCommandPalette();
     }
   });
 }
-
-/* ============================================
-   AUTO-SAVE ON VISIBILITY CHANGE
-============================================ */
-document.addEventListener('visibilitychange',()=>{
-  if(document.visibilityState==='hidden' && getMasterKey() && getBinId() && db.parts.length>=0){
-    // Save on background (best effort)
-  }
-});
 </script>
 </body>
 </html>
