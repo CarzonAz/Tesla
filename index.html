@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>TeslaLand Pro — Ehtiyat Hissəsi & Analitika</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { background-color: #0b0f19; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+    .glass { background: rgba(17, 24, 39, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="pb-24">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 glass px-4 py-3 flex justify-between items-center border-b border-slate-800">
+    <div class="flex items-center gap-2.5">
+      <div class="bg-red-600 text-white font-black px-3 py-1 rounded-xl text-lg tracking-wider shadow-lg shadow-red-600/30">TL</div>
+      <div>
+        <h1 class="font-black text-base leading-tight tracking-wide text-white">TeslaLand <span class="text-xs font-semibold px-1.5 py-0.5 bg-red-950 text-red-400 border border-red-800/50 rounded-md">PRO</span></h1>
+        <p class="text-[10px] text-slate-400">Anbar & Aylıq Satış Analitikası</p>
+      </div>
+    </div>
+    <div class="flex gap-1">
+      <button onclick="exportCSV()" class="text-slate-400 hover:text-white p-2 text-sm" title="CSV Export"><i class="fa-solid fa-file-csv text-lg"></i></button>
+      <button onclick="openConfigModal()" class="text-slate-400 hover:text-white p-2 text-sm" title="Ayarlar"><i class="fa-solid fa-gear text-lg"></i></button>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="p-3 max-w-xl mx-auto flex gap-2">
+    <button onclick="switchTab('inventory')" id="tab-inventory" class="flex-1 py-2.5 rounded-xl text-xs font-bold transition-all bg-red-600 text-white shadow-lg shadow-red-600/20">
+      <i class="fa-solid fa-boxes-stacked mr-1"></i> Anbar Stoku
+    </button>
+    <button onclick="switchTab('analytics')" id="tab-analytics" class="flex-1 py-2.5 rounded-xl text-xs font-bold transition-all bg-slate-800/80 text-slate-400 hover:text-white">
+      <i class="fa-solid fa-chart-line mr-1"></i> Analitika & Trend
+    </button>
+    <button onclick="switchTab('history')" id="tab-history" class="flex-1 py-2.5 rounded-xl text-xs font-bold transition-all bg-slate-800/80 text-slate-400 hover:text-white">
+      <i class="fa-solid fa-receipt mr-1"></i> Satış Tarixi
+    </button>
+  </nav>
+
+  <main class="px-4 max-w-xl mx-auto space-y-4">
+    
+    <!-- ==================== TAB 1: ANBAR STOKU ==================== -->
+    <section id="section-inventory" class="space-y-3">
+      <!-- Search & Filters -->
+      <div class="space-y-2">
+        <div class="relative">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+          <input type="text" id="searchInput" oninput="renderParts()" placeholder="Kod, Marka, Model, Mühərrik, Açıqlama..." 
+            class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-red-500 text-white placeholder-slate-500 shadow-inner">
+        </div>
+        
+        <div class="flex gap-1.5 overflow-x-auto pb-1 text-xs no-scrollbar">
+          <button onclick="setCategoryFilter('ALL')" class="cat-btn bg-red-600 text-white px-3 py-1.5 rounded-lg whitespace-nowrap font-medium">Hamısı</button>
+          <button onclick="setCategoryFilter('Mühərrik')" class="cat-btn bg-slate-800/80 text-slate-300 px-3 py-1.5 rounded-lg whitespace-nowrap font-medium">Mühərrik</button>
+          <button onclick="setCategoryFilter('Asqı & Şassi')" class="cat-btn bg-slate-800/80 text-slate-300 px-3 py-1.5 rounded-lg whitespace-nowrap font-medium">Asqı & Şassi</button>
+          <button onclick="setCategoryFilter('Ban & Eksteryer')" class="cat-btn bg-slate-800/80 text-slate-300 px-3 py-1.5 rounded-lg whitespace-nowrap font-medium">Ban & Eksteryer</button>
+          <button onclick="setCategoryFilter('Elektrik & Elektronika')" class="cat-btn bg-slate-800/80 text-slate-300 px-3 py-1.5 rounded-lg whitespace-nowrap font-medium">Elektrik</button>
+          <button onclick="setCategoryFilter('Salun & İnteryer')" class="cat-btn bg-slate-800/80 text-slate-300 px-3 py-1.5 rounded-lg whitespace-nowrap font-medium">Salun</button>
+          <button onclick="setCategoryFilter('Digər')" class="cat-btn bg-slate-800/80 text-slate-300 px-3 py-1.5 rounded-lg whitespace-nowrap font-medium">Digər</button>
+        </div>
+      </div>
+
+      <!-- Inventory Metrics Bar -->
+      <div class="grid grid-cols-3 gap-2">
+        <div class="glass rounded-xl p-2.5 text-center">
+          <p class="text-[10px] text-slate-400">Çeşid Sayı</p>
+          <p id="statTotalItems" class="text-sm font-bold text-white">0</p>
+        </div>
+        <div class="glass rounded-xl p-2.5 text-center">
+          <p class="text-[10px] text-slate-400">Ümumi Stok</p>
+          <p id="statTotalQty" class="text-sm font-bold text-emerald-400">0 ədəd</p>
+        </div>
+        <div class="glass rounded-xl p-2.5 text-center">
+          <p class="text-[10px] text-slate-400">Stok Dəyəri</p>
+          <p id="statTotalValue" class="text-sm font-bold text-amber-400">$0</p>
+        </div>
+      </div>
+
+      <!-- Parts List -->
+      <div id="partsList" class="space-y-3">
+        <div class="text-center py-12 text-slate-500 text-sm"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Yüklənir...</div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 2: ANALİTİKA & REPORT ==================== -->
+    <section id="section-analytics" class="space-y-4 hidden">
+      <!-- Period selector -->
+      <div class="glass rounded-xl p-3 flex justify-between items-center">
+        <span class="text-xs font-semibold text-slate-300"><i class="fa-solid fa-calendar-days text-red-500 mr-1.5"></i>Analiz Dövri:</span>
+        <select id="analyticsMonthSelect" onchange="renderAnalytics()" class="bg-slate-800 border border-slate-700 text-xs text-white rounded-lg p-1.5 focus:outline-none">
+          <!-- Populated dynamically -->
+        </select>
+      </div>
+
+      <!-- Financial Overview Cards -->
+      <div class="grid grid-cols-2 gap-3">
+        <div class="glass rounded-xl p-3.5 border-l-4 border-l-emerald-500">
+          <p class="text-xs text-slate-400 mb-1">Aylıq Ümumi Satış</p>
+          <p id="analyticsRevenue" class="text-lg font-black text-emerald-400">$0</p>
+          <p id="analyticsUnitsSold" class="text-[10px] text-slate-500 mt-0.5">0 ədəd detal satılıb</p>
+        </div>
+        <div class="glass rounded-xl p-3.5 border-l-4 border-l-blue-500">
+          <p class="text-xs text-slate-400 mb-1">Xalis Mənfəət (Kassaya)</p>
+          <p id="analyticsProfit" class="text-lg font-black text-blue-400">$0</p>
+          <p id="analyticsMargin" class="text-[10px] text-slate-500 mt-0.5">Marja: 0%</p>
+        </div>
+      </div>
+
+      <!-- Top Selling Parts -->
+      <div class="glass rounded-xl p-4 space-y-3">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+          <h3 class="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
+            <i class="fa-solid fa-fire text-amber-500"></i> Ən Çox Satılan Detallar (Top 5)
+          </h3>
+        </div>
+        <div id="topSoldList" class="space-y-2 text-xs">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- Slowest Moving / Non-selling Parts (Yatan Stok) -->
+      <div class="glass rounded-xl p-4 space-y-3">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+          <h3 class="text-xs font-bold text-red-400 uppercase tracking-wider flex items-center gap-1.5">
+            <i class="fa-solid fa-snowflake text-cyan-400"></i> Ən Az Satılan / Yatan Stok
+          </h3>
+          <span class="text-[10px] text-slate-500">0 satışlı hissələr</span>
+        </div>
+        <div id="leastSoldList" class="space-y-2 text-xs">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 3: SATIŞ TARİXÇƏSİ ==================== -->
+    <section id="section-history" class="space-y-3 hidden">
+      <div class="flex justify-between items-center px-1">
+        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Son Satış Əməliyyatları</h3>
+        <span id="salesCountBadge" class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full">0 əməliyyat</span>
+      </div>
+      <div id="salesHistoryList" class="space-y-2">
+        <!-- Populated dynamically -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Floating Add Button -->
+  <button onclick="openAddModal()" class="fixed bottom-6 right-6 bg-gradient-to-r from-red-600 to-red-700 text-white w-14 h-14 rounded-full shadow-xl shadow-red-600/40 flex items-center justify-center text-xl hover:scale-105 active:scale-95 transition-all z-30">
+    <i class="fa-solid fa-plus"></i>
+  </button>
+
+  <!-- Add/Edit Part Modal -->
+  <div id="partModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+        <h3 class="font-bold text-base text-white flex items-center gap-2">
+          <i class="fa-solid fa-box-open text-red-500"></i> Yeni Ehtiyat Hissəsi Daxil Et
+        </h3>
+        <button onclick="closePartModal()" class="text-slate-400 text-lg"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      
+      <form id="partForm" onsubmit="savePart(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block text-slate-400 mb-1">Fotoşəkil Çək / Yüklə</label>
+          <input type="file" id="partImage" accept="image/*" capture="environment" onchange="previewImage(event)" class="w-full bg-slate-800 text-slate-300 rounded-xl p-2">
+          <img id="imgPreview" class="mt-2 w-full h-36 object-cover rounded-xl hidden border border-slate-700 shadow-md">
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-slate-400 mb-1">Detal Kodu *</label>
+            <input type="text" id="partCode" required placeholder="məs: 51117424683" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white font-mono uppercase">
+          </div>
+          <div>
+            <label class="block text-slate-400 mb-1">Kateqoriya *</label>
+            <select id="partCategory" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+              <option value="Mühərrik">Mühərrik</option>
+              <option value="Asqı & Şassi">Asqı & Şassi</option>
+              <option value="Ban & Eksteryer">Ban & Eksteryer</option>
+              <option value="Elektrik & Elektronika">Elektrik & Elektronika</option>
+              <option value="Salun & İnteryer">Salun & İnteryer</option>
+              <option value="Digər">Digər</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-slate-400 mb-1">Marka & Model *</label>
+            <input type="text" id="partCar" required placeholder="məs: BMW G20 / Tesla Model 3" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+          </div>
+          <div>
+            <label class="block text-slate-400 mb-1">Mühərrik</label>
+            <input type="text" id="partEngine" placeholder="məs: 2.0 B48 / Dual Motor" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-slate-400 mb-1">Yürüş (Opsiyonel)</label>
+            <input type="text" id="partMileage" placeholder="məs: 45,000 mi" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+          </div>
+          <div>
+            <label class="block text-slate-400 mb-1">Stok Sayı *</label>
+            <input type="number" id="partQuantity" value="1" min="1" required class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 bg-slate-950/60 p-2.5 rounded-xl border border-slate-800">
+          <div>
+            <label class="block text-slate-400 mb-1">Maya / Alış ($)</label>
+            <input type="number" id="partBuyPrice" placeholder="0" step="0.01" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white font-semibold">
+          </div>
+          <div>
+            <label class="block text-slate-400 mb-1">Təxmini Satış ($)</label>
+            <input type="number" id="partSellPrice" placeholder="0" step="0.01" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-emerald-400 font-semibold">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-slate-400 mb-1">Açıqlama / Yerləşdiyi Yer</label>
+          <textarea id="partDescription" rows="2" placeholder="məs: Qabaq sağ bufer tutacağı, ideal vəziyyətdə, Şelf A-3" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></textarea>
+        </div>
+
+        <button type="submit" id="saveBtn" class="w-full bg-red-600 hover:bg-red-700 font-bold py-3 rounded-xl text-white transition-all text-sm shadow-lg shadow-red-600/30">
+          Stoka Əlavə Et
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Sell Action Modal -->
+  <div id="sellModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 w-full max-w-sm rounded-2xl p-5 space-y-4">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+        <h3 class="font-bold text-sm text-white"><i class="fa-solid fa-cash-register text-emerald-400 mr-2"></i>Satış Əməliyyatını Təsdiqlə</h3>
+        <button onclick="closeSellModal()" class="text-slate-400 text-sm"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <p id="sellModalPartTitle" class="text-xs text-slate-300 font-semibold truncate"></p>
+      
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block text-slate-400 mb-1">Faktiki Satış Qiyməti ($)</label>
+          <input type="number" id="sellActualPrice" step="0.01" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-emerald-400 font-bold text-base focus:outline-none focus:border-emerald-500">
+        </div>
+        <div>
+          <label class="block text-slate-400 mb-1">Satılan Say (Ədəd)</label>
+          <input type="number" id="sellActualQty" value="1" min="1" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white font-semibold">
+        </div>
+      </div>
+
+      <div class="flex gap-2">
+        <button onclick="confirmSale()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 py-2.5 rounded-xl font-bold text-white text-xs shadow-lg shadow-emerald-600/20">Satışı Qeydə Al</button>
+        <button onclick="closeSellModal()" class="px-4 bg-slate-800 py-2.5 rounded-xl text-slate-400 text-xs">Ləğv Et</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Config Modal -->
+  <div id="configModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 w-full max-w-sm rounded-2xl p-5 space-y-4">
+      <h3 class="font-bold text-base text-white">JSONBin.io Ayarları</h3>
+      <p class="text-xs text-slate-400">Vercel Environment Variables təyin olunmayıbsa, parametrləri bura yazın:</p>
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block text-slate-400 mb-1">X-Master-Key</label>
+          <input type="password" id="masterKeyInput" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+        </div>
+        <div>
+          <label class="block text-slate-400 mb-1">Bin ID</label>
+          <input type="text" id="binIdInput" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button onclick="saveConfig()" class="flex-1 bg-red-600 py-2.5 rounded-xl font-bold text-white text-xs">Yadda Saxla</button>
+        <button onclick="closeConfigModal()" class="px-4 bg-slate-800 py-2.5 rounded-xl text-slate-400 text-xs">Bağla</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let db = { parts: [], sales: [] };
+    let currentCategory = 'ALL';
+    let base64Image = '';
+    let activeSellPartId = null;
+
+    const getMasterKey = () => (typeof process !== 'undefined' && process.env && process.env.NEXT_PUBLIC_JSONBIN_MASTER_KEY) || localStorage.getItem('TL_MASTER_KEY') || '';
+    const getBinId = () => (typeof process !== 'undefined' && process.env && process.env.NEXT_PUBLIC_JSONBIN_BIN_ID) || localStorage.getItem('TL_BIN_ID') || '';
+
+    window.onload = () => {
+      document.getElementById('masterKeyInput').value = getMasterKey();
+      document.getElementById('binIdInput').value = getBinId();
+      if (!getMasterKey() || !getBinId()) {
+        openConfigModal();
+      } else {
+        loadData();
+      }
+    };
+
+    function openConfigModal() { document.getElementById('configModal').classList.remove('hidden'); }
+    function closeConfigModal() { document.getElementById('configModal').classList.add('hidden'); }
+    
+    function saveConfig() {
+      localStorage.setItem('TL_MASTER_KEY', document.getElementById('masterKeyInput').value.trim());
+      localStorage.setItem('TL_BIN_ID', document.getElementById('binIdInput').value.trim());
+      closeConfigModal();
+      loadData();
+    }
+
+    async function loadData() {
+      const partsList = document.getElementById('partsList');
+      partsList.innerHTML = `<div class="text-center py-12 text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Məlumatlar JSONBin-dən yüklənir...</div>`;
+      try {
+        const res = await fetch(`https://api.jsonbin.io/v3/b/${getBinId()}/latest`, {
+          headers: { 'X-Master-Key': getMasterKey() }
+        });
+        const json = await res.json();
+        
+        // Handle database structure migrations
+        if (Array.isArray(json.record)) {
+          db = { parts: json.record, sales: [] };
+        } else if (json.record && json.record.parts) {
+          db = { parts: json.record.parts || [], sales: json.record.sales || [] };
+        } else {
+          db = { parts: [], sales: [] };
+        }
+
+        renderParts();
+        renderAnalyticsMonths();
+        renderSalesHistory();
+      } catch (err) {
+        partsList.innerHTML = `<div class="text-center py-12 text-red-400">Xəta baş verdi! API Key və BIN ID parametrlərini yoxlayın.</div>`;
+      }
+    }
+
+    async function syncData() {
+      try {
+        await fetch(`https://api.jsonbin.io/v3/b/${getBinId()}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Master-Key': getMasterKey()
+          },
+          body: JSON.stringify(db)
+        });
+        renderParts();
+        renderAnalytics();
+        renderSalesHistory();
+      } catch (err) {
+        alert('Serverlə sinxronizasiyada xəta baş verdi!');
+      }
+    }
+
+    // --- TAB SWITCHING ---
+    function switchTab(tabName) {
+      ['inventory', 'analytics', 'history'].forEach(t => {
+        document.getElementById(`section-${t}`).classList.add('hidden');
+        document.getElementById(`tab-${t}`).className = 'flex-1 py-2.5 rounded-xl text-xs font-bold transition-all bg-slate-800/80 text-slate-400 hover:text-white';
+      });
+      document.getElementById(`section-${tabName}`).classList.remove('hidden');
+      document.getElementById(`tab-${tabName}`).className = 'flex-1 py-2.5 rounded-xl text-xs font-bold transition-all bg-red-600 text-white shadow-lg shadow-red-600/20';
+
+      if (tabName === 'analytics') renderAnalytics();
+      if (tabName === 'history') renderSalesHistory();
+    }
+
+    // --- INVENTORY RENDER ---
+    function setCategoryFilter(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        if(btn.innerText.includes(cat) || (cat==='ALL' && btn.innerText==='Hamısı')) {
+          btn.className = 'cat-btn bg-red-600 text-white px-3 py-1.5 rounded-lg whitespace-nowrap font-medium';
+        } else {
+          btn.className = 'cat-btn bg-slate-800/80 text-slate-300 px-3 py-1.5 rounded-lg whitespace-nowrap font-medium';
+        }
+      });
+      renderParts();
+    }
+
+    function renderParts() {
+      const partsList = document.getElementById('partsList');
+      const search = document.getElementById('searchInput').value.toLowerCase();
+
+      const filtered = db.parts.filter(item => {
+        const matchesCat = currentCategory === 'ALL' || item.category === currentCategory;
+        const matchesSearch = item.code.toLowerCase().includes(search) ||
+                              item.car.toLowerCase().includes(search) ||
+                              (item.engine && item.engine.toLowerCase().includes(search)) ||
+                              (item.description && item.description.toLowerCase().includes(search));
+        return matchesCat && matchesSearch;
+      });
+
+      // Update Inventory Metrics
+      document.getElementById('statTotalItems').innerText = db.parts.length;
+      const totalQty = db.parts.reduce((sum, p) => sum + (p.quantity || 0), 0);
+      document.getElementById('statTotalQty').innerText = `${totalQty} ədəd`;
+      const totalVal = db.parts.reduce((sum, p) => sum + ((p.sellPrice || 0) * (p.quantity || 0)), 0);
+      document.getElementById('statTotalValue').innerText = `$${totalVal.toLocaleString()}`;
+
+      if (filtered.length === 0) {
+        partsList.innerHTML = `<div class="text-center py-12 text-slate-500 text-sm">Axtarışa uyğun ehtiyat hissəsi tapılmadı.</div>`;
+        return;
+      }
+
+      partsList.innerHTML = filtered.map((item) => `
+        <div class="glass rounded-xl p-3 flex gap-3 relative border ${item.quantity === 0 ? 'border-red-900/50 bg-red-950/10' : 'border-slate-800'}">
+          ${item.image ? `<img src="${item.image}" class="w-22 h-22 rounded-xl object-cover border border-slate-700 flex-shrink-0">` 
+                      : `<div class="w-22 h-22 rounded-xl bg-slate-800 flex items-center justify-center text-slate-600 flex-shrink-0"><i class="fa-solid fa-car text-2xl"></i></div>`}
+          
+          <div class="flex-1 min-w-0 space-y-1">
+            <div class="flex justify-between items-start gap-1">
+              <span class="bg-red-950 text-red-400 font-mono font-bold text-xs px-2 py-0.5 rounded-md border border-red-800/50 truncate">${item.code}</span>
+              <span class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded-md whitespace-nowrap">${item.category || 'Digər'}</span>
+            </div>
+            
+            <h4 class="font-bold text-sm text-white truncate">${item.car} ${item.engine ? `<span class="text-slate-400 text-xs font-normal">(${item.engine})</span>` : ''}</h4>
+            
+            <div class="flex items-center gap-3 text-xs text-slate-400">
+              ${item.mileage ? `<span><i class="fa-solid fa-gauge-high text-[10px] mr-1 text-slate-500"></i>${item.mileage}</span>` : ''}
+              ${item.sellPrice ? `<span class="text-emerald-400 font-semibold">$${item.sellPrice}</span>` : ''}
+              <span class="text-slate-500">Satılıb: <b class="text-slate-300">${item.soldCount || 0} ədəd</b></span>
+            </div>
+
+            <p class="text-xs text-slate-300 line-clamp-2">${item.description || ''}</p>
+            
+            <div class="flex justify-between items-center pt-2 border-t border-slate-800/80">
+              <span class="text-xs font-bold ${item.quantity > 0 ? 'text-emerald-400' : 'text-red-500'}">
+                ${item.quantity > 0 ? `Stok: ${item.quantity} ədəd` : 'STOKDA YOXDUR'}
+              </span>
+              <div class="flex gap-1.5">
+                <button onclick="promptSell('${item.id}')" ${item.quantity <= 0 ? 'disabled' : ''} class="bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 text-white text-xs px-2.5 py-1 rounded-lg font-bold shadow-md shadow-emerald-600/20 flex items-center gap-1">
+                  <i class="fa-solid fa-cart-shopping text-[10px]"></i> Satış
+                </button>
+                <button onclick="changeQty('${item.id}', 1)" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-2 py-1 rounded-lg border border-slate-700">+1</button>
+                <button onclick="deletePart('${item.id}')" class="text-slate-500 hover:text-red-400 p-1 ml-1"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // --- SALE LOGIC & MODAL ---
+    function promptSell(partId) {
+      const part = db.parts.find(p => p.id === partId);
+      if (!part) return;
+      activeSellPartId = partId;
+      document.getElementById('sellModalPartTitle').innerText = `${part.code} — ${part.car}`;
+      document.getElementById('sellActualPrice').value = part.sellPrice || 0;
+      document.getElementById('sellActualQty').value = 1;
+      document.getElementById('sellModal').classList.remove('hidden');
+    }
+
+    function closeSellModal() { document.getElementById('sellModal').classList.add('hidden'); }
+
+    async function confirmSale() {
+      const part = db.parts.find(p => p.id === activeSellPartId);
+      if (!part) return;
+
+      const price = parseFloat(document.getElementById('sellActualPrice').value) || 0;
+      const qty = parseInt(document.getElementById('sellActualQty').value) || 1;
+
+      if (qty > part.quantity) {
+        alert('Stokda olan miqdardan daha çox satış qeyd edilə bilməz!');
+        return;
+      }
+
+      // Decrement stock & increment sold count
+      part.quantity -= qty;
+      part.soldCount = (part.soldCount || 0) + qty;
+
+      // Add to sales logs
+      const saleRecord = {
+        id: Date.now().toString(),
+        partId: part.id,
+        code: part.code,
+        car: part.car,
+        category: part.category,
+        qty: qty,
+        sellPrice: price,
+        buyPrice: part.buyPrice || 0,
+        profit: (price - (part.buyPrice || 0)) * qty,
+        date: new Date().toISOString()
+      };
+
+      if (!db.sales) db.sales = [];
+      db.sales.unshift(saleRecord);
+
+      closeSellModal();
+      await syncData();
+    }
+
+    // --- ANALYTICS TAB LOGIC ---
+    function renderAnalyticsMonths() {
+      const select = document.getElementById('analyticsMonthSelect');
+      const months = new Set();
+      
+      const nowStr = new Date().toISOString().slice(0, 7);
+      months.add(nowStr);
+
+      if (db.sales) {
+        db.sales.forEach(s => {
+          if (s.date) months.add(s.date.slice(0, 7));
+        });
+      }
+
+      select.innerHTML = Array.from(months).sort().reverse().map(m => `
+        <option value="${m}">${m} (Aylıq)</option>
+      `).join('');
+
+      renderAnalytics();
+    }
+
+    function renderAnalytics() {
+      const selectedMonth = document.getElementById('analyticsMonthSelect').value || new Date().toISOString().slice(0, 7);
+      
+      // Filter sales for the selected month
+      const monthlySales = (db.sales || []).filter(s => s.date && s.date.startsWith(selectedMonth));
+
+      const totalRev = monthlySales.reduce((sum, s) => sum + (s.sellPrice * s.qty), 0);
+      const totalProfit = monthlySales.reduce((sum, s) => sum + (s.profit || 0), 0);
+      const totalUnits = monthlySales.reduce((sum, s) => sum + s.qty, 0);
+      const margin = totalRev > 0 ? ((totalProfit / totalRev) * 100).toFixed(1) : 0;
+
+      document.getElementById('analyticsRevenue').innerText = `$${totalRev.toLocaleString()}`;
+      document.getElementById('analyticsProfit').innerText = `$${totalProfit.toLocaleString()}`;
+      document.getElementById('analyticsUnitsSold').innerText = `${totalUnits} ədəd detal satılıb`;
+      document.getElementById('analyticsMargin').innerText = `Mənfəət Marjası: ${margin}%`;
+
+      // Top 5 Sold Parts overall
+      const sortedTop = [...db.parts].sort((a, b) => (b.soldCount || 0) - (a.soldCount || 0)).slice(0, 5);
+      const topSoldList = document.getElementById('topSoldList');
+      topSoldList.innerHTML = sortedTop.map((item, idx) => `
+        <div class="flex justify-between items-center bg-slate-900 p-2 rounded-lg border border-slate-800">
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-slate-500 text-xs w-4">#${idx+1}</span>
+            <div>
+              <p class="font-bold text-white">${item.code} <span class="text-slate-400 font-normal">(${item.car})</span></p>
+              <p class="text-[10px] text-slate-500">${item.category}</p>
+            </div>
+          </div>
+          <span class="bg-emerald-950 text-emerald-400 font-bold px-2 py-0.5 rounded border border-emerald-800/40">${item.soldCount || 0} ədəd</span>
+        </div>
+      `).join('');
+
+      // Least Sold / Non-moving items (0 sales and in stock)
+      const leastSold = [...db.parts].filter(p => p.quantity > 0).sort((a, b) => (a.soldCount || 0) - (b.soldCount || 0)).slice(0, 5);
+      const leastSoldList = document.getElementById('leastSoldList');
+      leastSoldList.innerHTML = leastSold.map((item) => `
+        <div class="flex justify-between items-center bg-slate-900 p-2 rounded-lg border border-slate-800">
+          <div>
+            <p class="font-bold text-slate-300">${item.code} <span class="text-slate-500 font-normal">(${item.car})</span></p>
+            <p class="text-[10px] text-slate-500">Stokda: ${item.quantity} ədəd</p>
+          </div>
+          <span class="bg-slate-800 text-slate-400 font-medium px-2 py-0.5 rounded text-[10px]">${item.soldCount || 0} satış</span>
+        </div>
+      `).join('');
+    }
+
+    // --- SALES HISTORY RENDER ---
+    function renderSalesHistory() {
+      const container = document.getElementById('salesHistoryList');
+      const sales = db.sales || [];
+      document.getElementById('salesCountBadge').innerText = `${sales.length} əməliyyat`;
+
+      if (sales.length === 0) {
+        container.innerHTML = `<div class="text-center py-10 text-slate-500 text-xs">Hələ ki heç bir satış qeydə alınmayıb.</div>`;
+        return;
+      }
+
+      container.innerHTML = sales.map(s => {
+        const d = new Date(s.date);
+        const dateStr = `${d.getDate().toString().padStart(2,'0')}.${(d.getMonth()+1).toString().padStart(2,'0')}.${d.getFullYear()} ${d.getHours()}:${d.getMinutes().toString().padStart(2,'0')}`;
+        return `
+          <div class="glass p-3 rounded-xl flex justify-between items-center text-xs">
+            <div class="space-y-0.5">
+              <p class="font-bold text-white">${s.code} <span class="text-slate-400 font-normal">(${s.car})</span></p>
+              <p class="text-[10px] text-slate-500"><i class="fa-regular fa-clock mr-1"></i>${dateStr} • ${s.qty} ədəd</p>
+            </div>
+            <div class="text-right">
+              <p class="font-black text-emerald-400">+$${(s.sellPrice * s.qty).toLocaleString()}</p>
+              ${s.profit ? `<p class="text-[10px] text-blue-400 font-semibold">Qazanc: +$${s.profit}</p>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // --- MODAL & PART ACTIONS ---
+    function openAddModal() {
+      document.getElementById('partForm').reset();
+      base64Image = '';
+      document.getElementById('imgPreview').classList.add('hidden');
+      document.getElementById('partModal').classList.remove('hidden');
+    }
+    function closePartModal() { document.getElementById('partModal').classList.add('hidden'); }
+
+    function previewImage(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const img = new Image();
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        img.src = e.target.result;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          const maxDim = 550;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height && width > maxDim) {
+            height *= maxDim / width; width = maxDim;
+          } else if (height > maxDim) {
+            width *= maxDim / height; height = maxDim;
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          ctx.drawImage(img, 0, 0, width, height);
+          
+          base64Image = canvas.toDataURL('image/jpeg', 0.55);
+          const preview = document.getElementById('imgPreview');
+          preview.src = base64Image;
+          preview.classList.remove('hidden');
+        };
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function savePart(e) {
+      e.preventDefault();
+      const saveBtn = document.getElementById('saveBtn');
+      saveBtn.disabled = true;
+      saveBtn.innerText = 'Stoka əlavə edilir...';
+
+      const newPart = {
+        id: Date.now().toString(),
+        code: document.getElementById('partCode').value.trim().toUpperCase(),
+        category: document.getElementById('partCategory').value,
+        car: document.getElementById('partCar').value.trim(),
+        engine: document.getElementById('partEngine').value.trim(),
+        mileage: document.getElementById('partMileage').value.trim(),
+        quantity: parseInt(document.getElementById('partQuantity').value),
+        buyPrice: parseFloat(document.getElementById('partBuyPrice').value) || 0,
+        sellPrice: parseFloat(document.getElementById('partSellPrice').value) || 0,
+        soldCount: 0,
+        description: document.getElementById('partDescription').value.trim(),
+        image: base64Image,
+        createdAt: new Date().toISOString()
+      };
+
+      db.parts.unshift(newPart);
+      await syncData();
+      
+      saveBtn.disabled = false;
+      saveBtn.innerText = 'Stoka Əlavə Et';
+      closePartModal();
+    }
+
+    async function changeQty(id, delta) {
+      const part = db.parts.find(p => p.id === id);
+      if (part) {
+        part.quantity += delta;
+        if (part.quantity < 0) part.quantity = 0;
+        await syncData();
+      }
+    }
+
+    async function deletePart(id) {
+      if (confirm('Bu ehtiyat hissəsini silməyə əminsiniz?')) {
+        db.parts = db.parts.filter(p => p.id !== id);
+        await syncData();
+      }
+    }
+
+    // --- CSV EXPORT ---
+    function exportCSV() {
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += "Detal Kodu,Kateqoriya,Marka Model,Muhərrik,Stok Sayi,Alis Qiymeti,Satis Qiymeti,Satilan Say\n";
+      
+      db.parts.forEach(p => {
+        csvContent += `"${p.code}","${p.category}","${p.car}","${p.engine || ''}",${p.quantity},${p.buyPrice || 0},${p.sellPrice || 0},${p.soldCount || 0}\n`;
+      });
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `TeslaLand_Stok_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+</html>
