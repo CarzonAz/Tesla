@@ -804,25 +804,3 @@
   </script>
 </body>
 </html>
-```
-
-Dəyişikliklərin xülasəsi
-
-1. Geri qaytarma funksiyası
-
-· renderSalesHistory() — hər satışda "Qaytar" düyməsi əlavə olunur.
-· returnSale(saleId) — təsdiqdən sonra hissənin quantity-ni satılan say qədər artırır, soldCount-u azaldır, satışa returned: true və returnedAt sahələri yazır. Xəta olarsa, hər şey əvvəlki vəziyyətinə qaytarılır.
-· Analitikada !s.returned filteri ilə qaytarılan satışlar çıxarılır.
-· Qaytarılmış satışlar üzərindən xətt çəkilir və solğun göstərilir.
-
-2. İstehsal ili
-
-· partYear select sahəsi əlavə edildi (1980 → cari il + 1).
-· populateYearSelect() səhifə açılışında doldurulur.
-· Kartda təqvim ikonu ilə göstərilir, axtarışa daxildir, CSV export-a əlavə edildi.
-
-3. Kateqoriya avtomatik yaradılması
-
-· <select> → <input list="categoryDatalist"> ilə əvəz olundu — istənilən sərbəst mətn yazıla bilər.
-· getAllCategories() mövcud hissələrin kateqoriyalarını və default-ları birləşdirir.
-· Filter düymələri artıq statik deyil — renderCategoryFilters() hər dəfə onları yenidən qurur, yeni kateqoriya dərhal filterdə görünür.
