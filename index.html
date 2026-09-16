@@ -2,95 +2,262 @@
 <html lang="az">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TeslaLand Pro — Ehtiyat Hissəsi & Analitika</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>TeslaLand Pro — Premium İdarəetmə</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 *{-webkit-tap-highlight-color:transparent}
-body{background-color:#0b0f19;color:#f8fafc;font-family:system-ui,-apple-system,sans-serif;overscroll-behavior-y:none}
+html{scroll-behavior:smooth}
+body{background:#0b0f19;color:#f8fafc;font-family:system-ui,-apple-system,sans-serif;overscroll-behavior-y:none}
+body.light{background:#f1f5f9;color:#0f172a}
+body.light .glass{background:rgba(255,255,255,.85);border-color:rgba(0,0,0,.08)}
+body.light .bg-slate-900{background:#fff!important;color:#0f172a!important}
+body.light .bg-slate-800{background:#f1f5f9!important;color:#0f172a!important}
+body.light .bg-slate-950\/60,body.light .bg-slate-950\/70,body.light .bg-slate-950\/80{background:rgba(241,245,249,.6)!important}
+body.light .text-white{color:#0f172a!important}
+body.light .text-slate-400,body.light .text-slate-500{color:#475569!important}
+body.light .border-slate-800,body.light .border-slate-700{border-color:#cbd5e1!important}
+body.light .text-slate-300{color:#334155!important}
+body.light input,body.light select,body.light textarea{color:#0f172a!important;background:#fff!important;border-color:#cbd5e1!important}
 .glass{background:rgba(17,24,39,.75);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08)}
+.glass-hover:hover{border-color:rgba(239,68,68,.4);transform:translateY(-1px)}
 .no-scrollbar::-webkit-scrollbar{display:none}
 .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
-input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{opacity:1}
-.progress-bar{transition:width .5s ease-out}
+.progress-bar{transition:width .6s cubic-bezier(.4,0,.2,1)}
 .expand-chevron{transition:transform .25s ease}
 .expand-chevron.rotated{transform:rotate(180deg)}
-.v-expand{animation:slideDown .25s ease-out}
-@keyframes slideDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.v-expand{animation:slideDown .3s ease-out}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.scale-in{animation:scaleIn .2s ease}
+@keyframes scaleIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.pulse-badge{animation:pulseBadge 2s infinite}
+@keyframes pulseBadge{0%,100%{opacity:1}50%{opacity:.6}}
+.shimmer{background:linear-gradient(90deg,rgba(255,255,255,.02) 0%,rgba(255,255,255,.08) 50%,rgba(255,255,255,.02) 100%);background-size:200% 100%;animation:shimmer 1.4s infinite}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.ring-progress{transform:rotate(-90deg);transform-origin:50% 50%}
+.kpi-card{background:linear-gradient(135deg,rgba(30,41,59,.6),rgba(15,23,42,.8));border:1px solid rgba(255,255,255,.06);transition:all .2s}
+.kpi-card:hover{border-color:rgba(239,68,68,.3);transform:translateY(-2px)}
+.chart-wrap{position:relative;height:220px;width:100%}
 @media(max-width:380px){.part-img{width:4.5rem;height:4.5rem}}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(148,163,184,.3);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:rgba(148,163,184,.5)}
+.stock-bar{height:3px;background:linear-gradient(90deg,#ef4444,#f59e0b,#10b981);border-radius:2px}
+.tooltip-tip{position:relative}
+.tooltip-tip::after{content:attr(data-tip);position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:#1e293b;color:#fff;padding:4px 8px;border-radius:6px;font-size:10px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s;margin-bottom:4px;border:1px solid rgba(255,255,255,.1)}
+.tooltip-tip:hover::after{opacity:1}
+.sale-receipt{font-family:'Courier New',monospace}
+@media print{
+  body *{visibility:hidden}
+  .print-area,.print-area *{visibility:visible}
+  .print-area{position:absolute;left:0;top:0;width:100%;color:#000;background:#fff}
+}
+.premium-glow{box-shadow:0 0 20px rgba(239,68,68,.15),0 0 40px rgba(239,68,68,.05)}
+.condition-new{background:rgba(16,185,129,.15);color:#34d399;border:1px solid rgba(16,185,129,.3)}
+.condition-used{background:rgba(148,163,184,.15);color:#94a3b8;border:1px solid rgba(148,163,184,.3)}
+.condition-refurb{background:rgba(59,130,246,.15);color:#60a5fa;border:1px solid rgba(59,130,246,.3)}
+.tier-bronze{background:linear-gradient(135deg,#78350f,#92400e);color:#fcd34d}
+.tier-silver{background:linear-gradient(135deg,#334155,#475569);color:#e2e8f0}
+.tier-gold{background:linear-gradient(135deg,#713f12,#a16207);color:#fef3c7}
+.tier-platinum{background:linear-gradient(135deg,#1e1b4b,#3730a3);color:#c7d2fe}
 </style>
 </head>
 <body class="pb-24">
 
+<!-- HEADER -->
 <header class="sticky top-0 z-40 glass px-4 py-3 border-b border-slate-800">
-  <div class="max-w-xl lg:max-w-6xl mx-auto flex justify-between items-center">
+  <div class="max-w-xl lg:max-w-7xl mx-auto flex justify-between items-center gap-2">
     <div class="flex items-center gap-2.5 min-w-0">
-      <div class="bg-red-600 text-white font-black px-3 py-1 rounded-xl text-lg tracking-wider shadow-lg shadow-red-600/30 flex-shrink-0">TL</div>
+      <div class="bg-gradient-to-br from-red-600 to-red-800 text-white font-black px-3 py-1 rounded-xl text-lg tracking-wider shadow-lg shadow-red-600/30 flex-shrink-0">TL</div>
       <div class="min-w-0">
-        <h1 class="font-black text-base leading-tight tracking-wide text-white truncate">TeslaLand <span class="text-xs font-semibold px-1.5 py-0.5 bg-red-950 text-red-400 border border-red-800/50 rounded-md">PRO</span></h1>
-        <p class="text-[10px] text-slate-400 truncate">Anbar & Maliyyə Analitikası</p>
+        <h1 class="font-black text-base leading-tight tracking-wide text-white truncate">TeslaLand <span class="text-[10px] font-semibold px-1.5 py-0.5 bg-gradient-to-r from-red-950 to-red-900 text-red-400 border border-red-800/50 rounded-md">PREMIUM</span></h1>
+        <p class="text-[10px] text-slate-400 truncate">Ehtiyat Hissəsi İdarəetmə Sistemi</p>
       </div>
     </div>
-    <div class="flex gap-1 flex-shrink-0">
-      <button onclick="exportCSV()" class="text-slate-400 hover:text-white p-2 text-sm" title="CSV Export"><i class="fa-solid fa-file-csv text-lg"></i></button>
+    <div class="flex gap-1 flex-shrink-0 items-center">
+      <button id="alertBell" onclick="openAlertsModal()" class="relative text-slate-400 hover:text-amber-400 p-2 text-sm" title="Xəbərdarlıqlar">
+        <i class="fa-solid fa-bell text-lg"></i>
+        <span id="alertBadge" class="hidden absolute -top-0.5 -right-0.5 bg-red-600 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center pulse-badge">0</span>
+      </button>
+      <button onclick="toggleTheme()" class="text-slate-400 hover:text-white p-2 text-sm" title="Tema"><i id="themeIcon" class="fa-solid fa-moon text-lg"></i></button>
+      <button onclick="exportCSV()" class="text-slate-400 hover:text-white p-2 text-sm hidden sm:block" title="CSV"><i class="fa-solid fa-file-csv text-lg"></i></button>
       <button onclick="openConfigModal()" class="text-slate-400 hover:text-white p-2 text-sm" title="Ayarlar"><i class="fa-solid fa-gear text-lg"></i></button>
     </div>
   </div>
 </header>
 
+<!-- NAVIGATION -->
 <nav class="p-3">
-  <div class="max-w-xl lg:max-w-6xl mx-auto flex gap-1.5">
-    <button onclick="switchTab('inventory')" id="tab-inventory" class="flex-1 py-2.5 rounded-xl text-[10px] sm:text-xs font-bold transition-all bg-red-600 text-white shadow-lg shadow-red-600/20"><i class="fa-solid fa-boxes-stacked mr-1"></i> Anbar</button>
-    <button onclick="switchTab('vehicles')" id="tab-vehicles" class="flex-1 py-2.5 rounded-xl text-[10px] sm:text-xs font-bold transition-all bg-slate-800/80 text-slate-400 hover:text-white"><i class="fa-solid fa-car-side mr-1"></i> Avtomobil</button>
-    <button onclick="switchTab('analytics')" id="tab-analytics" class="flex-1 py-2.5 rounded-xl text-[10px] sm:text-xs font-bold transition-all bg-slate-800/80 text-slate-400 hover:text-white"><i class="fa-solid fa-chart-line mr-1"></i> Analitika</button>
-    <button onclick="switchTab('history')" id="tab-history" class="flex-1 py-2.5 rounded-xl text-[10px] sm:text-xs font-bold transition-all bg-slate-800/80 text-slate-400 hover:text-white"><i class="fa-solid fa-receipt mr-1"></i> Tarixçə</button>
+  <div class="max-w-xl lg:max-w-7xl mx-auto flex gap-1.5 overflow-x-auto no-scrollbar">
+    <button onclick="switchTab('dashboard')" id="tab-dashboard" class="tab-btn flex-1 min-w-fit py-2.5 px-3 rounded-xl text-[10px] sm:text-xs font-bold transition-all whitespace-nowrap"><i class="fa-solid fa-gauge-high mr-1"></i>Panel</button>
+    <button onclick="switchTab('inventory')" id="tab-inventory" class="tab-btn flex-1 min-w-fit py-2.5 px-3 rounded-xl text-[10px] sm:text-xs font-bold transition-all whitespace-nowrap"><i class="fa-solid fa-boxes-stacked mr-1"></i>Anbar</button>
+    <button onclick="switchTab('vehicles')" id="tab-vehicles" class="tab-btn flex-1 min-w-fit py-2.5 px-3 rounded-xl text-[10px] sm:text-xs font-bold transition-all whitespace-nowrap"><i class="fa-solid fa-car-side mr-1"></i>Avtomobil</button>
+    <button onclick="switchTab('analytics')" id="tab-analytics" class="tab-btn flex-1 min-w-fit py-2.5 px-3 rounded-xl text-[10px] sm:text-xs font-bold transition-all whitespace-nowrap"><i class="fa-solid fa-chart-line mr-1"></i>Analitika</button>
+    <button onclick="switchTab('customers')" id="tab-customers" class="tab-btn flex-1 min-w-fit py-2.5 px-3 rounded-xl text-[10px] sm:text-xs font-bold transition-all whitespace-nowrap"><i class="fa-solid fa-users mr-1"></i>Müştəri</button>
+    <button onclick="switchTab('history')" id="tab-history" class="tab-btn flex-1 min-w-fit py-2.5 px-3 rounded-xl text-[10px] sm:text-xs font-bold transition-all whitespace-nowrap"><i class="fa-solid fa-receipt mr-1"></i>Tarixçə</button>
   </div>
 </nav>
 
-<main class="px-4 max-w-xl lg:max-w-6xl mx-auto space-y-4">
+<main class="px-4 max-w-xl lg:max-w-7xl mx-auto space-y-4">
+
+<!-- ===== DASHBOARD ===== -->
+<section id="section-dashboard" class="space-y-4">
+  <div class="glass rounded-2xl p-4 bg-gradient-to-br from-red-950/40 via-slate-900/60 to-slate-900/60 border-red-900/30">
+    <div class="flex justify-between items-start">
+      <div>
+        <p class="text-[10px] text-red-400 font-bold uppercase tracking-widest">Ümumi Dəyər</p>
+        <p id="dashTotalValue" class="text-3xl font-black text-white mt-1">₼0</p>
+        <p id="dashTotalValueSub" class="text-[11px] text-slate-400 mt-1">Stok dəyəri + Avtomobil investisiyası</p>
+      </div>
+      <div class="bg-red-950/50 p-3 rounded-2xl border border-red-800/40">
+        <i class="fa-solid fa-crown text-red-400 text-2xl"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+    <div class="kpi-card rounded-2xl p-3.5">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-[10px] text-slate-400 uppercase tracking-wider">Bu Ay Satış</p>
+          <p id="dashMonthSales" class="text-lg font-black text-emerald-400 mt-1">₼0</p>
+          <p id="dashMonthSalesSub" class="text-[10px] text-slate-500 mt-0.5">0 satış</p>
+        </div>
+        <i class="fa-solid fa-arrow-trend-up text-emerald-500 text-lg"></i>
+      </div>
+    </div>
+    <div class="kpi-card rounded-2xl p-3.5">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-[10px] text-slate-400 uppercase tracking-wider">Bu Ay Qazanc</p>
+          <p id="dashMonthProfit" class="text-lg font-black text-blue-400 mt-1">₼0</p>
+          <p id="dashMonthMargin" class="text-[10px] text-slate-500 mt-0.5">Marja 0%</p>
+        </div>
+        <i class="fa-solid fa-sack-dollar text-blue-500 text-lg"></i>
+      </div>
+    </div>
+    <div class="kpi-card rounded-2xl p-3.5">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-[10px] text-slate-400 uppercase tracking-wider">Stok Detal</p>
+          <p id="dashPartsCount" class="text-lg font-black text-white mt-1">0</p>
+          <p id="dashPartsQty" class="text-[10px] text-slate-500 mt-0.5">0 ədəd</p>
+        </div>
+        <i class="fa-solid fa-cubes text-amber-500 text-lg"></i>
+      </div>
+    </div>
+    <div class="kpi-card rounded-2xl p-3.5">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-[10px] text-slate-400 uppercase tracking-wider">Avtomobil</p>
+          <p id="dashVehCount" class="text-lg font-black text-white mt-1">0</p>
+          <p id="dashVehRecovered" class="text-[10px] text-slate-500 mt-0.5">₼0 toplanıb</p>
+        </div>
+        <i class="fa-solid fa-car-side text-red-500 text-lg"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+    <div class="glass rounded-2xl p-4">
+      <div class="flex justify-between items-center mb-3">
+        <h3 class="text-xs font-bold text-white uppercase tracking-wider"><i class="fa-solid fa-chart-area text-emerald-400 mr-1.5"></i>Son 30 Gün Satış</h3>
+        <span id="chartSalesTotal" class="text-[10px] text-slate-400"></span>
+      </div>
+      <div class="chart-wrap"><canvas id="chartSales30"></canvas></div>
+    </div>
+    <div class="glass rounded-2xl p-4">
+      <div class="flex justify-between items-center mb-3">
+        <h3 class="text-xs font-bold text-white uppercase tracking-wider"><i class="fa-solid fa-chart-pie text-blue-400 mr-1.5"></i>Kateqoriya Üzrə</h3>
+      </div>
+      <div class="chart-wrap"><canvas id="chartCategories"></canvas></div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+    <div class="glass rounded-2xl p-4 space-y-3">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+        <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation"></i> Aşağı Stok Xəbərdarlığı</h3>
+        <span id="lowStockCount" class="text-[10px] bg-amber-950 text-amber-400 px-2 py-0.5 rounded-full border border-amber-800/40">0</span>
+      </div>
+      <div id="lowStockList" class="space-y-2 text-xs max-h-72 overflow-y-auto"></div>
+    </div>
+    <div class="glass rounded-2xl p-4 space-y-3">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+        <h3 class="text-xs font-bold text-red-400 uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-clock-rotate-left"></i> Son Fəaliyyətlər</h3>
+      </div>
+      <div id="dashActivity" class="space-y-1.5 text-xs max-h-72 overflow-y-auto"></div>
+    </div>
+  </div>
+
+  <div class="glass rounded-2xl p-4">
+    <div class="flex justify-between items-center mb-3">
+      <h3 class="text-xs font-bold text-white uppercase tracking-wider"><i class="fa-solid fa-trophy text-amber-400 mr-1.5"></i>Ən Yaxşı Müştərilər (VIP)</h3>
+    </div>
+    <div id="dashTopCustomers" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+  </div>
+</section>
 
 <!-- ===== ANBAR ===== -->
-<section id="section-inventory" class="space-y-3">
+<section id="section-inventory" class="space-y-3 hidden">
   <div class="space-y-2">
-    <div class="relative">
-      <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
-      <input type="text" id="searchInput" oninput="renderParts()" placeholder="Elantra ön bufer, B48 mühərrik, 51117424683..." class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-red-500 text-white placeholder-slate-500 shadow-inner">
+    <div class="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto] gap-2">
+      <div class="relative">
+        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+        <input type="text" id="searchInput" oninput="renderParts()" placeholder="Elantra ön bufer, B48 mühərrik, kod..." class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-10 pr-10 py-3 text-sm focus:outline-none focus:border-red-500 text-white placeholder-slate-500">
+        <button onclick="startVoiceSearch('searchInput')" class="absolute right-2.5 top-3 text-slate-400 hover:text-red-400 p-0.5" title="Səslə axtar"><i class="fa-solid fa-microphone text-sm"></i></button>
+      </div>
+      <select id="sortParts" onchange="renderParts()" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-3 text-xs text-white focus:outline-none focus:border-red-500">
+        <option value="recent">Ən yeni</option>
+        <option value="code">Kod (A→Z)</option>
+        <option value="price_asc">Qiymət ↑</option>
+        <option value="price_desc">Qiymət ↓</option>
+        <option value="qty_asc">Stok ↑</option>
+        <option value="qty_desc">Stok ↓</option>
+        <option value="sold_desc">Ən çox satılan</option>
+      </select>
+      <button onclick="toggleStockFilter()" id="stockFilterBtn" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-3 text-xs text-slate-300 hover:border-red-500 font-semibold whitespace-nowrap">
+        <i class="fa-solid fa-filter mr-1"></i><span id="stockFilterLabel">Hamısı</span>
+      </button>
     </div>
-    <p class="text-[10px] text-slate-500 px-1"><i class="fa-solid fa-lightbulb text-amber-500 mr-1"></i>Bir neçə söz yaza bilərsiniz — hamısı uyğun gəlməlidir</p>
     <div id="categoryFilters" class="flex gap-1.5 overflow-x-auto pb-1 text-xs no-scrollbar"></div>
   </div>
 
   <div class="grid grid-cols-3 gap-2">
-    <div class="glass rounded-xl p-2.5 text-center"><p class="text-[10px] text-slate-400">Çeşid</p><p id="statTotalItems" class="text-sm font-bold text-white">0</p></div>
-    <div class="glass rounded-xl p-2.5 text-center"><p class="text-[10px] text-slate-400">Stok</p><p id="statTotalQty" class="text-sm font-bold text-emerald-400">0</p></div>
-    <div class="glass rounded-xl p-2.5 text-center"><p class="text-[10px] text-slate-400">Dəyər</p><p id="statTotalValue" class="text-sm font-bold text-amber-400">₼0</p></div>
+    <div class="kpi-card rounded-xl p-2.5 text-center"><p class="text-[10px] text-slate-400">Çeşid</p><p id="statTotalItems" class="text-sm font-bold text-white">0</p></div>
+    <div class="kpi-card rounded-xl p-2.5 text-center"><p class="text-[10px] text-slate-400">Stok</p><p id="statTotalQty" class="text-sm font-bold text-emerald-400">0</p></div>
+    <div class="kpi-card rounded-xl p-2.5 text-center"><p class="text-[10px] text-slate-400">Dəyər</p><p id="statTotalValue" class="text-sm font-bold text-amber-400">₼0</p></div>
   </div>
 
-  <div id="partsList" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+  <div id="partsList" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
     <div class="col-span-full text-center py-12 text-slate-500 text-sm"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Yüklənir...</div>
   </div>
 </section>
 
-<!-- ===== AVTOMOBİLLƏR ===== -->
+<!-- ===== AVTOMOBİL ===== -->
 <section id="section-vehicles" class="space-y-3 hidden">
   <div class="glass rounded-xl p-3 flex justify-between items-center">
     <div>
       <p class="text-xs font-bold text-slate-200"><i class="fa-solid fa-warehouse text-red-500 mr-1.5"></i>Sökülən Avtomobillər</p>
       <p class="text-[10px] text-slate-500 mt-0.5">Karta basın → maliyyə açılsın</p>
     </div>
-    <button onclick="openVehicleModal()" class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-2 rounded-xl font-bold shadow-lg shadow-red-600/30"><i class="fa-solid fa-plus mr-1"></i> Yeni</button>
+    <button onclick="openVehicleModal()" class="bg-gradient-to-br from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white text-xs px-3 py-2 rounded-xl font-bold shadow-lg shadow-red-600/30"><i class="fa-solid fa-plus mr-1"></i> Yeni</button>
   </div>
 
   <div class="grid grid-cols-3 gap-2">
-    <div class="glass rounded-xl p-2.5 text-center"><p class="text-[10px] text-slate-400">Avtomobil</p><p id="statVehicleCount" class="text-sm font-bold text-white">0</p></div>
-    <div class="glass rounded-xl p-2.5 text-center"><p class="text-[10px] text-slate-400">İnvestisiya</p><p id="statVehicleInvestment" class="text-sm font-bold text-amber-400">₼0</p></div>
-    <div class="glass rounded-xl p-2.5 text-center"><p class="text-[10px] text-slate-400">Ödənilib</p><p id="statVehicleRecovered" class="text-sm font-bold text-emerald-400">₼0</p></div>
+    <div class="kpi-card rounded-xl p-2.5 text-center"><p class="text-[10px] text-slate-400">Avtomobil</p><p id="statVehicleCount" class="text-sm font-bold text-white">0</p></div>
+    <div class="kpi-card rounded-xl p-2.5 text-center"><p class="text-[10px] text-slate-400">İnvestisiya</p><p id="statVehicleInvestment" class="text-sm font-bold text-amber-400">₼0</p></div>
+    <div class="kpi-card rounded-xl p-2.5 text-center"><p class="text-[10px] text-slate-400">Ödənilib</p><p id="statVehicleRecovered" class="text-sm font-bold text-emerald-400">₼0</p></div>
   </div>
 
   <div class="relative">
     <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
-    <input type="text" id="vehicleSearchInput" oninput="renderVehicles()" placeholder="BMW G20, WBA12345..." class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-red-500 text-white placeholder-slate-500 shadow-inner">
+    <input type="text" id="vehicleSearchInput" oninput="renderVehicles()" placeholder="BMW G20, WBA12345..." class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-red-500 text-white placeholder-slate-500">
   </div>
 
   <div id="vehiclesList" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3"></div>
@@ -98,9 +265,20 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <!-- ===== ANALİTİKA ===== -->
 <section id="section-analytics" class="space-y-4 hidden">
-  <div class="glass rounded-xl p-3 flex justify-between items-center">
+  <div class="glass rounded-xl p-3 flex justify-between items-center flex-wrap gap-2">
     <span class="text-xs font-semibold text-slate-300"><i class="fa-solid fa-calendar-days text-red-500 mr-1.5"></i>Analiz Dövrü:</span>
     <select id="analyticsMonthSelect" onchange="renderAnalytics()" class="bg-slate-800 border border-slate-700 text-xs text-white rounded-lg p-1.5 focus:outline-none"></select>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+    <div class="glass rounded-2xl p-4">
+      <h3 class="text-xs font-bold text-white uppercase tracking-wider mb-3"><i class="fa-solid fa-chart-bar text-blue-400 mr-1.5"></i>Günlük Satış (Seçilmiş Ay)</h3>
+      <div class="chart-wrap"><canvas id="chartDaily"></canvas></div>
+    </div>
+    <div class="glass rounded-2xl p-4">
+      <h3 class="text-xs font-bold text-white uppercase tracking-wider mb-3"><i class="fa-solid fa-chart-line text-emerald-400 mr-1.5"></i>6 Aylıq Trend</h3>
+      <div class="chart-wrap"><canvas id="chartMonthly"></canvas></div>
+    </div>
   </div>
 
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
@@ -153,34 +331,39 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
   </div>
 </section>
 
-<!-- ===== TARİXÇƏ ===== -->
-<section id="section-history" class="space-y-3 hidden">
-  <div class="glass rounded-xl p-1 flex gap-1">
-    <button onclick="setHistoryView('sales')" id="hViewSales" class="flex-1 py-2 rounded-lg text-[11px] font-bold transition-all bg-red-600 text-white"><i class="fa-solid fa-receipt mr-1"></i>Əməliyyatlar</button>
-    <button onclick="setHistoryView('customers')" id="hViewCustomers" class="flex-1 py-2 rounded-lg text-[11px] font-bold transition-all text-slate-400 hover:text-white"><i class="fa-solid fa-users mr-1"></i>Müştərilər</button>
-  </div>
-
+<!-- ===== MÜŞTƏRİLƏR ===== -->
+<section id="section-customers" class="space-y-3 hidden">
   <div class="relative">
     <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
-    <input type="text" id="historySearchInput" oninput="renderHistoryView()" placeholder="Ad, telefon, detal kodu..." class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-red-500 text-white placeholder-slate-500 shadow-inner">
+    <input type="text" id="customerSearchInput" oninput="renderCustomersTab()" placeholder="Ad, telefon..." class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-red-500 text-white placeholder-slate-500">
+  </div>
+  <div id="customersGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3"></div>
+</section>
+
+<!-- ===== TARİXÇƏ ===== -->
+<section id="section-history" class="space-y-3 hidden">
+  <div class="relative">
+    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+    <input type="text" id="historySearchInput" oninput="renderSalesHistory()" placeholder="Ad, telefon, detal kodu..." class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-red-500 text-white placeholder-slate-500">
   </div>
 
-  <div class="flex justify-between items-center px-1">
-    <h3 id="historyTitle" class="text-xs font-bold text-slate-400 uppercase tracking-wider">Son Satış Əməliyyatları</h3>
-    <span id="salesCountBadge" class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full">0</span>
+  <div class="grid grid-cols-3 gap-2">
+    <div class="kpi-card rounded-xl p-2.5 text-center"><p class="text-[10px] text-slate-400">Satış</p><p id="histSalesCount" class="text-sm font-bold text-white">0</p></div>
+    <div class="kpi-card rounded-xl p-2.5 text-center"><p class="text-[10px] text-slate-400">Qaytarılan</p><p id="histReturnsCount" class="text-sm font-bold text-red-400">0</p></div>
+    <div class="kpi-card rounded-xl p-2.5 text-center"><p class="text-[10px] text-slate-400">Borclu</p><p id="histCreditCount" class="text-sm font-bold text-amber-400">₼0</p></div>
   </div>
 
   <div id="salesHistoryList" class="grid grid-cols-1 md:grid-cols-2 gap-2"></div>
-  <div id="customersList" class="grid grid-cols-1 md:grid-cols-2 gap-2 hidden"></div>
 </section>
 
 </main>
 
-<button onclick="openAddModal()" class="fixed bottom-6 right-6 bg-gradient-to-r from-red-600 to-red-700 text-white w-14 h-14 rounded-full shadow-xl shadow-red-600/40 flex items-center justify-center text-xl hover:scale-105 active:scale-95 transition-all z-30"><i class="fa-solid fa-plus"></i></button>
+<!-- FAB -->
+<button onclick="openAddModal()" class="fixed bottom-6 right-6 bg-gradient-to-br from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white w-14 h-14 rounded-full shadow-xl shadow-red-600/50 flex items-center justify-center text-xl hover:scale-105 active:scale-95 transition-all z-30 premium-glow"><i class="fa-solid fa-plus"></i></button>
 
 <!-- ===== CODE MODAL ===== -->
-<div id="codeModal" class="fixed inset-0 bg-black/90 z-[60] hidden flex items-center justify-center p-4">
-  <div class="bg-slate-900 border border-slate-700 w-full max-w-xs rounded-2xl p-5 space-y-4">
+<div id="codeModal" class="fixed inset-0 bg-black/90 z-[80] hidden flex items-center justify-center p-4">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-xs rounded-2xl p-5 space-y-4 scale-in">
     <div class="text-center">
       <div class="inline-flex bg-red-950 text-red-400 w-12 h-12 rounded-full items-center justify-center text-xl border border-red-800/50 mb-2"><i class="fa-solid fa-lock"></i></div>
       <h3 class="font-bold text-white text-sm">Təhlükəsizlik Kodu</h3>
@@ -197,7 +380,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <!-- ===== PART MODAL ===== -->
 <div id="partModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-  <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-4 max-h-[92vh] overflow-y-auto">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-4 max-h-[92vh] overflow-y-auto scale-in">
     <div class="flex justify-between items-center border-b border-slate-800 pb-3">
       <h3 id="partModalTitle" class="font-bold text-base text-white flex items-center gap-2"><i class="fa-solid fa-box-open text-red-500"></i> Yeni Ehtiyat Hissəsi</h3>
       <button onclick="closePartModal()" class="text-slate-400 text-lg"><i class="fa-solid fa-xmark"></i></button>
@@ -218,11 +401,14 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
         <select id="partVehicleSelect" onchange="onPartVehicleChange()" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white text-xs focus:outline-none focus:border-red-500"><option value="">— Seçin —</option></select>
         <p id="vehicleAutofillHint" class="text-[10px] text-slate-500 italic"></p>
       </div>
+
+      <!-- MULTI PHOTO -->
       <div>
-        <label class="block text-slate-400 mb-1">Fotoşəkil</label>
-        <input type="file" id="partImage" accept="image/*" capture="environment" onchange="previewImage(event)" class="w-full bg-slate-800 text-slate-300 rounded-xl p-2">
-        <img id="imgPreview" class="mt-2 w-full h-36 object-cover rounded-xl hidden border border-slate-700 shadow-md">
+        <label class="block text-slate-400 mb-1">Fotoşəkillər (max 3)</label>
+        <input type="file" id="partImage" accept="image/*" multiple onchange="handlePhotos(event)" class="w-full bg-slate-800 text-slate-300 rounded-xl p-2 text-[11px]">
+        <div id="photoGrid" class="grid grid-cols-3 gap-1.5 mt-2"></div>
       </div>
+
       <div class="grid grid-cols-2 gap-2">
         <div>
           <label class="block text-slate-400 mb-1">Detal Kodu</label>
@@ -237,6 +423,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
           <div id="categoryDropdown" class="absolute z-30 left-0 right-0 mt-1 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl shadow-black/60 max-h-56 overflow-y-auto hidden"></div>
         </div>
       </div>
+
       <div class="grid grid-cols-2 gap-2">
         <div>
           <label class="block text-slate-400 mb-1">Marka & Model *</label>
@@ -247,6 +434,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
           <input type="text" id="partEngine" placeholder="2.0 B48" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
         </div>
       </div>
+
       <div class="grid grid-cols-3 gap-2">
         <div>
           <label class="block text-slate-400 mb-1">İl</label>
@@ -261,28 +449,47 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
           <input type="number" id="partQuantity" value="1" min="0" required class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
         </div>
       </div>
+
+      <div class="grid grid-cols-2 gap-2">
+        <div>
+          <label class="block text-slate-400 mb-1">Vəziyyət</label>
+          <select id="partCondition" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+            <option value="used">İşlənmiş</option>
+            <option value="new">Yeni</option>
+            <option value="refurb">Bərpa olunmuş</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-slate-400 mb-1">Min. Stok Xəbərdarlığı</label>
+          <input type="number" id="partMinStock" value="1" min="0" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+        </div>
+      </div>
+
       <div id="buyPriceWrap" class="bg-blue-950/40 border border-blue-900/40 rounded-xl p-2.5 hidden">
         <label class="block text-blue-300 font-bold mb-1 text-[11px] uppercase tracking-wider"><i class="fa-solid fa-tag mr-1"></i>Maya (₼) *</label>
         <input type="number" id="partBuyPrice" placeholder="0.00" step="0.01" min="0" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white font-semibold">
-        <p class="text-[10px] text-blue-300/70 mt-1 italic">Qazanc = satış − maya.</p>
+        <p class="text-[10px] text-blue-300/70 mt-1 italic">Qazanc = satış − maya. Avtomobil mayasına təsir etmir.</p>
       </div>
+
       <div class="bg-emerald-950/40 border border-emerald-900/40 rounded-xl p-2.5">
         <label class="block text-emerald-300 font-bold mb-1 text-[11px] uppercase tracking-wider"><i class="fa-solid fa-money-bill-trend-up mr-1"></i>Satış qiyməti (₼)</label>
         <input type="number" id="partSellPrice" placeholder="0.00" step="0.01" min="0" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-emerald-400 font-semibold text-base">
         <p id="sellHint" class="text-[10px] text-emerald-300/70 mt-1 italic"></p>
       </div>
+
       <div>
         <label class="block text-slate-400 mb-1">Açıqlama / Yer</label>
         <textarea id="partDescription" rows="2" placeholder="Şelf A-3" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></textarea>
       </div>
-      <button type="submit" id="saveBtn" class="w-full bg-red-600 hover:bg-red-700 font-bold py-3 rounded-xl text-white transition-all text-sm shadow-lg shadow-red-600/30">Stoka Əlavə Et</button>
+
+      <button type="submit" id="saveBtn" class="w-full bg-gradient-to-br from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 font-bold py-3 rounded-xl text-white transition-all text-sm shadow-lg shadow-red-600/30">Stoka Əlavə Et</button>
     </form>
   </div>
 </div>
 
 <!-- ===== VEHICLE MODAL ===== -->
 <div id="vehicleModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-  <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-4 max-h-[92vh] overflow-y-auto">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-4 max-h-[92vh] overflow-y-auto scale-in">
     <div class="flex justify-between items-center border-b border-slate-800 pb-3">
       <h3 id="vehicleModalTitle" class="font-bold text-base text-white flex items-center gap-2"><i class="fa-solid fa-car-side text-red-500"></i> Yeni Avtomobil</h3>
       <button onclick="closeVehicleModal()" class="text-slate-400 text-lg"><i class="fa-solid fa-xmark"></i></button>
@@ -365,14 +572,14 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
         <label class="block text-slate-400 mb-1">Qeyd</label>
         <textarea id="vNotes" rows="2" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></textarea>
       </div>
-      <button type="submit" id="saveVehicleBtn" class="w-full bg-red-600 hover:bg-red-700 font-bold py-3 rounded-xl text-white transition-all text-sm shadow-lg shadow-red-600/30">Avtomobili Yadda Saxla</button>
+      <button type="submit" id="saveVehicleBtn" class="w-full bg-gradient-to-br from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 font-bold py-3 rounded-xl text-white transition-all text-sm shadow-lg shadow-red-600/30">Avtomobili Yadda Saxla</button>
     </form>
   </div>
 </div>
 
 <!-- ===== VEHICLE DETAIL ===== -->
 <div id="vehicleDetailModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-  <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-4 max-h-[92vh] overflow-y-auto">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-4 max-h-[92vh] overflow-y-auto scale-in">
     <div class="flex justify-between items-center border-b border-slate-800 pb-3">
       <h3 id="vehicleDetailTitle" class="font-bold text-base text-white flex items-center gap-2 min-w-0"><i class="fa-solid fa-car-side text-red-500 flex-shrink-0"></i><span class="truncate">Avtomobil</span></h3>
       <button onclick="closeVehicleDetail()" class="text-slate-400 text-lg flex-shrink-0"><i class="fa-solid fa-xmark"></i></button>
@@ -381,9 +588,20 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
   </div>
 </div>
 
+<!-- ===== PART DETAIL / HISTORY ===== -->
+<div id="partDetailModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-4 max-h-[92vh] overflow-y-auto scale-in">
+    <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+      <h3 id="partDetailTitle" class="font-bold text-base text-white flex items-center gap-2 min-w-0"><i class="fa-solid fa-box text-red-500 flex-shrink-0"></i><span class="truncate">Detal</span></h3>
+      <button onclick="closePartDetail()" class="text-slate-400 text-lg flex-shrink-0"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="partDetailBody" class="space-y-3"></div>
+  </div>
+</div>
+
 <!-- ===== SELL MODAL ===== -->
 <div id="sellModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
-  <div class="bg-slate-900 border border-slate-700 w-full max-w-sm rounded-2xl p-5 space-y-4 max-h-[92vh] overflow-y-auto">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-sm rounded-2xl p-5 space-y-4 max-h-[92vh] overflow-y-auto scale-in">
     <div class="flex justify-between items-center border-b border-slate-800 pb-2">
       <h3 class="font-bold text-sm text-white"><i class="fa-solid fa-cash-register text-emerald-400 mr-2"></i>Satış</h3>
       <button onclick="closeSellModal()" class="text-slate-400 text-sm"><i class="fa-solid fa-xmark"></i></button>
@@ -404,13 +622,36 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
         </div>
         <div id="customerHint" class="text-[10px] text-blue-300/80 italic hidden"></div>
       </div>
-      <div>
-        <label class="block text-slate-400 mb-1">Satış Qiyməti (₼)</label>
-        <input type="number" id="sellActualPrice" step="0.01" min="0" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-emerald-400 font-bold text-base focus:outline-none focus:border-emerald-500">
+      <div class="grid grid-cols-2 gap-2">
+        <div>
+          <label class="block text-slate-400 mb-1">Satış Qiyməti (₼)</label>
+          <input type="number" id="sellActualPrice" step="0.01" min="0" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-emerald-400 font-bold text-base focus:outline-none focus:border-emerald-500">
+        </div>
+        <div>
+          <label class="block text-slate-400 mb-1">Endirim (₼)</label>
+          <input type="number" id="sellDiscount" value="0" step="0.01" min="0" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-amber-400 font-bold text-base focus:outline-none focus:border-amber-500">
+        </div>
       </div>
       <div>
         <label class="block text-slate-400 mb-1">Say (Ədəd)</label>
         <input type="number" id="sellActualQty" value="1" min="1" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white font-semibold">
+      </div>
+      <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3 space-y-2">
+        <p class="text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1"><i class="fa-solid fa-credit-card mr-1"></i>Ödəniş</p>
+        <div class="grid grid-cols-3 gap-1">
+          <button type="button" onclick="setPaymentStatus('paid')" id="payBtnPaid" class="py-2 rounded-lg text-[10px] font-bold transition-all bg-emerald-600 text-white">Tam</button>
+          <button type="button" onclick="setPaymentStatus('partial')" id="payBtnPartial" class="py-2 rounded-lg text-[10px] font-bold transition-all text-slate-400 border border-slate-700">Qismən</button>
+          <button type="button" onclick="setPaymentStatus('credit')" id="payBtnCredit" class="py-2 rounded-lg text-[10px] font-bold transition-all text-slate-400 border border-slate-700">Borclu</button>
+        </div>
+        <input type="hidden" id="sellPaymentStatus" value="paid">
+        <div id="paidAmountWrap" class="hidden">
+          <label class="block text-slate-400 mb-1 text-[10px]">Ödənilən məbləğ (₼)</label>
+          <input type="number" id="sellPaidAmount" step="0.01" min="0" value="0" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white font-semibold">
+        </div>
+        <div class="flex justify-between text-[11px] pt-1 border-t border-slate-800">
+          <span class="text-slate-400">Yekun:</span>
+          <span id="sellFinalTotal" class="font-bold text-emerald-400">₼0</span>
+        </div>
       </div>
     </div>
     <div class="flex gap-2">
@@ -422,7 +663,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <!-- ===== CUSTOMER DETAIL ===== -->
 <div id="customerDetailModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-  <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-4 max-h-[92vh] overflow-y-auto">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-4 max-h-[92vh] overflow-y-auto scale-in">
     <div class="flex justify-between items-center border-b border-slate-800 pb-3">
       <h3 id="customerDetailTitle" class="font-bold text-base text-white flex items-center gap-2 min-w-0"><i class="fa-solid fa-user text-blue-500 flex-shrink-0"></i><span class="truncate">Müştəri</span></h3>
       <button onclick="closeCustomerDetail()" class="text-slate-400 text-lg flex-shrink-0"><i class="fa-solid fa-xmark"></i></button>
@@ -431,55 +672,227 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
   </div>
 </div>
 
+<!-- ===== RETURN MODAL ===== -->
+<div id="returnModal" class="fixed inset-0 bg-black/90 z-[70] hidden flex items-center justify-center p-4">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-sm rounded-2xl p-5 space-y-4 scale-in">
+    <h3 class="font-bold text-base text-white flex items-center gap-2"><i class="fa-solid fa-rotate-left text-red-500"></i>Geri Qaytarma</h3>
+    <div class="space-y-3 text-xs">
+      <div>
+        <label class="block text-slate-400 mb-1">Səbəb</label>
+        <select id="returnReason" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+          <option value="Nasaz">Nasaz çıxdı</option>
+          <option value="Uyğun deyil">Uyğun deyil</option>
+          <option value="Müştəri istədi">Müştəri istədi</option>
+          <option value="Səhv göndəriş">Səhv göndəriş</option>
+          <option value="Digər">Digər</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-slate-400 mb-1">Qeyd (əlavə)</label>
+        <textarea id="returnNote" rows="2" placeholder="Əlavə məlumat..." class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></textarea>
+      </div>
+    </div>
+    <div class="flex gap-2">
+      <button onclick="submitReturn()" class="flex-1 bg-red-600 hover:bg-red-700 py-2.5 rounded-xl font-bold text-white text-xs">Təsdiq</button>
+      <button onclick="closeReturnModal()" class="px-4 bg-slate-800 py-2.5 rounded-xl text-slate-400 text-xs">Ləğv</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== RECEIPT ===== -->
+<div id="receiptModal" class="fixed inset-0 bg-black/90 z-[70] hidden flex items-center justify-center p-4">
+  <div class="bg-white text-black w-full max-w-sm rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in print-area">
+    <div class="text-center border-b-2 border-dashed border-gray-400 pb-3">
+      <div class="bg-black text-white inline-block px-3 py-1 rounded-lg font-black text-lg">TeslaLand</div>
+      <p class="text-[10px] text-gray-600 mt-1">Ehtiyat Hissəsi Mağazası</p>
+    </div>
+    <div id="receiptBody" class="text-xs sale-receipt space-y-1"></div>
+    <div class="flex gap-2 pt-2">
+      <button onclick="printReceipt()" class="flex-1 bg-black text-white py-2.5 rounded-xl font-bold text-xs"><i class="fa-solid fa-print mr-1"></i>Çap</button>
+      <button onclick="shareWhatsApp()" class="flex-1 bg-green-600 text-white py-2.5 rounded-xl font-bold text-xs"><i class="fa-brands fa-whatsapp mr-1"></i>WhatsApp</button>
+      <button onclick="closeReceipt()" class="px-3 bg-gray-200 py-2.5 rounded-xl text-gray-700 text-xs">Bağla</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ALERTS MODAL ===== -->
+<div id="alertsModal" class="fixed inset-0 bg-black/80 z-[70] hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
+    <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+      <h3 class="font-bold text-base text-white flex items-center gap-2"><i class="fa-solid fa-bell text-amber-500"></i>Xəbərdarlıqlar</h3>
+      <button onclick="closeAlertsModal()" class="text-slate-400 text-lg"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="alertsBody" class="space-y-2 text-xs"></div>
+  </div>
+</div>
+
 <!-- ===== CONFIG ===== -->
 <div id="configModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
-  <div class="bg-slate-900 border border-slate-700 w-full max-w-sm rounded-2xl p-5 space-y-4">
-    <h3 class="font-bold text-base text-white">JSONBin.io Ayarları</h3>
-    <p class="text-xs text-slate-400">Bin ID və X-Master-Key-i <a href="https://jsonbin.io" target="_blank" class="text-red-400 underline">jsonbin.io</a>-dan götürün.</p>
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-2xl p-5 space-y-4 max-h-[92vh] overflow-y-auto scale-in">
+    <h3 class="font-bold text-base text-white flex items-center gap-2"><i class="fa-solid fa-gear text-red-500"></i>Ayarlar</h3>
     <div class="space-y-3 text-xs">
-      <div><label class="block text-slate-400 mb-1">X-Master-Key</label><input type="password" id="masterKeyInput" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></div>
-      <div><label class="block text-slate-400 mb-1">Bin ID</label><input type="text" id="binIdInput" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></div>
+      <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3 space-y-2">
+        <p class="text-[11px] font-bold text-slate-300 uppercase tracking-wider">JSONBin.io Bağlantısı</p>
+        <div>
+          <label class="block text-slate-400 mb-1 text-[10px]">X-Master-Key</label>
+          <input type="password" id="masterKeyInput" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+        </div>
+        <div>
+          <label class="block text-slate-400 mb-1 text-[10px]">Bin ID</label>
+          <input type="text" id="binIdInput" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+        </div>
+        <p id="configError" class="text-[11px] text-red-400 hidden"></p>
+      </div>
+
+      <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3 space-y-2">
+        <p class="text-[11px] font-bold text-slate-300 uppercase tracking-wider">Backup & Bərpa</p>
+        <div class="flex gap-2">
+          <button onclick="backupData()" class="flex-1 bg-emerald-700 hover:bg-emerald-600 text-white py-2 rounded-lg font-bold text-[11px]"><i class="fa-solid fa-download mr-1"></i>Backup yüklə</button>
+          <label class="flex-1 bg-blue-700 hover:bg-blue-600 text-white py-2 rounded-lg font-bold text-[11px] text-center cursor-pointer"><i class="fa-solid fa-upload mr-1"></i>Bərpa et<input type="file" accept=".json" onchange="restoreData(event)" class="hidden"></label>
+        </div>
+        <button onclick="exportCSV()" class="w-full bg-slate-700 hover:bg-slate-600 text-white py-2 rounded-lg font-bold text-[11px]"><i class="fa-solid fa-file-csv mr-1"></i>CSV İxrac et</button>
+      </div>
+
+      <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3 space-y-2">
+        <p class="text-[11px] font-bold text-slate-300 uppercase tracking-wider">Fəaliyyət Jurnalı</p>
+        <p class="text-[10px] text-slate-500">Son 50 fəaliyyət saxlanılır</p>
+        <button onclick="openActivityLog()" class="w-full bg-slate-700 hover:bg-slate-600 text-white py-2 rounded-lg font-bold text-[11px]"><i class="fa-solid fa-list mr-1"></i>Jurnalı aç</button>
+      </div>
     </div>
-    <p id="configError" class="text-[11px] text-red-400 hidden"></p>
-    <div class="flex gap-2">
-      <button onclick="saveConfig()" class="flex-1 bg-red-600 py-2.5 rounded-xl font-bold text-white text-xs">Yadda Saxla</button>
+    <div class="flex gap-2 pt-1">
+      <button onclick="saveConfig()" class="flex-1 bg-red-600 hover:bg-red-700 py-2.5 rounded-xl font-bold text-white text-xs">Yadda Saxla</button>
       <button onclick="closeConfigModal()" id="configCloseBtn" class="px-4 bg-slate-800 py-2.5 rounded-xl text-slate-400 text-xs">Bağla</button>
     </div>
   </div>
 </div>
 
-<div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 bg-slate-800 border border-slate-700 text-white text-xs px-4 py-2.5 rounded-xl shadow-xl z-[70] hidden max-w-[90vw] text-center"></div>
+<!-- ===== ACTIVITY LOG ===== -->
+<div id="activityModal" class="fixed inset-0 bg-black/80 z-[70] hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
+    <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+      <h3 class="font-bold text-base text-white flex items-center gap-2"><i class="fa-solid fa-list text-blue-500"></i>Fəaliyyət Jurnalı</h3>
+      <button onclick="closeActivityLog()" class="text-slate-400 text-lg"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="activityList" class="space-y-1.5 text-xs"></div>
+  </div>
+</div>
+
+<div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 bg-slate-800 border border-slate-700 text-white text-xs px-4 py-2.5 rounded-xl shadow-xl z-[100] hidden max-w-[90vw] text-center"></div>
 
 <script>
-let db = { parts: [], sales: [], vehicles: [], customCategories: [], customers: [] };
+/* ========================================================
+   GLOBAL STATE
+======================================================== */
+let db = {
+  parts: [],
+  sales: [],
+  vehicles: [],
+  customCategories: [],
+  customers: [],
+  activityLog: [],
+  settings: { theme: 'dark' }
+};
 let currentCategory = 'ALL';
-let base64Image = '';
+let stockFilter = 'all'; // all | low | out | in
+let base64Images = []; // array for multi-photo
 let activeSellPartId = null;
+let activeReturnSaleId = null;
+let activeReceiptSale = null;
 let syncing = false;
 let pendingVehicleReturn = false;
 let currentPartSource = 'vehicle';
-let historyView = 'sales';
 let expandedVehicles = new Set();
+let currentPaymentStatus = 'paid';
+let chartSales30, chartCategories, chartDaily, chartMonthly;
 
-const SECRET_CODE = '0990';
+const SECRET_CODE_KEY = 'TL_SECRET_CODE';
+const DEFAULT_CODE = '0990';
 const DEFAULT_CATEGORIES = ['Mühərrik','Asqı & Şassi','Ban & Eksteryer','Elektrik & Elektronika','Salun & İnteryer','Parkradar','Bufer','Digər'];
 const COMMON_BRANDS = ['BMW','Mercedes-Benz','Audi','Volkswagen','Toyota','Lexus','Tesla','Hyundai','Kia','Nissan','Ford','Chevrolet','Honda','Mazda','Land Rover','Porsche','Volvo','Renault','Peugeot','Skoda','Opel','Fiat','Mitsubishi','Subaru','Jeep','Dodge'];
 const M = '₼';
 
 const getMasterKey = () => localStorage.getItem('TL_MASTER_KEY') || '';
 const getBinId = () => localStorage.getItem('TL_BIN_ID') || '';
+const getSecretCode = () => localStorage.getItem(SECRET_CODE_KEY) || DEFAULT_CODE;
 
+/* ========================================================
+   UTILS
+======================================================== */
 function esc(str){const d=document.createElement('div');d.innerText=str==null?'':str;return d.innerHTML}
 function fmt(n){return M + (Number(n)||0).toLocaleString('az-AZ',{maximumFractionDigits:2})}
+function fmtN(n){return (Number(n)||0).toLocaleString('az-AZ',{maximumFractionDigits:2})}
+function shortDate(iso){
+  if(!iso) return '';
+  const d = new Date(iso);
+  return `${d.getDate().toString().padStart(2,'0')}.${(d.getMonth()+1).toString().padStart(2,'0')}.${d.getFullYear()}`;
+}
+function fullDate(iso){
+  if(!iso) return '';
+  const d = new Date(iso);
+  return `${d.getDate().toString().padStart(2,'0')}.${(d.getMonth()+1).toString().padStart(2,'0')}.${d.getFullYear()} ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;
+}
+function timeAgo(iso){
+  if(!iso) return '';
+  const diff = Date.now() - new Date(iso).getTime();
+  const sec = Math.floor(diff/1000);
+  if(sec < 60) return 'indi';
+  const min = Math.floor(sec/60);
+  if(min < 60) return `${min} dəq əvvəl`;
+  const h = Math.floor(min/60);
+  if(h < 24) return `${h} saat əvvəl`;
+  const d = Math.floor(h/24);
+  if(d < 30) return `${d} gün əvvəl`;
+  return shortDate(iso);
+}
 function showToast(msg,isError){
   const t=document.getElementById('toast');
   t.innerText=msg;
-  t.className=`fixed bottom-24 left-1/2 -translate-x-1/2 text-white text-xs px-4 py-2.5 rounded-xl shadow-xl z-[70] max-w-[90vw] text-center border ${isError?'bg-red-950 border-red-800 text-red-300':'bg-slate-800 border-slate-700'}`;
+  t.className=`fixed bottom-24 left-1/2 -translate-x-1/2 text-white text-xs px-4 py-2.5 rounded-xl shadow-xl z-[100] max-w-[90vw] text-center border ${isError?'bg-red-950 border-red-800 text-red-300':'bg-slate-800 border-slate-700'}`;
   clearTimeout(window._toastTimer);
   window._toastTimer=setTimeout(()=>t.classList.add('hidden'),2600);
 }
+function logActivity(action, details){
+  if(!db.activityLog) db.activityLog = [];
+  db.activityLog.unshift({
+    id: Date.now().toString(),
+    action, details: details||'',
+    date: new Date().toISOString()
+  });
+  if(db.activityLog.length > 50) db.activityLog = db.activityLog.slice(0,50);
+}
+function matchesQuery(query, fields){
+  const q = (query||'').toLowerCase().trim();
+  if(!q) return true;
+  const words = q.split(/\s+/).filter(w=>w.length>0);
+  const haystack = fields.filter(Boolean).map(f=>String(f).toLowerCase()).join(' ');
+  return words.every(w => haystack.includes(w));
+}
 
-// ===== CODE GATE =====
+/* ========================================================
+   THEME
+======================================================== */
+function applyTheme(){
+  const theme = (db.settings && db.settings.theme) || 'dark';
+  if(theme === 'light'){
+    document.body.classList.add('light');
+    const ic = document.getElementById('themeIcon');
+    if(ic) ic.className = 'fa-solid fa-sun text-lg';
+  } else {
+    document.body.classList.remove('light');
+    const ic = document.getElementById('themeIcon');
+    if(ic) ic.className = 'fa-solid fa-moon text-lg';
+  }
+}
+function toggleTheme(){
+  if(!db.settings) db.settings = {};
+  db.settings.theme = db.settings.theme === 'light' ? 'dark' : 'light';
+  applyTheme();
+  if(getMasterKey() && getBinId()) syncData(null, true);
+}
+
+/* ========================================================
+   CODE GATE
+======================================================== */
 let codeCallback = null;
 function requireCode(actionName, callback){
   codeCallback = callback;
@@ -495,7 +908,7 @@ function closeCodeModal(){
 }
 function submitCode(){
   const val = document.getElementById('codeInput').value.trim();
-  if(val === SECRET_CODE){
+  if(val === getSecretCode()){
     const cb = codeCallback;
     codeCallback = null;
     document.getElementById('codeModal').classList.add('hidden');
@@ -507,16 +920,9 @@ function submitCode(){
   }
 }
 
-// ===== SMART MULTI-WORD SEARCH =====
-function matchesQuery(query, fields){
-  const q = (query||'').toLowerCase().trim();
-  if(!q) return true;
-  const words = q.split(/\s+/).filter(w=>w.length>0);
-  const haystack = fields.filter(Boolean).map(f=>String(f).toLowerCase()).join(' ');
-  return words.every(w => haystack.includes(w));
-}
-
-// ===== CATEGORIES =====
+/* ========================================================
+   CATEGORIES
+======================================================== */
 function getAllCategories(){
   const lowerSeen=new Set();const result=[];
   const push=c=>{if(!c)return;const lc=c.toLowerCase().trim();if(lowerSeen.has(lc))return;lowerSeen.add(lc);result.push(c)};
@@ -531,7 +937,9 @@ function registerCategory(name){
   if(!getAllCategories().some(c=>c.toLowerCase()===lc))db.customCategories.push(trimmed);
 }
 
-// ===== CUSTOMERS =====
+/* ========================================================
+   CUSTOMERS
+======================================================== */
 function getAllCustomers(){
   const map = new Map();
   (db.customers||[]).forEach(c=>{
@@ -561,13 +969,79 @@ function getCustomerStats(name){
   if(!name) return null;
   const lc = name.toLowerCase().trim();
   const all = (db.sales||[]).filter(s=>s.customerName && s.customerName.toLowerCase().trim()===lc && !s.returned);
-  const total = all.reduce((s,x)=>s+x.sellPrice*x.qty,0);
+  const total = all.reduce((s,x)=>s+x.sellPrice*x.qty - (x.discount||0),0);
   const units = all.reduce((s,x)=>s+x.qty,0);
+  const credit = all.reduce((s,x)=>{
+    const t = x.sellPrice*x.qty - (x.discount||0);
+    if(x.paymentStatus==='credit') return s + t;
+    if(x.paymentStatus==='partial') return s + Math.max(0, t - (x.paidAmount||0));
+    return s;
+  }, 0);
   const lastDate = all.length>0 ? all.map(s=>s.date).sort().reverse()[0] : null;
-  return {count:all.length, units, total, lastDate};
+  return {count:all.length, units, total, credit, lastDate};
+}
+function getCustomerTier(name){
+  const s = getCustomerStats(name);
+  if(!s) return {label:'—',cls:'bg-slate-800 text-slate-400 border-slate-700'};
+  if(s.total >= 5000) return {label:'Platinum',cls:'tier-platinum'};
+  if(s.total >= 2000) return {label:'Gold',cls:'tier-gold'};
+  if(s.total >= 500) return {label:'Silver',cls:'tier-silver'};
+  if(s.count >= 1) return {label:'Bronze',cls:'tier-bronze'};
+  return {label:'—',cls:'bg-slate-800 text-slate-400 border-slate-700'};
 }
 
-// ===== CATEGORY AUTOCOMPLETE =====
+/* ========================================================
+   VEHICLE HELPERS
+======================================================== */
+function vehicleLabel(v){
+  const gen=v.generation?` ${v.generation}`:'';
+  let yearRange='';
+  if(v.yearFrom&&v.yearTo&&v.yearFrom!==v.yearTo)yearRange=` ${v.yearFrom}-${v.yearTo}`;
+  else if(v.yearFrom)yearRange=` ${v.yearFrom}`;
+  return `${v.brand} ${v.model}${gen}${yearRange}`;
+}
+function vehicleTotalCost(v){return (Number(v.purchasePrice)||0)+(Number(v.additionalCosts)||0)}
+function vehicleRecovered(vid){
+  return (db.sales||[]).filter(s=>s.vehicleId===vid&&s.source==='vehicle'&&!s.returned)
+    .reduce((sum,s)=>sum+(Number(s.sellPrice)||0)*s.qty - (s.discount||0),0);
+}
+function vehicleSoldUnits(vid){
+  return (db.sales||[]).filter(s=>s.vehicleId===vid&&s.source==='vehicle'&&!s.returned)
+    .reduce((sum,s)=>sum+s.qty,0);
+}
+function vehicleAvgPrice(vid){
+  const rev=vehicleRecovered(vid);const units=vehicleSoldUnits(vid);
+  return units>0?rev/units:0;
+}
+function toggleVehicleExpand(id){
+  if(expandedVehicles.has(id)) expandedVehicles.delete(id);
+  else expandedVehicles.add(id);
+  renderVehicles();
+}
+
+/* ========================================================
+   VOICE SEARCH
+======================================================== */
+function startVoiceSearch(targetId){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){ showToast('Brauzer səs axtarışını dəstəkləmir', true); return; }
+  const rec = new SR();
+  rec.lang = 'az-AZ';
+  rec.interimResults = false;
+  rec.maxAlternatives = 1;
+  showToast('🎤 Danışın...', false);
+  rec.onresult = (e)=>{
+    const txt = e.results[0][0].transcript;
+    document.getElementById(targetId).value = txt;
+    if(targetId === 'searchInput') renderParts();
+  };
+  rec.onerror = ()=>{ showToast('Səs tanınmadı', true); };
+  rec.start();
+}
+
+/* ========================================================
+   CATEGORY AUTOCOMPLETE
+======================================================== */
 let categoryDropdownVisible=false;
 function buildCategoryDropdown(query){
   const dd=document.getElementById('categoryDropdown');
@@ -609,8 +1083,9 @@ function initCategoryAutocomplete(){
   input.addEventListener('blur',()=>setTimeout(closeCategoryDropdown,120));
 }
 
-// ===== CUSTOMER AUTOCOMPLETE =====
-let customerDropdownVisible=false;
+/* ========================================================
+   CUSTOMER AUTOCOMPLETE
+======================================================== */
 function buildCustomerDropdown(query){
   const dd=document.getElementById('customerDropdown');
   const q=(query||'').toLowerCase().trim();
@@ -620,7 +1095,8 @@ function buildCustomerDropdown(query){
   if(filtered.length>0){
     html += filtered.slice(0,20).map(c=>{
       const stats = getCustomerStats(c.name);
-      const meta = stats ? `<span class="text-[10px] text-slate-500 flex-shrink-0">${stats.count}x • ${fmt(stats.total)}</span>` : '';
+      const tier = getCustomerTier(c.name);
+      const meta = stats ? `<div class="text-right flex-shrink-0"><p class="text-[10px] text-slate-500">${stats.count}x • ${fmt(stats.total)}</p><span class="text-[8px] font-bold px-1.5 py-0.5 rounded ${tier.cls}">${tier.label}</span></div>` : '';
       return `<div class="cust-item px-3 py-2.5 hover:bg-slate-700/80 cursor-pointer flex items-center gap-2 border-b border-slate-800/60" data-name="${esc(c.name)}" data-phone="${esc(c.phone||'')}">
         <i class="fa-solid fa-user-circle text-blue-400 text-sm flex-shrink-0"></i>
         <div class="flex-1 min-w-0">
@@ -635,8 +1111,8 @@ function buildCustomerDropdown(query){
     el.addEventListener('mousedown',ev=>{ev.preventDefault();pickCustomer(el.dataset.name, el.dataset.phone)});
   });
 }
-function openCustomerDropdown(){buildCustomerDropdown(document.getElementById('sellCustomerName').value);document.getElementById('customerDropdown').classList.remove('hidden');customerDropdownVisible=true}
-function closeCustomerDropdown(){document.getElementById('customerDropdown').classList.add('hidden');customerDropdownVisible=false}
+function openCustomerDropdown(){buildCustomerDropdown(document.getElementById('sellCustomerName').value);document.getElementById('customerDropdown').classList.remove('hidden')}
+function closeCustomerDropdown(){document.getElementById('customerDropdown').classList.add('hidden')}
 function pickCustomer(name, phone){
   document.getElementById('sellCustomerName').value = name;
   if(phone && !document.getElementById('sellCustomerPhone').value) document.getElementById('sellCustomerPhone').value = phone;
@@ -648,9 +1124,10 @@ function updateCustomerHint(){
   const hint = document.getElementById('customerHint');
   if(!name){hint.classList.add('hidden');return}
   const stats = getCustomerStats(name);
+  const tier = getCustomerTier(name);
   if(stats && stats.count>0){
-    const d = stats.lastDate ? new Date(stats.lastDate).toLocaleDateString('az-AZ') : '';
-    hint.innerHTML = `<i class="fa-solid fa-check-circle text-emerald-400 mr-1"></i>Bu müştəri <b>${stats.count}</b> dəfə alıb — cəmi <b>${fmt(stats.total)}</b>${d?` • son: ${d}`:''}`;
+    const d = stats.lastDate ? shortDate(stats.lastDate) : '';
+    hint.innerHTML = `<i class="fa-solid fa-check-circle text-emerald-400 mr-1"></i>${stats.count} alış • ${fmt(stats.total)} • <span class="text-[9px] font-bold px-1.5 py-0.5 rounded ${tier.cls}">${tier.label}</span>${stats.credit>0?` • <span class="text-amber-400">Borc: ${fmt(stats.credit)}</span>`:''}`;
   } else {
     hint.innerHTML = `<i class="fa-solid fa-sparkles text-amber-400 mr-1"></i>Yeni müştəri olacaq`;
   }
@@ -664,63 +1141,148 @@ function initCustomerAutocomplete(){
   input.addEventListener('blur',()=>setTimeout(closeCustomerDropdown,120));
 }
 
-// ===== VEHICLE HELPERS =====
-function vehicleLabel(v){
-  const gen=v.generation?` ${v.generation}`:'';
-  let yearRange='';
-  if(v.yearFrom&&v.yearTo&&v.yearFrom!==v.yearTo)yearRange=` ${v.yearFrom}-${v.yearTo}`;
-  else if(v.yearFrom)yearRange=` ${v.yearFrom}`;
-  return `${v.brand} ${v.model}${gen}${yearRange}`;
+/* ========================================================
+   PHOTOS
+======================================================== */
+function handlePhotos(event){
+  const files = Array.from(event.target.files).slice(0,3);
+  base64Images = [];
+  Promise.all(files.map(file => new Promise((resolve)=>{
+    const reader = new FileReader();
+    reader.onload = (e)=>{
+      const img = new Image();
+      img.onload = ()=>{
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const maxDim = 500;
+        let width=img.width,height=img.height;
+        if(width>height&&width>maxDim){height*=maxDim/width;width=maxDim}
+        else if(height>maxDim){width*=maxDim/height;height=maxDim}
+        canvas.width=width;canvas.height=height;
+        ctx.drawImage(img,0,0,width,height);
+        resolve(canvas.toDataURL('image/jpeg',0.5));
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }))).then(imgs=>{
+    base64Images = imgs;
+    renderPhotoGrid();
+  });
 }
-function vehicleTotalCost(v){return (Number(v.purchasePrice)||0)+(Number(v.additionalCosts)||0)}
-function vehicleRecovered(vid){
-  return (db.sales||[]).filter(s=>s.vehicleId===vid&&s.source==='vehicle'&&!s.returned)
-    .reduce((sum,s)=>sum+(Number(s.sellPrice)||0)*s.qty,0);
+function renderPhotoGrid(){
+  const grid = document.getElementById('photoGrid');
+  grid.innerHTML = base64Images.map((img,i)=>`
+    <div class="relative">
+      <img src="${img}" class="w-full h-20 object-cover rounded-lg border border-slate-700">
+      <button type="button" onclick="removePhoto(${i})" class="absolute -top-1.5 -right-1.5 bg-red-600 text-white w-5 h-5 rounded-full text-[10px] font-bold shadow-lg"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+  `).join('');
 }
-function vehicleSoldUnits(vid){
-  return (db.sales||[]).filter(s=>s.vehicleId===vid&&s.source==='vehicle'&&!s.returned)
-    .reduce((sum,s)=>sum+s.qty,0);
-}
-function vehicleAvgPrice(vid){
-  const rev=vehicleRecovered(vid);const units=vehicleSoldUnits(vid);
-  return units>0?rev/units:0;
-}
-function toggleVehicleExpand(id){
-  if(expandedVehicles.has(id)) expandedVehicles.delete(id);
-  else expandedVehicles.add(id);
-  renderVehicles();
+function removePhoto(i){
+  base64Images.splice(i,1);
+  renderPhotoGrid();
 }
 
-function populateYearSelects(){
-  const current=new Date().getFullYear()+1;let opts='';
-  for(let y=current;y>=1980;y--)opts+=`<option value="${y}">${y}</option>`;
-  document.getElementById('partYear').innerHTML='<option value="">—</option>'+opts;
-  document.getElementById('vYearFrom').innerHTML='<option value="">Seçin...</option>'+opts;
-  document.getElementById('vYearTo').innerHTML='<option value="">—</option>'+opts;
-}
-function populateBrandDatalist(){document.getElementById('brandDatalist').innerHTML=COMMON_BRANDS.map(b=>`<option value="${esc(b)}"></option>`).join('')}
-function populatePartVehicleSelect(){
-  const sel=document.getElementById('partVehicleSelect');
-  const current=sel.value;
-  const list=[...(db.vehicles||[])].sort((a,b)=>vehicleLabel(a).localeCompare(vehicleLabel(b)));
-  sel.innerHTML='<option value="">— Seçin —</option>'+list.map(v=>`<option value="${v.id}">${esc(vehicleLabel(v))}</option>`).join('');
-  if(current&&list.some(v=>v.id===current))sel.value=current;
+/* ========================================================
+   ACTIVITY LOG
+======================================================== */
+function openActivityLog(){document.getElementById('activityModal').classList.remove('hidden');renderActivityLog()}
+function closeActivityLog(){document.getElementById('activityModal').classList.add('hidden')}
+function renderActivityLog(){
+  const c = document.getElementById('activityList');
+  const logs = db.activityLog || [];
+  if(logs.length === 0){ c.innerHTML = `<p class="text-slate-500 text-center py-6">Hələ heç bir fəaliyyət yoxdur.</p>`; return; }
+  c.innerHTML = logs.map(l=>`
+    <div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2.5 flex justify-between items-start gap-2">
+      <div class="min-w-0">
+        <p class="text-xs text-white font-semibold">${esc(l.action)}</p>
+        ${l.details?`<p class="text-[10px] text-slate-400 mt-0.5">${esc(l.details)}</p>`:''}
+      </div>
+      <span class="text-[10px] text-slate-500 flex-shrink-0">${timeAgo(l.date)}</span>
+    </div>
+  `).join('');
 }
 
-window.onload=()=>{
-  document.getElementById('masterKeyInput').value=getMasterKey();
-  document.getElementById('binIdInput').value=getBinId();
+/* ========================================================
+   ALERTS
+======================================================== */
+function getAlerts(){
+  const out = [];
+  db.parts.forEach(p=>{
+    if(p.quantity === 0){
+      out.push({type:'out', msg:`${p.code||'—'} — ${p.car}`, sub:'Stok bitib', partId:p.id});
+    } else if((p.quantity||0) <= (p.minStock||1)){
+      out.push({type:'low', msg:`${p.code||'—'} — ${p.car}`, sub:`Az qalıb (${p.quantity} ədəd)`, partId:p.id});
+    }
+  });
+  // Credit sales
+  const credits = (db.sales||[]).filter(s=>!s.returned && (s.paymentStatus==='credit' || s.paymentStatus==='partial'));
+  credits.forEach(s=>{
+    const due = s.paymentStatus==='credit'
+      ? (s.sellPrice*s.qty - (s.discount||0))
+      : Math.max(0, s.sellPrice*s.qty - (s.discount||0) - (s.paidAmount||0));
+    if(due > 0){
+      out.push({type:'credit', msg:`${s.customerName||'Müştəri'} — ${fmt(due)} borc`, sub:`${s.code||'—'} • ${shortDate(s.date)}`});
+    }
+  });
+  return out;
+}
+function updateAlertBadge(){
+  const alerts = getAlerts();
+  const badge = document.getElementById('alertBadge');
+  if(alerts.length > 0){
+    badge.textContent = alerts.length > 9 ? '9+' : alerts.length;
+    badge.classList.remove('hidden');
+  } else {
+    badge.classList.add('hidden');
+  }
+}
+function openAlertsModal(){
+  const body = document.getElementById('alertsBody');
+  const alerts = getAlerts();
+  if(alerts.length === 0){
+    body.innerHTML = `<div class="text-center py-8"><i class="fa-solid fa-check-circle text-emerald-500 text-4xl mb-2"></i><p class="text-slate-400 text-sm">Xəbərdarlıq yoxdur!</p></div>`;
+  } else {
+    body.innerHTML = alerts.map(a=>{
+      const color = a.type==='out'?'red':a.type==='low'?'amber':'blue';
+      const icon = a.type==='out'?'fa-ban':a.type==='low'?'fa-triangle-exclamation':'fa-hand-holding-dollar';
+      return `<div class="bg-${color}-950/30 border border-${color}-900/40 rounded-lg p-2.5 flex items-start gap-2">
+        <i class="fa-solid ${icon} text-${color}-400 text-sm mt-0.5"></i>
+        <div class="min-w-0 flex-1">
+          <p class="text-xs font-bold text-white">${esc(a.msg)}</p>
+          <p class="text-[10px] text-slate-400 mt-0.5">${esc(a.sub)}</p>
+        </div>
+      </div>`;
+    }).join('');
+  }
+  document.getElementById('alertsModal').classList.remove('hidden');
+}
+function closeAlertsModal(){document.getElementById('alertsModal').classList.add('hidden')}
+
+/* ========================================================
+   LOAD/SAVE DATA
+======================================================== */
+window.onload = () => {
+  document.getElementById('masterKeyInput').value = getMasterKey();
+  document.getElementById('binIdInput').value = getBinId();
   populateYearSelects();
   populateBrandDatalist();
   initCategoryAutocomplete();
   initCustomerAutocomplete();
   initVehicleFinancePreview();
-  if(!getMasterKey()||!getBinId()){
+  initSaleCalculator();
+  if(!getMasterKey() || !getBinId()){
     document.getElementById('configCloseBtn').classList.add('hidden');
     document.getElementById('configModal').classList.remove('hidden');
-  }else loadData();
+  } else {
+    loadData();
+  }
   renderAnalyticsMonths();
   setPartSource('vehicle');
+  setPaymentStatus('paid');
+  applyTheme();
+  switchTab('dashboard');
 };
 
 function initVehicleFinancePreview(){
@@ -732,67 +1294,85 @@ function initVehicleFinancePreview(){
     });
   });
 }
-
-// ===== CONFIG =====
-function openConfigModal(bypass){
-  if(bypass){document.getElementById('configModal').classList.remove('hidden');return}
-  requireCode('Ayarları aç', ()=>{document.getElementById('configModal').classList.remove('hidden')});
+function initSaleCalculator(){
+  ['sellActualPrice','sellActualQty','sellDiscount','sellPaidAmount'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.addEventListener('input', updateSaleTotal);
+  });
 }
-function closeConfigModal(){if(!getMasterKey()||!getBinId())return;document.getElementById('configModal').classList.add('hidden')}
-function saveConfig(){
-  const key=document.getElementById('masterKeyInput').value.trim();
-  const bin=document.getElementById('binIdInput').value.trim();
-  const errEl=document.getElementById('configError');
-  if(!key||!bin){errEl.innerText='Hər iki xananı doldurun.';errEl.classList.remove('hidden');return}
-  errEl.classList.add('hidden');
-  localStorage.setItem('TL_MASTER_KEY',key);
-  localStorage.setItem('TL_BIN_ID',bin);
-  document.getElementById('configCloseBtn').classList.remove('hidden');
-  closeConfigModal();
-  loadData();
+function updateSaleTotal(){
+  const price = parseFloat(document.getElementById('sellActualPrice').value)||0;
+  const qty = parseInt(document.getElementById('sellActualQty').value)||1;
+  const disc = parseFloat(document.getElementById('sellDiscount').value)||0;
+  const total = Math.max(0, price*qty - disc);
+  document.getElementById('sellFinalTotal').innerText = fmt(total);
+  if(currentPaymentStatus==='partial'){
+    document.getElementById('sellPaidAmount').value = document.getElementById('sellPaidAmount').value || 0;
+  }
+}
+function setPaymentStatus(status){
+  currentPaymentStatus = status;
+  document.getElementById('sellPaymentStatus').value = status;
+  ['paid','partial','credit'].forEach(s=>{
+    const btn = document.getElementById('payBtn'+s.charAt(0).toUpperCase()+s.slice(1));
+    if(s === status){
+      btn.className = 'py-2 rounded-lg text-[10px] font-bold transition-all ' +
+        (s==='paid'?'bg-emerald-600 text-white':s==='partial'?'bg-amber-600 text-white':'bg-red-600 text-white');
+    } else {
+      btn.className = 'py-2 rounded-lg text-[10px] font-bold transition-all text-slate-400 border border-slate-700';
+    }
+  });
+  document.getElementById('paidAmountWrap').classList.toggle('hidden', status !== 'partial');
 }
 
-// ===== DATA =====
 async function loadData(){
   const partsList=document.getElementById('partsList');
   partsList.innerHTML=`<div class="col-span-full text-center py-12 text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Yüklənir...</div>`;
   try{
     const res=await fetch(`https://api.jsonbin.io/v3/b/${getBinId()}/latest`,{headers:{'X-Master-Key':getMasterKey()}});
-    if(!res.ok)throw new Error('HTTP '+res.status);
+    if(!res.ok) throw new Error('HTTP '+res.status);
     const json=await res.json();
+    let data;
     if(Array.isArray(json.record)){
-      db={parts:json.record,sales:[],vehicles:[],customCategories:[],customers:[]};
-    }else if(json.record&&json.record.parts){
-      db={
-        parts:json.record.parts||[],
-        sales:json.record.sales||[],
-        vehicles:json.record.vehicles||[],
-        customCategories:json.record.customCategories||[],
-        customers:json.record.customers||[]
-      };
-    }else db={parts:[],sales:[],vehicles:[],customCategories:[],customers:[]};
-
+      data = {parts:json.record};
+    } else {
+      data = json.record || {};
+    }
+    db = {
+      parts: data.parts || [],
+      sales: data.sales || [],
+      vehicles: data.vehicles || [],
+      customCategories: data.customCategories || [],
+      customers: data.customers || [],
+      activityLog: data.activityLog || [],
+      settings: data.settings || {theme:'dark'}
+    };
+    // Migration
     db.parts.forEach(p=>{
-      if(typeof p.soldCount!=='number')p.soldCount=0;
-      if(!p.source)p.source=(p.vehicleId?'vehicle':'local');
+      if(typeof p.soldCount !== 'number') p.soldCount = 0;
+      if(!p.source) p.source = p.vehicleId ? 'vehicle' : 'local';
+      if(!Array.isArray(p.images)){
+        p.images = p.image ? [p.image] : [];
+        delete p.image;
+      }
+      if(!p.condition) p.condition = 'used';
+      if(typeof p.minStock !== 'number') p.minStock = 1;
     });
-    if(!db.vehicles)db.vehicles=[];
-    if(!db.customCategories)db.customCategories=[];
-    if(!db.customers)db.customers=[];
-
-    renderCategoryFilters();
-    renderParts();
-    renderVehicles();
-    populatePartVehicleSelect();
-    renderAnalyticsMonths();
-    renderHistoryView();
-  }catch(err){
+    db.sales.forEach(s=>{
+      if(!s.paymentStatus) s.paymentStatus = 'paid';
+      if(typeof s.discount !== 'number') s.discount = 0;
+      if(typeof s.paidAmount !== 'number') s.paidAmount = s.paymentStatus==='paid' ? (s.sellPrice*s.qty - (s.discount||0)) : 0;
+      if(!s.source) s.source = s.vehicleId ? 'vehicle' : 'local';
+    });
+    applyTheme();
+    renderAll();
+  } catch(err) {
     partsList.innerHTML=`<div class="col-span-full text-center py-12 text-red-400 text-sm px-4">Xəta. <button onclick="openConfigModal(true)" class="underline font-bold">Ayarları yoxla</button></div>`;
   }
 }
 
-async function syncData(successMsg){
-  if(syncing)return false;
+async function syncData(successMsg, silent){
+  if(syncing) return false;
   syncing=true;
   try{
     const res=await fetch(`https://api.jsonbin.io/v3/b/${getBinId()}`,{
@@ -800,51 +1380,121 @@ async function syncData(successMsg){
       headers:{'Content-Type':'application/json','X-Master-Key':getMasterKey()},
       body:JSON.stringify(db)
     });
-    if(!res.ok)throw new Error('HTTP '+res.status);
-    renderCategoryFilters();renderParts();renderVehicles();populatePartVehicleSelect();renderAnalytics();renderHistoryView();
-    if(successMsg)showToast(successMsg,false);
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    renderAll();
+    if(successMsg) showToast(successMsg,false);
     return true;
-  }catch(err){
-    showToast('Sinxronizasiya xətası!',true);return false;
-  }finally{syncing=false}
+  } catch(err) {
+    if(!silent) showToast('Sinxronizasiya xətası!',true);
+    return false;
+  } finally { syncing=false; }
 }
 
-// ===== TABS =====
+function renderAll(){
+  renderCategoryFilters();
+  renderParts();
+  renderVehicles();
+  populatePartVehicleSelect();
+  renderAnalyticsMonths();
+  renderSalesHistory();
+  renderCustomersTab();
+  renderDashboard();
+  updateAlertBadge();
+  if(document.getElementById('section-analytics') && !document.getElementById('section-analytics').classList.contains('hidden')){
+    renderAnalytics();
+  }
+}
+
+/* ========================================================
+   TABS
+======================================================== */
 function switchTab(tabName){
-  ['inventory','vehicles','analytics','history'].forEach(t=>{
+  ['dashboard','inventory','vehicles','analytics','customers','history'].forEach(t=>{
     document.getElementById(`section-${t}`).classList.add('hidden');
-    document.getElementById(`tab-${t}`).className='flex-1 py-2.5 rounded-xl text-[10px] sm:text-xs font-bold transition-all bg-slate-800/80 text-slate-400 hover:text-white';
+    const tabBtn = document.getElementById(`tab-${t}`);
+    if(tabBtn) tabBtn.className = 'tab-btn flex-1 min-w-fit py-2.5 px-3 rounded-xl text-[10px] sm:text-xs font-bold transition-all whitespace-nowrap bg-slate-800/80 text-slate-400 hover:text-white';
   });
   document.getElementById(`section-${tabName}`).classList.remove('hidden');
-  document.getElementById(`tab-${tabName}`).className='flex-1 py-2.5 rounded-xl text-[10px] sm:text-xs font-bold transition-all bg-red-600 text-white shadow-lg shadow-red-600/20';
-  if(tabName==='analytics')renderAnalytics();
-  if(tabName==='history')renderHistoryView();
-  if(tabName==='vehicles')renderVehicles();
+  const activeTab = document.getElementById(`tab-${tabName}`);
+  if(activeTab) activeTab.className = 'tab-btn flex-1 min-w-fit py-2.5 px-3 rounded-xl text-[10px] sm:text-xs font-bold transition-all whitespace-nowrap bg-gradient-to-br from-red-600 to-red-700 text-white shadow-lg shadow-red-600/30';
+
+  if(tabName === 'analytics') renderAnalytics();
+  if(tabName === 'history') renderSalesHistory();
+  if(tabName === 'vehicles') renderVehicles();
+  if(tabName === 'customers') renderCustomersTab();
+  if(tabName === 'dashboard') renderDashboard();
 }
 
-// ===== CATEGORY FILTERS =====
+/* ========================================================
+   CATEGORY FILTERS
+======================================================== */
 function renderCategoryFilters(){
   const container=document.getElementById('categoryFilters');
+  if(!container) return;
   const cats=['ALL',...getAllCategories()];
-  if(currentCategory!=='ALL'&&!cats.includes(currentCategory))currentCategory='ALL';
-  container.innerHTML=cats.map(c=>{
-    const label=c==='ALL'?'Hamısı':c;
-    const active=c===currentCategory;
-    return `<button data-cat="${esc(c)}" class="cat-btn ${active?'bg-red-600 text-white':'bg-slate-800/80 text-slate-300'} px-3 py-1.5 rounded-lg whitespace-nowrap font-medium flex-shrink-0">${esc(label)}</button>`;
+  if(currentCategory!=='ALL'&&!cats.includes(currentCategory)) currentCategory='ALL';
+  container.innerHTML = cats.map(c=>{
+    const label = c==='ALL' ? 'Hamısı' : c;
+    const active = c===currentCategory;
+    return `<button data-cat="${esc(c)}" class="cat-btn ${active?'bg-gradient-to-br from-red-600 to-red-700 text-white shadow-md shadow-red-600/30':'bg-slate-800/80 text-slate-300 hover:bg-slate-700'} px-3 py-1.5 rounded-lg whitespace-nowrap font-medium flex-shrink-0 transition-all">${esc(label)}</button>`;
   }).join('');
   container.querySelectorAll('.cat-btn').forEach(btn=>btn.addEventListener('click',()=>setCategoryFilter(btn.dataset.cat)));
 }
 function setCategoryFilter(cat){currentCategory=cat;renderCategoryFilters();renderParts()}
 
-// ===== PARTS =====
+function toggleStockFilter(){
+  const modes = ['all','in','low','out'];
+  const labels = {all:'Hamısı', in:'Stokda', low:'Az qalıb', out:'Bitib'};
+  stockFilter = modes[(modes.indexOf(stockFilter)+1) % modes.length];
+  document.getElementById('stockFilterLabel').innerText = labels[stockFilter];
+  const btn = document.getElementById('stockFilterBtn');
+  const colors = {
+    all:'text-slate-300 border-slate-800',
+    in:'text-emerald-400 border-emerald-700',
+    low:'text-amber-400 border-amber-700',
+    out:'text-red-400 border-red-700'
+  };
+  btn.className = `bg-slate-900 border ${colors[stockFilter]} rounded-xl px-3 py-3 text-xs font-semibold whitespace-nowrap`;
+  renderParts();
+}
+
+/* ========================================================
+   PARTS RENDER
+======================================================== */
+function getConditionBadge(cond){
+  const map = {
+    'new': {label:'Yeni',cls:'condition-new'},
+    'used': {label:'İşlənmiş',cls:'condition-used'},
+    'refurb': {label:'Bərpa',cls:'condition-refurb'}
+  };
+  const c = map[cond] || map.used;
+  return `<span class="${c.cls} text-[9px] font-bold px-1.5 py-0.5 rounded">${c.label}</span>`;
+}
+
 function renderParts(){
   const partsList=document.getElementById('partsList');
   const search=document.getElementById('searchInput').value;
-  const filtered=db.parts.filter(item=>{
-    const matchesCat=currentCategory==='ALL'||item.category===currentCategory;
+  const sort = document.getElementById('sortParts').value;
+
+  let filtered=db.parts.filter(item=>{
+    const matchesCat = currentCategory==='ALL' || item.category===currentCategory;
     const matchesSearch = matchesQuery(search, [item.code, item.car, item.engine, item.year, item.description, item.category, item.mileage]);
-    return matchesCat && matchesSearch;
+    let matchesStock = true;
+    if(stockFilter === 'in') matchesStock = item.quantity > 0;
+    else if(stockFilter === 'low') matchesStock = item.quantity > 0 && item.quantity <= (item.minStock||1);
+    else if(stockFilter === 'out') matchesStock = item.quantity === 0;
+    return matchesCat && matchesSearch && matchesStock;
   });
+
+  // Sorting
+  filtered = [...filtered];
+  if(sort === 'code') filtered.sort((a,b)=>(a.code||'').localeCompare(b.code||''));
+  else if(sort === 'price_asc') filtered.sort((a,b)=>(a.sellPrice||0)-(b.sellPrice||0));
+  else if(sort === 'price_desc') filtered.sort((a,b)=>(b.sellPrice||0)-(a.sellPrice||0));
+  else if(sort === 'qty_asc') filtered.sort((a,b)=>(a.quantity||0)-(b.quantity||0));
+  else if(sort === 'qty_desc') filtered.sort((a,b)=>(b.quantity||0)-(a.quantity||0));
+  else if(sort === 'sold_desc') filtered.sort((a,b)=>(b.soldCount||0)-(a.soldCount||0));
+  else filtered.sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));
 
   document.getElementById('statTotalItems').innerText=db.parts.length;
   const totalQty=db.parts.reduce((s,p)=>s+(p.quantity||0),0);
@@ -853,23 +1503,31 @@ function renderParts(){
   document.getElementById('statTotalValue').innerText=fmt(totalVal);
 
   if(filtered.length===0){
-    partsList.innerHTML=`<div class="col-span-full text-center py-12 text-slate-500 text-sm">Axtarışa uyğun detal tapılmadı.</div>`;
+    partsList.innerHTML=`<div class="col-span-full text-center py-12 text-slate-500 text-sm"><i class="fa-solid fa-inbox text-3xl opacity-30 mb-3 block"></i>Axtarışa uyğun detal tapılmadı.</div>`;
     return;
   }
 
   partsList.innerHTML=filtered.map(item=>{
     const veh=item.vehicleId?(db.vehicles||[]).find(v=>v.id===item.vehicleId):null;
     const isLocal=item.source==='local';
+    const isLow = item.quantity > 0 && item.quantity <= (item.minStock||1);
+    const isOut = item.quantity === 0;
+    const img = (item.images && item.images[0]) ? item.images[0] : null;
+    const stockColor = isOut ? 'text-red-500' : isLow ? 'text-amber-400' : 'text-emerald-400';
+
     return `
-    <div class="glass rounded-xl p-3 flex gap-3 relative border ${item.quantity===0?'border-red-900/50 bg-red-950/10':'border-slate-800'}">
-      ${item.image?`<img src="${item.image}" class="part-img w-20 h-20 sm:w-24 sm:h-24 rounded-xl object-cover border border-slate-700 flex-shrink-0 cursor-pointer" onclick="openEditModal('${item.id}')">`
-                  :`<div class="part-img w-20 h-20 sm:w-24 sm:h-24 rounded-xl bg-slate-800 flex items-center justify-center text-slate-600 flex-shrink-0 cursor-pointer" onclick="openEditModal('${item.id}')"><i class="fa-solid fa-car text-2xl"></i></div>`}
+    <div class="glass glass-hover rounded-xl p-3 flex gap-3 relative transition-all ${isOut?'border-red-900/40 bg-red-950/5':''}">
+      ${img?`<img src="${img}" class="part-img w-20 h-20 sm:w-24 sm:h-24 rounded-xl object-cover border border-slate-700 flex-shrink-0 cursor-pointer" onclick="openPartDetail('${item.id}')">`
+          :`<div class="part-img w-20 h-20 sm:w-24 sm:h-24 rounded-xl bg-slate-800 flex items-center justify-center text-slate-600 flex-shrink-0 cursor-pointer border border-slate-700" onclick="openPartDetail('${item.id}')"><i class="fa-solid fa-car text-2xl"></i></div>`}
       <div class="flex-1 min-w-0 space-y-1">
-        <div class="flex justify-between items-start gap-1">
-          <span class="bg-red-950 text-red-400 font-mono font-bold text-xs px-2 py-0.5 rounded-md border border-red-800/50 truncate">${esc(item.code||'—')}</span>
+        <div class="flex justify-between items-start gap-1 flex-wrap">
+          <div class="flex items-center gap-1 flex-wrap">
+            <span class="bg-red-950 text-red-400 font-mono font-bold text-xs px-2 py-0.5 rounded-md border border-red-800/50 truncate">${esc(item.code||'—')}</span>
+            ${getConditionBadge(item.condition)}
+          </div>
           <span class="text-[10px] ${isLocal?'bg-blue-950 text-blue-300 border-blue-800/40':'bg-slate-800 text-slate-400'} px-2 py-0.5 rounded-md whitespace-nowrap flex-shrink-0"><i class="fa-solid ${isLocal?'fa-shop':'fa-car-side'} text-[8px] mr-0.5"></i>${esc(item.category||'Digər')}</span>
         </div>
-        <h4 class="font-bold text-sm text-white truncate">${esc(item.car)} ${item.engine?`<span class="text-slate-400 text-xs font-normal">(${esc(item.engine)})</span>`:''}</h4>
+        <h4 class="font-bold text-sm text-white truncate cursor-pointer hover:text-red-300" onclick="openPartDetail('${item.id}')">${esc(item.car)} ${item.engine?`<span class="text-slate-400 text-xs font-normal">(${esc(item.engine)})</span>`:''}</h4>
         ${veh?`<button onclick="openVehicleDetail('${veh.id}')" class="text-[10px] text-red-300 hover:text-red-200 inline-flex items-center gap-1"><i class="fa-solid fa-link"></i>${esc(vehicleLabel(veh))}</button>`:''}
         <div class="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-slate-400">
           ${item.year?`<span><i class="fa-regular fa-calendar text-[10px] mr-1"></i>${esc(item.year)}</span>`:''}
@@ -878,13 +1536,15 @@ function renderParts(){
           ${isLocal&&item.buyPrice?`<span class="text-slate-500 text-[10px]">Maya: ${fmt(item.buyPrice)}</span>`:''}
           <span class="text-slate-500">Satılıb: <b class="text-slate-300">${item.soldCount||0}</b></span>
         </div>
-        <p class="text-xs text-slate-300 line-clamp-2">${esc(item.description||'')}</p>
+        ${item.description?`<p class="text-xs text-slate-300 line-clamp-1">${esc(item.description)}</p>`:''}
         <div class="flex justify-between items-center pt-2 border-t border-slate-800/80 gap-1 flex-wrap">
-          <span class="text-xs font-bold whitespace-nowrap ${item.quantity>0?'text-emerald-400':'text-red-500'}">${item.quantity>0?`Stok: ${item.quantity} ədəd`:'STOKDA YOXDUR'}</span>
+          <span class="text-xs font-bold whitespace-nowrap ${stockColor}">
+            ${isOut?'<i class="fa-solid fa-ban mr-1"></i>STOKDA YOXDUR':isLow?`<i class="fa-solid fa-triangle-exclamation mr-1"></i>Az: ${item.quantity} ədəd`:`<i class="fa-solid fa-check mr-1"></i>Stok: ${item.quantity} ədəd`}
+          </span>
           <div class="flex gap-1.5 flex-shrink-0">
-            <button onclick="promptSell('${item.id}')" ${item.quantity<=0?'disabled':''} class="bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 text-white text-xs px-2.5 py-1 rounded-lg font-bold shadow-md shadow-emerald-600/20 flex items-center gap-1"><i class="fa-solid fa-cart-shopping text-[10px]"></i> Satış</button>
+            <button onclick="promptSell('${item.id}')" ${item.quantity<=0?'disabled':''} class="bg-emerald-600 hover:bg-emerald-500 disabled:opacity-30 text-white text-xs px-2.5 py-1 rounded-lg font-bold shadow-md shadow-emerald-600/20 flex items-center gap-1"><i class="fa-solid fa-cart-shopping text-[10px]"></i> Satış</button>
             <button onclick="openEditModal('${item.id}')" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-2 py-1 rounded-lg border border-slate-700"><i class="fa-solid fa-pen text-[10px]"></i></button>
-            <button onclick="deletePart('${item.id}')" class="text-slate-500 hover:text-red-400 p-1"><i class="fa-solid fa-trash"></i></button>
+            <button onclick="deletePart('${item.id}')" class="text-slate-500 hover:text-red-400 p-1"><i class="fa-solid fa-trash text-xs"></i></button>
           </div>
         </div>
       </div>
@@ -892,9 +1552,79 @@ function renderParts(){
   }).join('');
 }
 
-// ===== VEHICLES (COLLAPSED CARDS) =====
+/* ========================================================
+   PART DETAIL / HISTORY
+======================================================== */
+function openPartDetail(id){
+  const part = db.parts.find(p=>p.id===id);
+  if(!part) return;
+  const veh = part.vehicleId ? (db.vehicles||[]).find(v=>v.id===part.vehicleId) : null;
+  const sales = (db.sales||[]).filter(s=>s.partId===id);
+
+  document.getElementById('partDetailTitle').innerHTML = `<i class="fa-solid fa-box text-red-500 flex-shrink-0"></i><span class="truncate">${esc(part.code||'—')}</span>`;
+
+  const images = part.images || [];
+  const imgHtml = images.length ? `
+    <div class="grid grid-cols-3 gap-2">
+      ${images.map(img=>`<img src="${img}" class="w-full h-24 object-cover rounded-lg border border-slate-700 cursor-pointer" onclick="window.open('${img}')">`).join('')}
+    </div>
+  ` : '';
+
+  const salesHtml = sales.length ? sales.map(s=>{
+    const isLocal = s.source==='local';
+    const total = s.sellPrice*s.qty - (s.discount||0);
+    const ret = s.returned ? 'opacity-50 line-through' : '';
+    return `<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2.5 flex justify-between items-start gap-2">
+      <div class="min-w-0">
+        <p class="text-[11px] font-bold text-white truncate ${ret}">${esc(s.customerName||'Qeyd olunmayıb')}</p>
+        <p class="text-[10px] text-slate-500 mt-0.5">${shortDate(s.date)} • ${s.qty} ədəd${s.returned?' • <span class="text-red-400">Qaytarılıb</span>':''}</p>
+        <p class="text-[10px] text-slate-500">${s.paymentStatus==='paid'?'<span class="text-emerald-400">Tam ödənilib</span>':s.paymentStatus==='partial'?'<span class="text-amber-400">Qismən</span>':'<span class="text-red-400">Borclu</span>'}</p>
+      </div>
+      <p class="text-xs font-bold ${s.returned?'text-slate-500 line-through':'text-emerald-400'} flex-shrink-0">${fmt(total)}</p>
+    </div>`;
+  }).join('') : `<p class="text-center text-slate-500 text-xs py-6">Hələ satış yoxdur.</p>`;
+
+  const totalRevenue = sales.filter(s=>!s.returned).reduce((sum,s)=>sum+s.sellPrice*s.qty-(s.discount||0),0);
+  const totalCost = (part.buyPrice||0) * sales.filter(s=>!s.returned).reduce((sum,s)=>sum+s.qty,0);
+  const totalProfit = totalRevenue - totalCost;
+
+  document.getElementById('partDetailBody').innerHTML = `
+    ${imgHtml}
+    <div class="grid grid-cols-2 gap-2 text-xs">
+      <div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2"><p class="text-[9px] text-slate-500 uppercase">Kateqoriya</p><p class="text-white text-[11px]">${esc(part.category)}</p></div>
+      <div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2"><p class="text-[9px] text-slate-500 uppercase">Vəziyyət</p><p class="text-[11px]">${getConditionBadge(part.condition)}</p></div>
+      <div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2"><p class="text-[9px] text-slate-500 uppercase">Marka & Model</p><p class="text-white text-[11px]">${esc(part.car)}</p></div>
+      <div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2"><p class="text-[9px] text-slate-500 uppercase">Mühərrik</p><p class="text-white text-[11px]">${esc(part.engine||'—')}</p></div>
+      ${part.year?`<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2"><p class="text-[9px] text-slate-500 uppercase">İl</p><p class="text-white text-[11px]">${esc(part.year)}</p></div>`:''}
+      ${part.mileage?`<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2"><p class="text-[9px] text-slate-500 uppercase">Yürüş</p><p class="text-white text-[11px]">${esc(part.mileage)}</p></div>`:''}
+    </div>
+    ${veh?`<button onclick="closePartDetail();openVehicleDetail('${veh.id}')" class="w-full bg-slate-800 hover:bg-slate-700 text-white text-xs py-2 rounded-lg font-semibold border border-slate-700"><i class="fa-solid fa-car-side mr-1"></i>${esc(vehicleLabel(veh))}</button>`:''}
+    <div class="grid grid-cols-3 gap-1.5 text-center">
+      <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800"><p class="text-[9px] text-slate-500 uppercase">Stok</p><p class="text-sm font-bold ${part.quantity===0?'text-red-500':part.quantity<=(part.minStock||1)?'text-amber-400':'text-emerald-400'}">${part.quantity}</p></div>
+      <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800"><p class="text-[9px] text-slate-500 uppercase">Satılıb</p><p class="text-sm font-bold text-blue-400">${part.soldCount||0}</p></div>
+      <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800"><p class="text-[9px] text-slate-500 uppercase">Satış Qiyməti</p><p class="text-sm font-bold text-white">${fmtN(part.sellPrice)}</p></div>
+    </div>
+    <div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2.5 space-y-1 text-[11px]">
+      <div class="flex justify-between"><span class="text-slate-400">Ümumi gəlir:</span><span class="text-emerald-400 font-bold">${fmt(totalRevenue)}</span></div>
+      ${part.buyPrice?`<div class="flex justify-between"><span class="text-slate-400">Ümumi maya:</span><span class="text-red-400 font-bold">${fmt(totalCost)}</span></div>`:''}
+      ${part.buyPrice?`<div class="flex justify-between border-t border-slate-800 pt-1"><span class="text-slate-300 font-bold">Qazanc:</span><span class="text-blue-400 font-bold">${fmt(totalProfit)}</span></div>`:''}
+    </div>
+    <div class="border-t border-slate-800 pt-2">
+      <p class="text-[10px] uppercase text-slate-500 font-bold tracking-wider mb-2">Satış Tarixçəsi (${sales.length})</p>
+      <div class="space-y-1.5 max-h-[40vh] overflow-y-auto pr-1">${salesHtml}</div>
+    </div>
+    <button onclick="closePartDetail();openEditModal('${part.id}')" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs py-2.5 rounded-xl font-semibold border border-slate-700"><i class="fa-solid fa-pen mr-1"></i>Redaktə et</button>
+  `;
+  document.getElementById('partDetailModal').classList.remove('hidden');
+}
+function closePartDetail(){document.getElementById('partDetailModal').classList.add('hidden')}
+
+/* ========================================================
+   VEHICLES RENDER
+======================================================== */
 function renderVehicles(){
   const list=document.getElementById('vehiclesList');
+  if(!list) return;
   const search=document.getElementById('vehicleSearchInput').value;
   const vehicles=(db.vehicles||[]).filter(v=>matchesQuery(search,[v.brand,v.model,v.generation,v.vin,v.engine,v.engineCode,v.color,v.notes]))
     .sort((a,b)=>vehicleLabel(a).localeCompare(vehicleLabel(b)));
@@ -925,7 +1655,6 @@ function renderVehicles(){
     const isPaidOff=recovered>=totalCost&&totalCost>0;
     const expanded = expandedVehicles.has(v.id);
 
-    // Paid % badge (visible in collapsed state)
     let badge='';
     if(totalCost>0){
       if(isPaidOff) badge = `<span class="bg-emerald-950 text-emerald-400 border border-emerald-800/50 text-[10px] font-bold px-2 py-0.5 rounded-md"><i class="fa-solid fa-check text-[8px] mr-0.5"></i>Ödənildi</span>`;
@@ -968,7 +1697,7 @@ function renderVehicles(){
     ` : '';
 
     return `
-    <div class="glass rounded-xl p-3.5 border ${expanded?'border-red-900/50':'border-slate-800'} hover:border-red-900/50 transition-all cursor-pointer" onclick="toggleVehicleExpand('${v.id}')">
+    <div class="glass glass-hover rounded-xl p-3.5 border ${expanded?'border-red-900/50':'border-slate-800'} transition-all cursor-pointer" onclick="toggleVehicleExpand('${v.id}')">
       <div class="flex justify-between items-start gap-2">
         <div class="min-w-0 flex-1">
           <h4 class="font-bold text-white text-sm truncate">${esc(vehicleLabel(v))}</h4>
@@ -990,7 +1719,10 @@ function renderVehicles(){
   }).join('');
 }
 
-function openVehicleModal(id,fromPartModal){
+/* ========================================================
+   VEHICLE MODAL
+======================================================== */
+function openVehicleModal(id, fromPartModal){
   if(id){
     requireCode('Avtomobili redaktə et', ()=>_doOpenVehicleModal(id, fromPartModal));
   } else {
@@ -1055,10 +1787,12 @@ async function saveVehicle(e){
   if(editId){
     const v=db.vehicles.find(x=>x.id===editId);
     if(v)Object.assign(v,data);
+    logActivity('Avtomobil redaktə edildi', vehicleLabel(data));
     ok=await syncData('Avtomobil yeniləndi ✓');
   }else{
     newId=Date.now().toString();
     db.vehicles.push({id:newId,createdAt:new Date().toISOString(),...data});
+    logActivity('Yeni avtomobil əlavə edildi', vehicleLabel(data));
     ok=await syncData('Avtomobil əlavə olundu ✓');
   }
   btn.disabled=false;
@@ -1081,10 +1815,12 @@ async function _doDeleteVehicle(id){
   let msg='Bu avtomobili silməyə əminsiniz?';
   if(vParts.length>0)msg=`${vParts.length} detal var. Silinsin?`;
   if(!confirm(msg))return;
+  const v = db.vehicles.find(x=>x.id===id);
   const backupVehicles=db.vehicles;
   const backupPartsLinks=db.parts.map(p=>p.vehicleId);
   db.vehicles=db.vehicles.filter(v=>v.id!==id);
   db.parts.forEach(p=>{if(p.vehicleId===id)p.vehicleId=''});
+  logActivity('Avtomobil silindi', v ? vehicleLabel(v) : '');
   const ok=await syncData('Silindi');
   if(!ok){db.vehicles=backupVehicles;db.parts.forEach((p,i)=>p.vehicleId=backupPartsLinks[i])}
 }
@@ -1122,15 +1858,17 @@ function openVehicleDetail(id){
   document.getElementById('vehicleDetailTitle').innerHTML=`<i class="fa-solid fa-car-side text-red-500 flex-shrink-0"></i><span class="truncate">${esc(vehicleLabel(v))}</span>`;
 
   const rowsHtml=vParts.length===0?`<p class="text-center text-slate-500 text-xs py-6">Detal yoxdur.</p>`:
-    vParts.map(p=>`
-      <div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2.5 flex justify-between items-start gap-2">
-        <div class="min-w-0">
-          <p class="font-bold text-white text-xs truncate">${esc(p.code||'—')} <span class="text-slate-500 font-normal">• ${esc(p.category)}</span></p>
-          <p class="text-[10px] text-slate-400 mt-0.5 line-clamp-1">${esc(p.description||'')}</p>
-          <p class="text-[10px] text-slate-500 mt-0.5">Stok: ${p.quantity} ədəd • Satılıb: ${p.soldCount||0}</p>
+    vParts.map(p=>{
+      const img = (p.images && p.images[0]) ? p.images[0] : null;
+      return `<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2 flex gap-2 cursor-pointer" onclick="closeVehicleDetail();openPartDetail('${p.id}')">
+        ${img?`<img src="${img}" class="w-10 h-10 rounded object-cover flex-shrink-0 border border-slate-700">`:`<div class="w-10 h-10 rounded bg-slate-800 flex items-center justify-center text-slate-600 flex-shrink-0"><i class="fa-solid fa-box text-xs"></i></div>`}
+        <div class="min-w-0 flex-1">
+          <p class="font-bold text-white text-xs truncate">${esc(p.code||'—')}</p>
+          <p class="text-[10px] text-slate-500">${esc(p.category)} • Stok: ${p.quantity} • Satılıb: ${p.soldCount||0}</p>
         </div>
-        <div class="text-right flex-shrink-0"><p class="text-xs font-bold text-emerald-400">${fmt(p.sellPrice)}</p></div>
-      </div>`).join('');
+        <p class="text-xs font-bold text-emerald-400 flex-shrink-0">${fmt(p.sellPrice)}</p>
+      </div>`;
+    }).join('');
 
   let finBlock='';
   if(totalCost>0){
@@ -1164,7 +1902,7 @@ function openVehicleDetail(id){
       <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800"><p class="text-[9px] text-slate-500">Detal</p><p class="text-sm font-bold text-white">${vParts.length}</p></div>
       <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800"><p class="text-[9px] text-slate-500">Stok</p><p class="text-sm font-bold text-emerald-400">${qtySum}</p></div>
       <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800"><p class="text-[9px] text-slate-500">Satılıb</p><p class="text-sm font-bold text-blue-400">${soldUnits}</p></div>
-      <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800"><p class="text-[9px] text-slate-500">Gəlir</p><p class="text-sm font-bold text-amber-400">${fmt(recovered).replace(M,'')}</p></div>
+      <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800"><p class="text-[9px] text-slate-500">Gəlir</p><p class="text-sm font-bold text-amber-400">${fmtN(recovered)}</p></div>
     </div>
     <div class="border-t border-slate-800 pt-2">
       <p class="text-[10px] uppercase text-slate-500 font-bold tracking-wider mb-2">Detallar</p>
@@ -1185,21 +1923,23 @@ function openAddModalForVehicle(vehicleId){
   if(sel){sel.value=vehicleId;onPartVehicleChange()}
 }
 
-// ===== SOURCE PICKER =====
+/* ========================================================
+   SOURCE PICKER
+======================================================== */
 function setPartSource(source){
   currentPartSource=source;
   document.getElementById('partSource').value=source;
   const vBtn=document.getElementById('srcVehicleBtn');
   const lBtn=document.getElementById('srcLocalBtn');
   if(source==='vehicle'){
-    vBtn.className='flex-1 py-2 rounded-lg text-[11px] font-bold transition-all bg-red-600 text-white shadow-md shadow-red-600/20';
+    vBtn.className='flex-1 py-2 rounded-lg text-[11px] font-bold transition-all bg-gradient-to-br from-red-600 to-red-700 text-white shadow-md shadow-red-600/20';
     lBtn.className='flex-1 py-2 rounded-lg text-[11px] font-bold transition-all text-slate-400 hover:text-white';
     document.getElementById('vehiclePickerWrap').classList.remove('hidden');
     document.getElementById('buyPriceWrap').classList.add('hidden');
     document.getElementById('sellHint').innerText='Bu satış avtomobilin maya ödənişinə gedir.';
   }else{
     vBtn.className='flex-1 py-2 rounded-lg text-[11px] font-bold transition-all text-slate-400 hover:text-white';
-    lBtn.className='flex-1 py-2 rounded-lg text-[11px] font-bold transition-all bg-blue-600 text-white shadow-md shadow-blue-600/20';
+    lBtn.className='flex-1 py-2 rounded-lg text-[11px] font-bold transition-all bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-md shadow-blue-600/20';
     document.getElementById('vehiclePickerWrap').classList.add('hidden');
     document.getElementById('buyPriceWrap').classList.remove('hidden');
     document.getElementById('partVehicleSelect').value='';
@@ -1209,7 +1949,9 @@ function setPartSource(source){
   }
 }
 
-// ===== SALE =====
+/* ========================================================
+   SALE
+======================================================== */
 function promptSell(partId){
   const part=db.parts.find(p=>p.id===partId);
   if(!part)return;
@@ -1219,10 +1961,13 @@ function promptSell(partId){
   document.getElementById('sellActualPrice').value=part.sellPrice||0;
   document.getElementById('sellActualQty').value=1;
   document.getElementById('sellActualQty').max=part.quantity;
+  document.getElementById('sellDiscount').value=0;
   document.getElementById('sellCustomerName').value='';
   document.getElementById('sellCustomerPhone').value='';
   document.getElementById('customerHint').classList.add('hidden');
   closeCustomerDropdown();
+  setPaymentStatus('paid');
+  updateSaleTotal();
   document.getElementById('sellModal').classList.remove('hidden');
 }
 function closeSellModal(){document.getElementById('sellModal').classList.add('hidden');activeSellPartId=null;closeCustomerDropdown()}
@@ -1235,11 +1980,16 @@ async function _doConfirmSale(){
   if(!part)return;
   const price=parseFloat(document.getElementById('sellActualPrice').value)||0;
   const qty=parseInt(document.getElementById('sellActualQty').value)||1;
+  const discount=parseFloat(document.getElementById('sellDiscount').value)||0;
+  const payStatus=document.getElementById('sellPaymentStatus').value;
+  const paidAmount=payStatus==='partial'?(parseFloat(document.getElementById('sellPaidAmount').value)||0):(payStatus==='paid'?Math.max(0, price*qty-discount):0);
   const customerName=document.getElementById('sellCustomerName').value.trim();
   const customerPhone=document.getElementById('sellCustomerPhone').value.trim();
 
   if(qty>part.quantity){showToast('Stokda olan miqdardan çox!',true);return}
   if(qty<1){showToast('Say ən az 1 olmalıdır.',true);return}
+  if(discount > price*qty){showToast('Endirim məbləğdən çox ola bilməz!',true);return}
+  if(payStatus==='partial' && (paidAmount < 0 || paidAmount >= price*qty-discount)){showToast('Ödənilən məbləğ düzgün deyil!',true);return}
 
   const btn=document.getElementById('confirmSaleBtn');
   btn.disabled=true;btn.innerText='Qeydə alınır...';
@@ -1247,6 +1997,7 @@ async function _doConfirmSale(){
   part.quantity-=qty;
   part.soldCount=(part.soldCount||0)+qty;
 
+  const totalAmount = price*qty - discount;
   const saleRecord={
     id:Date.now().toString(),
     partId:part.id,
@@ -1255,47 +2006,313 @@ async function _doConfirmSale(){
     category:part.category,
     qty,
     sellPrice:price,
+    discount,
     buyPrice:part.source==='local'?(part.buyPrice||0):0,
-    profit:part.source==='local'?(price-(part.buyPrice||0))*qty:price*qty,
+    profit:part.source==='local'?(price-(part.buyPrice||0))*qty-discount:totalAmount,
     date:new Date().toISOString(),
     returned:false,
     source:part.source,
     vehicleId:part.vehicleId||'',
     customerName:customerName,
-    customerPhone:customerPhone
+    customerPhone:customerPhone,
+    paymentStatus:payStatus,
+    paidAmount:paidAmount,
+    dueAmount:Math.max(0, totalAmount - paidAmount)
   };
   if(!db.sales)db.sales=[];
   db.sales.unshift(saleRecord);
   if(customerName) registerCustomer(customerName, customerPhone);
+  logActivity('Satış', `${part.code||'—'} → ${customerName||'Qeyd yoxdur'} • ${fmt(totalAmount)}`);
 
   const ok=await syncData('Satış qeydə alındı ✓');
   if(!ok){part.quantity+=qty;part.soldCount-=qty;db.sales.shift()}
   btn.disabled=false;btn.innerText='Satışı Qeydə Al';
   closeSellModal();
+
+  // Offer receipt
+  if(ok && confirm('Çek göstərilsin?')){
+    activeReceiptSale = saleRecord;
+    showReceipt(saleRecord);
+  }
 }
 
 function returnSale(saleId){
-  requireCode('Satışı geri qaytar', ()=>_doReturnSale(saleId));
+  activeReturnSaleId = saleId;
+  document.getElementById('returnReason').value = 'Nasaz';
+  document.getElementById('returnNote').value = '';
+  document.getElementById('returnModal').classList.remove('hidden');
 }
-async function _doReturnSale(saleId){
+function closeReturnModal(){document.getElementById('returnModal').classList.add('hidden');activeReturnSaleId=null}
+function submitReturn(){
+  requireCode('Satışı geri qaytar', _doReturnSale);
+}
+async function _doReturnSale(){
+  const saleId = activeReturnSaleId;
   const sale=db.sales.find(s=>s.id===saleId);
   if(!sale||sale.returned)return;
-  if(!confirm(`"${sale.code||'—'}" — ${sale.qty} ədəd satışı geri qaytarmaq istəyirsiniz?`))return;
+  const reason = document.getElementById('returnReason').value;
+  const note = document.getElementById('returnNote').value.trim();
+
   const part=db.parts.find(p=>p.id===sale.partId);
-  const backup={partQty:part?part.quantity:null,partSold:part?part.soldCount:null,returned:sale.returned,returnedAt:sale.returnedAt};
+  const backup={partQty:part?part.quantity:null,partSold:part?part.soldCount:null,returned:sale.returned,returnedAt:sale.returnedAt,reason:sale.returnReason,note:sale.returnNote};
   if(part){part.quantity=(part.quantity||0)+sale.qty;part.soldCount=Math.max(0,(part.soldCount||0)-sale.qty)}
-  sale.returned=true;sale.returnedAt=new Date().toISOString();
+  sale.returned=true;
+  sale.returnedAt=new Date().toISOString();
+  sale.returnReason=reason;
+  sale.returnNote=note;
+  logActivity('Geri qaytarma', `${sale.code||'—'} • Səbəb: ${reason}`);
+
+  closeReturnModal();
   const ok=await syncData('Geri qaytarıldı ✓');
   if(!ok){
     if(part){part.quantity=backup.partQty;part.soldCount=backup.partSold}
     sale.returned=backup.returned;
     if(backup.returnedAt===undefined)delete sale.returnedAt;else sale.returnedAt=backup.returnedAt;
+    if(backup.reason===undefined)delete sale.returnReason;else sale.returnReason=backup.reason;
+    if(backup.note===undefined)delete sale.returnNote;else sale.returnNote=backup.note;
   }
 }
 
-// ===== ANALYTICS =====
+/* ========================================================
+   RECEIPT
+======================================================== */
+function showReceipt(sale){
+  const d = new Date(sale.date);
+  const receiptNo = sale.id.slice(-6).toUpperCase();
+  document.getElementById('receiptBody').innerHTML = `
+    <div class="text-center text-[10px] text-gray-600 border-b border-dashed border-gray-400 pb-2">
+      <p>Çek №: <b>${receiptNo}</b></p>
+      <p>${fullDate(sale.date)}</p>
+    </div>
+    <div class="py-2 border-b border-dashed border-gray-400">
+      <p class="text-[11px]"><b>Müştəri:</b> ${esc(sale.customerName||'Qeyd olunmayıb')}</p>
+      ${sale.customerPhone?`<p class="text-[11px]"><b>Telefon:</b> ${esc(sale.customerPhone)}</p>`:''}
+    </div>
+    <div class="py-2 border-b border-dashed border-gray-400 space-y-1">
+      <p class="text-[11px]"><b>Detal:</b> ${esc(sale.code||'—')}</p>
+      <p class="text-[11px]"><b>Marka:</b> ${esc(sale.car)}</p>
+      <p class="text-[11px]"><b>Kateqoriya:</b> ${esc(sale.category)}</p>
+    </div>
+    <div class="py-2 border-b border-dashed border-gray-400 space-y-1">
+      <div class="flex justify-between text-[11px]"><span>Qiymət × Say:</span><span>${fmtN(sale.sellPrice)} × ${sale.qty}</span></div>
+      <div class="flex justify-between text-[11px]"><span>Alt cəm:</span><span>${fmtN(sale.sellPrice*sale.qty)}</span></div>
+      ${sale.discount>0?`<div class="flex justify-between text-[11px] text-red-600"><span>Endirim:</span><span>−${fmtN(sale.discount)}</span></div>`:''}
+      <div class="flex justify-between text-sm font-black pt-1 border-t border-gray-400"><span>YEKUN:</span><span>₼${fmtN(sale.sellPrice*sale.qty - (sale.discount||0))}</span></div>
+    </div>
+    <div class="py-2 border-b border-dashed border-gray-400">
+      <p class="text-[10px]"><b>Ödəniş:</b> ${sale.paymentStatus==='paid'?'Tam ödənilib ✓':sale.paymentStatus==='partial'?`Qismən (${fmtN(sale.paidAmount)})`:'Borclu'}</p>
+      ${sale.paymentStatus!=='paid' && sale.dueAmount>0?`<p class="text-[11px] text-red-600 font-bold">Qalıq borc: ₼${fmtN(sale.dueAmount)}</p>`:''}
+    </div>
+    <div class="text-center text-[10px] text-gray-600 pt-2">
+      <p>Bizi seçdiyiniz üçün təşəkkürlər!</p>
+      <p>Zəmanət və zəmanət şərtləri üçün müraciət edin</p>
+    </div>
+  `;
+  document.getElementById('receiptModal').classList.remove('hidden');
+}
+function closeReceipt(){document.getElementById('receiptModal').classList.add('hidden');activeReceiptSale=null}
+function printReceipt(){window.print()}
+function shareWhatsApp(){
+  if(!activeReceiptSale) return;
+  const s = activeReceiptSale;
+  const text = `🧾 *TeslaLand Çek*\n\n👤 Müştəri: ${s.customerName||'—'}\n🔧 Detal: ${s.code||'—'}\n🚗 Avtomobil: ${s.car}\n📦 Say: ${s.qty}\n💰 Qiymət: ₼${fmtN(s.sellPrice)}\n${s.discount>0?`🎁 Endirim: ₼${fmtN(s.discount)}\n`:''}✅ *Yekun: ₼${fmtN(s.sellPrice*s.qty - (s.discount||0))}*\n💳 Ödəniş: ${s.paymentStatus==='paid'?'Tam':s.paymentStatus==='partial'?'Qismən':'Borclu'}\n\nTəşəkkürlər! 🙏`;
+  const phone = (s.customerPhone||'').replace(/[^0-9]/g,'');
+  const url = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(text)}` : `https://wa.me/?text=${encodeURIComponent(text)}`;
+  window.open(url, '_blank');
+}
+
+/* ========================================================
+   DASHBOARD
+======================================================== */
+function renderDashboard(){
+  const now = new Date();
+  const thisMonth = now.toISOString().slice(0,7);
+  const monthSales = (db.sales||[]).filter(s=>s.date && s.date.startsWith(thisMonth) && !s.returned);
+  const monthRevenue = monthSales.reduce((sum,s)=>sum+s.sellPrice*s.qty-(s.discount||0),0);
+  const monthProfit = monthSales.reduce((sum,s)=>sum+(s.profit||0),0);
+  const monthCount = monthSales.length;
+  const monthMargin = monthRevenue>0?(monthProfit/monthRevenue*100):0;
+
+  const partsValue = (db.parts||[]).reduce((s,p)=>s+(p.sellPrice||0)*(p.quantity||0),0);
+  const vehInvestment = (db.vehicles||[]).reduce((s,v)=>s+vehicleTotalCost(v),0);
+  const totalValue = partsValue + vehInvestment;
+  const recovered = (db.vehicles||[]).reduce((s,v)=>s+vehicleRecovered(v.id),0);
+
+  document.getElementById('dashTotalValue').innerText = fmt(totalValue);
+  document.getElementById('dashTotalValueSub').innerText = `Stok: ${fmt(partsValue)} + Avtomobil: ${fmt(vehInvestment)}`;
+  document.getElementById('dashMonthSales').innerText = fmt(monthRevenue);
+  document.getElementById('dashMonthSalesSub').innerText = `${monthCount} satış`;
+  document.getElementById('dashMonthProfit').innerText = fmt(monthProfit);
+  document.getElementById('dashMonthMargin').innerText = `Marja ${monthMargin.toFixed(1)}%`;
+  document.getElementById('dashPartsCount').innerText = (db.parts||[]).length;
+  const totalQty = (db.parts||[]).reduce((s,p)=>s+(p.quantity||0),0);
+  document.getElementById('dashPartsQty').innerText = `${totalQty} ədəd`;
+  document.getElementById('dashVehCount').innerText = (db.vehicles||[]).length;
+  document.getElementById('dashVehRecovered').innerText = `${fmt(recovered)} toplanıb`;
+
+  renderChartSales30();
+  renderChartCategories();
+  renderLowStock();
+  renderDashActivity();
+  renderTopCustomers();
+}
+
+function renderChartSales30(){
+  const canvas = document.getElementById('chartSales30');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const days = [];
+  const values = [];
+  const now = new Date();
+  for(let i = 29; i >= 0; i--){
+    const d = new Date(now);
+    d.setDate(d.getDate()-i);
+    const key = d.toISOString().slice(0,10);
+    days.push(`${d.getDate()}`);
+    const total = (db.sales||[]).filter(s=>s.date && s.date.startsWith(key) && !s.returned)
+      .reduce((sum,s)=>sum+s.sellPrice*s.qty-(s.discount||0),0);
+    values.push(total);
+  }
+  const total30 = values.reduce((a,b)=>a+b,0);
+  document.getElementById('chartSalesTotal').innerText = fmt(total30);
+
+  if(chartSales30) chartSales30.destroy();
+  chartSales30 = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: days,
+      datasets: [{
+        label: 'Satış',
+        data: values,
+        borderColor: '#10b981',
+        backgroundColor: 'rgba(16,185,129,.15)',
+        fill: true,
+        tension: 0.4,
+        borderWidth: 2,
+        pointRadius: 0,
+        pointHoverRadius: 5
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c)=>`₼${fmtN(c.parsed.y)}` } } },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: '#64748b', font: { size: 9 }, maxTicksLimit: 8 } },
+        y: { grid: { color: 'rgba(100,116,139,.1)' }, ticks: { color: '#64748b', font: { size: 9 }, callback: (v)=>'₼'+v } }
+      }
+    }
+  });
+}
+
+function renderChartCategories(){
+  const canvas = document.getElementById('chartCategories');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const cats = {};
+  (db.parts||[]).forEach(p=>{
+    const key = p.category || 'Digər';
+    cats[key] = (cats[key]||0) + (p.sellPrice||0)*(p.quantity||0);
+  });
+  const labels = Object.keys(cats);
+  const values = Object.values(cats);
+  const palette = ['#ef4444','#f59e0b','#10b981','#3b82f6','#8b5cf6','#ec4899','#14b8a6','#f97316','#6366f1','#a855f7'];
+
+  if(chartCategories) chartCategories.destroy();
+  if(labels.length === 0){
+    chartCategories = new Chart(ctx, {type:'doughnut',data:{labels:['Boş'],datasets:[{data:[1],backgroundColor:['#334155']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
+    return;
+  }
+  chartCategories = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels,
+      datasets: [{
+        data: values,
+        backgroundColor: palette.slice(0, labels.length),
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'right', labels: { color: '#94a3b8', font: { size: 10 }, boxWidth: 10, padding: 8 } },
+        tooltip: { callbacks: { label: (c)=>`${c.label}: ₼${fmtN(c.parsed)}` } }
+      }
+    }
+  });
+}
+
+function renderLowStock(){
+  const container = document.getElementById('lowStockList');
+  const low = (db.parts||[]).filter(p=>(p.quantity||0) <= (p.minStock||1)).sort((a,b)=>(a.quantity||0)-(b.quantity||0)).slice(0,10);
+  document.getElementById('lowStockCount').innerText = low.length;
+  if(low.length === 0){
+    container.innerHTML = `<div class="text-center py-6"><i class="fa-solid fa-check-circle text-emerald-500 text-2xl mb-2"></i><p class="text-slate-500 text-xs">Bütün stoklar yaxşıdır ✓</p></div>`;
+    return;
+  }
+  container.innerHTML = low.map(p=>{
+    const isOut = p.quantity === 0;
+    return `<div class="flex justify-between items-center bg-slate-950/60 border ${isOut?'border-red-900/40':'border-amber-900/40'} rounded-lg p-2 gap-2 cursor-pointer hover:border-red-700" onclick="openPartDetail('${p.id}')">
+      <div class="min-w-0">
+        <p class="text-xs font-bold text-white truncate">${esc(p.code||'—')} <span class="text-slate-500 font-normal">${esc(p.car)}</span></p>
+        <p class="text-[10px] ${isOut?'text-red-400':'text-amber-400'}">${isOut?'Stok bitib':'Az qalıb'}</p>
+      </div>
+      <span class="text-xs font-bold ${isOut?'text-red-400':'text-amber-400'} flex-shrink-0">${p.quantity} ədəd</span>
+    </div>`;
+  }).join('');
+}
+
+function renderDashActivity(){
+  const container = document.getElementById('dashActivity');
+  const logs = (db.activityLog||[]).slice(0,10);
+  if(logs.length === 0){
+    container.innerHTML = `<p class="text-slate-500 text-xs text-center py-6">Hələ fəaliyyət yoxdur</p>`;
+    return;
+  }
+  container.innerHTML = logs.map(l=>`
+    <div class="flex items-start gap-2 bg-slate-950/60 border border-slate-800 rounded-lg p-2">
+      <i class="fa-solid fa-circle text-[6px] text-red-500 mt-1.5 flex-shrink-0"></i>
+      <div class="min-w-0 flex-1">
+        <p class="text-[11px] text-white font-semibold truncate">${esc(l.action)}</p>
+        ${l.details?`<p class="text-[10px] text-slate-500 truncate">${esc(l.details)}</p>`:''}
+      </div>
+      <span class="text-[9px] text-slate-500 flex-shrink-0">${timeAgo(l.date)}</span>
+    </div>
+  `).join('');
+}
+
+function renderTopCustomers(){
+  const container = document.getElementById('dashTopCustomers');
+  const customers = getAllCustomers().map(c=>{
+    const stats = getCustomerStats(c.name);
+    const tier = getCustomerTier(c.name);
+    return {...c, stats, tier};
+  }).filter(c=>c.stats.count > 0).sort((a,b)=>b.stats.total - a.stats.total).slice(0,4);
+
+  if(customers.length === 0){
+    container.innerHTML = `<p class="text-slate-500 text-xs text-center py-4 col-span-2">Hələ müştəri yoxdur</p>`;
+    return;
+  }
+  container.innerHTML = customers.map(c=>`
+    <div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2.5 flex items-center gap-2 cursor-pointer hover:border-blue-800" onclick="openCustomerDetail('${esc(c.name).replace(/'/g,"&#39;")}')">
+      <div class="w-9 h-9 rounded-full ${c.tier.cls} flex items-center justify-center flex-shrink-0 font-bold text-sm">${esc(c.name.charAt(0).toUpperCase())}</div>
+      <div class="min-w-0 flex-1">
+        <p class="text-xs font-bold text-white truncate">${esc(c.name)}</p>
+        <p class="text-[10px] text-slate-500">${c.stats.count} alış</p>
+      </div>
+      <p class="text-xs font-bold text-emerald-400 flex-shrink-0">${fmt(c.stats.total)}</p>
+    </div>
+  `).join('');
+}
+
+/* ========================================================
+   ANALYTICS
+======================================================== */
 function renderAnalyticsMonths(){
   const select=document.getElementById('analyticsMonthSelect');
+  if(!select) return;
   const prevValue=select.value;
   const months=new Set();
   months.add(new Date().toISOString().slice(0,7));
@@ -1311,17 +2328,17 @@ function renderAnalytics(){
   const localSales=monthlySales.filter(s=>s.source==='local');
   const vehSales=monthlySales.filter(s=>s.source==='vehicle');
 
-  const localRev=localSales.reduce((s,x)=>s+x.sellPrice*x.qty,0);
+  const localRev=localSales.reduce((s,x)=>s+x.sellPrice*x.qty-(x.discount||0),0);
   const localCost=localSales.reduce((s,x)=>s+(x.buyPrice||0)*x.qty,0);
   const localProfit=localRev-localCost;
   const localUnits=localSales.reduce((s,x)=>s+x.qty,0);
 
-  const vehRev=vehSales.reduce((s,x)=>s+x.sellPrice*x.qty,0);
+  const vehRev=vehSales.reduce((s,x)=>s+x.sellPrice*x.qty-(x.discount||0),0);
   const vehUnits=vehSales.reduce((s,x)=>s+x.qty,0);
 
-  const totalLocalRev=(db.sales||[]).filter(s=>!s.returned&&s.source==='local').reduce((s,x)=>s+x.sellPrice*x.qty,0);
+  const totalLocalRev=(db.sales||[]).filter(s=>!s.returned&&s.source==='local').reduce((s,x)=>s+x.sellPrice*x.qty-(x.discount||0),0);
   const totalLocalCost=(db.sales||[]).filter(s=>!s.returned&&s.source==='local').reduce((s,x)=>s+(x.buyPrice||0)*x.qty,0);
-  const totalVehRev=(db.sales||[]).filter(s=>!s.returned&&s.source==='vehicle').reduce((s,x)=>s+x.sellPrice*x.qty,0);
+  const totalVehRev=(db.sales||[]).filter(s=>!s.returned&&s.source==='vehicle').reduce((s,x)=>s+x.sellPrice*x.qty-(x.discount||0),0);
   const totalVehInvestment=(db.vehicles||[]).reduce((s,v)=>s+vehicleTotalCost(v),0);
   const allTimeRevenue=totalLocalRev+totalVehRev;
   const allTimeCost=totalLocalCost+totalVehInvestment;
@@ -1367,112 +2384,152 @@ function renderAnalytics(){
       </div>
       <span class="bg-slate-800 text-slate-400 font-medium px-2 py-0.5 rounded text-[10px] flex-shrink-0">${item.soldCount||0}</span>
     </div>`).join(''):`<p class="text-slate-500 text-center py-4">Stokda hissə yoxdur.</p>`;
+
+  renderChartDaily(selectedMonth);
+  renderChartMonthly();
 }
 
-// ===== HISTORY =====
-function setHistoryView(view){
-  historyView = view;
-  const salesBtn = document.getElementById('hViewSales');
-  const custBtn = document.getElementById('hViewCustomers');
-  const salesList = document.getElementById('salesHistoryList');
-  const custList = document.getElementById('customersList');
-  const title = document.getElementById('historyTitle');
-
-  if(view==='sales'){
-    salesBtn.className = 'flex-1 py-2 rounded-lg text-[11px] font-bold transition-all bg-red-600 text-white';
-    custBtn.className = 'flex-1 py-2 rounded-lg text-[11px] font-bold transition-all text-slate-400 hover:text-white';
-    salesList.classList.remove('hidden');
-    custList.classList.add('hidden');
-    title.innerText = 'Satış Əməliyyatları';
-  } else {
-    salesBtn.className = 'flex-1 py-2 rounded-lg text-[11px] font-bold transition-all text-slate-400 hover:text-white';
-    custBtn.className = 'flex-1 py-2 rounded-lg text-[11px] font-bold transition-all bg-blue-600 text-white';
-    salesList.classList.add('hidden');
-    custList.classList.remove('hidden');
-    title.innerText = 'Müştərilər';
+function renderChartDaily(month){
+  const canvas = document.getElementById('chartDaily');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const [year, mon] = month.split('-').map(Number);
+  const daysInMonth = new Date(year, mon, 0).getDate();
+  const labels = [];
+  const values = [];
+  for(let d = 1; d <= daysInMonth; d++){
+    const key = `${month}-${String(d).padStart(2,'0')}`;
+    labels.push(d);
+    const total = (db.sales||[]).filter(s=>s.date && s.date.startsWith(key) && !s.returned)
+      .reduce((sum,s)=>sum+s.sellPrice*s.qty-(s.discount||0),0);
+    values.push(total);
   }
-  renderHistoryView();
+  if(chartDaily) chartDaily.destroy();
+  chartDaily = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Satış',
+        data: values,
+        backgroundColor: 'rgba(239,68,68,.7)',
+        borderRadius: 4,
+        borderSkipped: false
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c)=>`₼${fmtN(c.parsed.y)}` } } },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: '#64748b', font: { size: 9 }, maxTicksLimit: 15 } },
+        y: { grid: { color: 'rgba(100,116,139,.1)' }, ticks: { color: '#64748b', font: { size: 9 }, callback: (v)=>'₼'+v } }
+      }
+    }
+  });
 }
 
-function renderHistoryView(){
-  if(historyView==='sales') renderSalesHistory();
-  else renderCustomers();
-}
-
-function renderSalesHistory(){
-  const container=document.getElementById('salesHistoryList');
-  const search=document.getElementById('historySearchInput').value;
-  const sales=(db.sales||[]).filter(s=>matchesQuery(search,[s.code,s.car,s.category,s.customerName,s.customerPhone]));
-  document.getElementById('salesCountBadge').innerText=`${sales.length} / ${(db.sales||[]).length}`;
-
-  if(sales.length===0){
-    container.innerHTML=`<div class="col-span-full text-center py-10 text-slate-500 text-xs">${(db.sales||[]).length===0?'Hələ satış yoxdur.':'Uyğun nəticə yoxdur.'}</div>`;
-    return;
+function renderChartMonthly(){
+  const canvas = document.getElementById('chartMonthly');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const labels = [];
+  const revenues = [];
+  const profits = [];
+  const now = new Date();
+  for(let i = 5; i >= 0; i--){
+    const d = new Date(now.getFullYear(), now.getMonth()-i, 1);
+    const key = d.toISOString().slice(0,7);
+    labels.push(d.toLocaleDateString('az-AZ',{month:'short', year:'2-digit'}));
+    const monthSales = (db.sales||[]).filter(s=>s.date && s.date.startsWith(key) && !s.returned);
+    revenues.push(monthSales.reduce((sum,s)=>sum+s.sellPrice*s.qty-(s.discount||0),0));
+    profits.push(monthSales.reduce((sum,s)=>sum+(s.profit||0),0));
   }
-
-  container.innerHTML=sales.map(s=>{
-    const d=new Date(s.date);
-    const dateStr=`${d.getDate().toString().padStart(2,'0')}.${(d.getMonth()+1).toString().padStart(2,'0')}.${d.getFullYear()} ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;
-    const returnedStyle=s.returned?'opacity-60 border-red-900/40 bg-red-950/10':'';
-    const isLocal=s.source==='local';
-    const hasCustomer = s.customerName;
-    return `
-    <div class="glass p-3 rounded-xl text-xs ${returnedStyle}">
-      <div class="flex justify-between items-start gap-2">
-        <div class="space-y-0.5 min-w-0 flex-1">
-          ${hasCustomer?`<p class="font-bold text-blue-300 text-[11px] truncate"><i class="fa-solid fa-user text-[9px] mr-1"></i>${esc(s.customerName)}${s.customerPhone?` <span class="font-mono text-slate-400 font-normal text-[10px]">• ${esc(s.customerPhone)}</span>`:''}</p>`:''}
-          <p class="font-bold text-white truncate ${s.returned?'line-through text-slate-400':''}">${esc(s.code||'—')} <span class="text-slate-400 font-normal">(${esc(s.car)})</span></p>
-          <p class="text-[10px] text-slate-500"><i class="fa-regular fa-clock mr-1"></i>${dateStr} • ${s.qty} ədəd • <span class="${isLocal?'text-blue-400':'text-emerald-400'}">${isLocal?'Yerli':'Avtomobil'}</span></p>
-          ${s.returned?`<p class="text-[10px] text-red-400 font-semibold mt-0.5"><i class="fa-solid fa-rotate-left mr-1"></i>Geri qaytarılıb</p>`:''}
-        </div>
-        <div class="text-right flex-shrink-0 flex flex-col items-end gap-1">
-          <p class="font-black ${s.returned?'text-slate-500 line-through':'text-emerald-400'}">+${fmt(s.sellPrice*s.qty)}</p>
-          ${!s.returned&&isLocal&&s.profit?`<p class="text-[10px] text-blue-400 font-semibold">Qazanc: +${fmt(s.profit)}</p>`:''}
-          ${!s.returned&&!isLocal?`<p class="text-[10px] text-amber-400 font-semibold">Mayaya</p>`:''}
-          ${!s.returned?`<button onclick="returnSale('${s.id}')" class="bg-red-900/60 hover:bg-red-800 text-red-200 text-[10px] px-2 py-0.5 rounded-md border border-red-800/60 font-semibold"><i class="fa-solid fa-rotate-left mr-1"></i>Qaytar</button>`:''}
-        </div>
-      </div>
-    </div>`;
-  }).join('');
+  if(chartMonthly) chartMonthly.destroy();
+  chartMonthly = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Satış',
+          data: revenues,
+          borderColor: '#10b981',
+          backgroundColor: 'rgba(16,185,129,.1)',
+          fill: true,
+          tension: 0.4,
+          borderWidth: 2
+        },
+        {
+          label: 'Qazanc',
+          data: profits,
+          borderColor: '#3b82f6',
+          backgroundColor: 'rgba(59,130,246,.1)',
+          fill: true,
+          tension: 0.4,
+          borderWidth: 2
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { labels: { color: '#94a3b8', font: { size: 10 }, boxWidth: 8 } },
+        tooltip: { callbacks: { label: (c)=>`${c.dataset.label}: ₼${fmtN(c.parsed.y)}` } }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: '#64748b', font: { size: 9 } } },
+        y: { grid: { color: 'rgba(100,116,139,.1)' }, ticks: { color: '#64748b', font: { size: 9 }, callback: (v)=>'₼'+v } }
+      }
+    }
+  });
 }
 
-function renderCustomers(){
-  const container=document.getElementById('customersList');
-  const search=document.getElementById('historySearchInput').value;
+/* ========================================================
+   CUSTOMERS TAB
+======================================================== */
+function renderCustomersTab(){
+  const container = document.getElementById('customersGrid');
+  if(!container) return;
+  const search = document.getElementById('customerSearchInput').value;
   const customers = getAllCustomers().filter(c=>matchesQuery(search,[c.name,c.phone]));
 
-  document.getElementById('salesCountBadge').innerText=`${customers.length} müştəri`;
-
-  if(customers.length===0){
-    container.innerHTML=`<div class="col-span-full text-center py-10 text-slate-500 text-xs">Hələ müştəri qeydə alınmayıb.</div>`;
+  if(customers.length === 0){
+    container.innerHTML = `<div class="col-span-full text-center py-12 text-slate-500 text-sm"><i class="fa-solid fa-users text-3xl opacity-30 mb-3 block"></i>Hələ müştəri yoxdur.</div>`;
     return;
   }
 
   const enriched = customers.map(c=>{
     const stats = getCustomerStats(c.name);
-    return {...c, stats};
-  }).filter(c=>c.stats && c.stats.count>0).sort((a,b)=>b.stats.total - a.stats.total);
+    const tier = getCustomerTier(c.name);
+    return {...c, stats, tier};
+  }).filter(c=>c.stats.count > 0).sort((a,b)=>b.stats.total - a.stats.total);
 
   container.innerHTML = enriched.map(c=>{
     const d = c.stats.lastDate ? new Date(c.stats.lastDate) : null;
-    const dateStr = d ? `${d.getDate().toString().padStart(2,'0')}.${(d.getMonth()+1).toString().padStart(2,'0')}.${d.getFullYear()}` : '';
+    const dateStr = d ? shortDate(c.stats.lastDate) : '';
     return `
-      <div class="glass rounded-xl p-3 border border-slate-800 hover:border-blue-900/50 transition-all cursor-pointer" onclick="openCustomerDetail('${esc(c.name).replace(/'/g,"&#39;")}')">
+      <div class="glass glass-hover rounded-xl p-3.5 border border-slate-800 transition-all cursor-pointer" onclick="openCustomerDetail('${esc(c.name).replace(/'/g,"&#39;")}')">
         <div class="flex justify-between items-start gap-2">
-          <div class="min-w-0 flex-1">
-            <p class="font-bold text-white text-sm truncate"><i class="fa-solid fa-user-circle text-blue-400 mr-1.5"></i>${esc(c.name)}</p>
-            ${c.phone?`<p class="text-[11px] text-slate-400 font-mono mt-0.5"><i class="fa-solid fa-phone text-[9px] mr-1"></i>${esc(c.phone)}</p>`:''}
-            <div class="flex flex-wrap gap-x-3 gap-y-0.5 text-[10px] text-slate-500 mt-1">
-              <span><i class="fa-solid fa-cart-shopping mr-1"></i>${c.stats.count} alış</span>
-              <span><i class="fa-solid fa-cubes mr-1"></i>${c.stats.units} ədəd</span>
-              ${dateStr?`<span><i class="fa-regular fa-clock mr-1"></i>${dateStr}</span>`:''}
+          <div class="flex items-center gap-2 min-w-0 flex-1">
+            <div class="w-10 h-10 rounded-full ${c.tier.cls} flex items-center justify-center flex-shrink-0 font-bold">${esc(c.name.charAt(0).toUpperCase())}</div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <p class="font-bold text-white text-sm truncate">${esc(c.name)}</p>
+                <span class="text-[9px] font-bold px-1.5 py-0.5 rounded ${c.tier.cls}">${c.tier.label}</span>
+              </div>
+              ${c.phone?`<p class="text-[11px] text-slate-400 font-mono mt-0.5"><i class="fa-solid fa-phone text-[9px] mr-1"></i>${esc(c.phone)}</p>`:''}
             </div>
           </div>
-          <div class="text-right flex-shrink-0">
-            <p class="font-black text-emerald-400 text-sm">${fmt(c.stats.total)}</p>
-            <p class="text-[9px] text-slate-500 uppercase mt-0.5">cəmi</p>
-          </div>
         </div>
+        <div class="grid grid-cols-3 gap-1.5 text-center mt-3">
+          <div class="bg-slate-950/60 rounded-lg p-1.5 border border-slate-800"><p class="text-[9px] text-slate-500 uppercase">Alış</p><p class="text-xs font-bold text-white">${c.stats.count}</p></div>
+          <div class="bg-slate-950/60 rounded-lg p-1.5 border border-slate-800"><p class="text-[9px] text-slate-500 uppercase">Ədəd</p><p class="text-xs font-bold text-blue-400">${c.stats.units}</p></div>
+          <div class="bg-slate-950/60 rounded-lg p-1.5 border border-slate-800"><p class="text-[9px] text-slate-500 uppercase">Cəmi</p><p class="text-xs font-bold text-amber-400">${fmtN(c.stats.total)}</p></div>
+        </div>
+        ${c.stats.credit > 0 ? `<div class="mt-2 bg-red-950/40 border border-red-900/40 rounded-lg p-2 text-[11px] flex justify-between items-center"><span class="text-red-400 font-bold"><i class="fa-solid fa-hand-holding-dollar mr-1"></i>Borc:</span><span class="text-red-300 font-bold font-mono">${fmt(c.stats.credit)}</span></div>`:''}
+        ${dateStr?`<p class="text-[10px] text-slate-500 mt-2"><i class="fa-regular fa-clock mr-1"></i>Son: ${dateStr}</p>`:''}
       </div>`;
   }).join('');
 }
@@ -1482,24 +2539,33 @@ function openCustomerDetail(name){
   if(!stats) return;
   const customer = getAllCustomers().find(c=>c.name.toLowerCase()===name.toLowerCase());
   const sales = (db.sales||[]).filter(s=>s.customerName && s.customerName.toLowerCase()===name.toLowerCase());
+  const tier = getCustomerTier(name);
 
   document.getElementById('customerDetailTitle').innerHTML = `<i class="fa-solid fa-user text-blue-500 flex-shrink-0"></i><span class="truncate">${esc(name)}</span>`;
 
   const salesHtml = sales.map(s=>{
-    const d = new Date(s.date);
-    const ds = `${d.getDate().toString().padStart(2,'0')}.${(d.getMonth()+1).toString().padStart(2,'0')}.${d.getFullYear()}`;
+    const ds = shortDate(s.date);
     const isLocal = s.source==='local';
+    const total = s.sellPrice*s.qty - (s.discount||0);
     const ret = s.returned ? 'line-through opacity-50' : '';
-    return `<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2.5 flex justify-between items-start gap-2">
+    return `<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2.5 flex justify-between items-start gap-2 cursor-pointer hover:border-red-800" onclick="closeCustomerDetail();openPartDetail('${s.partId}')">
       <div class="min-w-0">
         <p class="font-bold text-white text-xs ${ret} truncate">${esc(s.code||'—')} <span class="text-slate-500 font-normal">(${esc(s.car)})</span></p>
         <p class="text-[10px] text-slate-500 mt-0.5">${ds} • ${s.qty} ədəd • <span class="${isLocal?'text-blue-400':'text-emerald-400'}">${isLocal?'Yerli':'Avtomobil'}</span>${s.returned?' • <span class="text-red-400">Qaytarılıb</span>':''}</p>
+        ${s.paymentStatus!=='paid' && !s.returned ? `<p class="text-[10px] text-amber-400 mt-0.5"><i class="fa-solid fa-hand-holding-dollar mr-1"></i>Borc: ${fmt(s.dueAmount||0)}</p>`:''}
       </div>
-      <p class="text-xs font-bold ${s.returned?'text-slate-500 line-through':'text-emerald-400'} flex-shrink-0">${fmt(s.sellPrice*s.qty)}</p>
+      <p class="text-xs font-bold ${s.returned?'text-slate-500 line-through':'text-emerald-400'} flex-shrink-0">${fmt(total)}</p>
     </div>`;
   }).join('');
 
   document.getElementById('customerDetailBody').innerHTML = `
+    <div class="flex items-center gap-3">
+      <div class="w-14 h-14 rounded-full ${tier.cls} flex items-center justify-center flex-shrink-0 font-bold text-xl">${esc(name.charAt(0).toUpperCase())}</div>
+      <div class="min-w-0 flex-1">
+        <p class="font-bold text-white text-base truncate">${esc(name)}</p>
+        <span class="text-[10px] font-bold px-2 py-0.5 rounded ${tier.cls} inline-block mt-1">${tier.label} Müştəri</span>
+      </div>
+    </div>
     ${customer && customer.phone ? `<div class="bg-blue-950/30 border border-blue-900/40 rounded-lg p-2.5">
       <p class="text-[9px] text-blue-400 uppercase mb-1">Telefon</p>
       <a href="tel:${esc(customer.phone)}" class="text-blue-200 font-mono text-sm"><i class="fa-solid fa-phone mr-1.5"></i>${esc(customer.phone)}</a>
@@ -1507,18 +2573,83 @@ function openCustomerDetail(name){
     <div class="grid grid-cols-3 gap-1.5 text-center">
       <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800"><p class="text-[9px] text-slate-500 uppercase">Alış</p><p class="text-sm font-bold text-white">${stats.count}</p></div>
       <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800"><p class="text-[9px] text-slate-500 uppercase">Ədəd</p><p class="text-sm font-bold text-emerald-400">${stats.units}</p></div>
-      <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800"><p class="text-[9px] text-slate-500 uppercase">Cəmi</p><p class="text-sm font-bold text-amber-400">${fmt(stats.total).replace(M,'')}</p></div>
+      <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800"><p class="text-[9px] text-slate-500 uppercase">Cəmi</p><p class="text-sm font-bold text-amber-400">${fmtN(stats.total)}</p></div>
     </div>
+    ${stats.credit > 0 ? `<div class="bg-red-950/40 border border-red-900/40 rounded-lg p-3 flex justify-between items-center">
+      <div><p class="text-[10px] text-red-400 uppercase font-bold">Ümumi Borc</p><p class="text-[10px] text-slate-500">Ödənilməmiş</p></div>
+      <p class="text-lg font-black text-red-400 font-mono">${fmt(stats.credit)}</p>
+    </div>`:''}
     <div class="border-t border-slate-800 pt-2">
-      <p class="text-[10px] uppercase text-slate-500 font-bold tracking-wider mb-2">Bütün alışları</p>
-      <div class="space-y-1.5 max-h-[50vh] overflow-y-auto pr-1">${salesHtml || '<p class="text-slate-500 text-xs text-center py-4">Satış yoxdur.</p>'}</div>
+      <p class="text-[10px] uppercase text-slate-500 font-bold tracking-wider mb-2">Bütün alışları (${sales.length})</p>
+      <div class="space-y-1.5 max-h-[45vh] overflow-y-auto pr-1">${salesHtml || '<p class="text-slate-500 text-xs text-center py-4">Satış yoxdur.</p>'}</div>
     </div>
   `;
   document.getElementById('customerDetailModal').classList.remove('hidden');
 }
 function closeCustomerDetail(){document.getElementById('customerDetailModal').classList.add('hidden')}
 
-// ===== PART MODAL =====
+/* ========================================================
+   HISTORY
+======================================================== */
+function renderSalesHistory(){
+  const container=document.getElementById('salesHistoryList');
+  if(!container) return;
+  const search=document.getElementById('historySearchInput').value;
+  const sales=(db.sales||[]).filter(s=>matchesQuery(search,[s.code,s.car,s.category,s.customerName,s.customerPhone]));
+
+  const allSales = db.sales || [];
+  const returnsCount = allSales.filter(s=>s.returned).length;
+  const creditsTotal = allSales.filter(s=>!s.returned && (s.paymentStatus==='credit' || s.paymentStatus==='partial'))
+    .reduce((sum,s)=>sum + Math.max(0, (s.sellPrice*s.qty - (s.discount||0)) - (s.paidAmount||0)), 0);
+
+  document.getElementById('histSalesCount').innerText = allSales.filter(s=>!s.returned).length;
+  document.getElementById('histReturnsCount').innerText = returnsCount;
+  document.getElementById('histCreditCount').innerText = fmtN(creditsTotal);
+
+  if(sales.length === 0){
+    container.innerHTML=`<div class="col-span-full text-center py-10 text-slate-500 text-xs">${allSales.length===0?'Hələ satış yoxdur.':'Uyğun nəticə yoxdur.'}</div>`;
+    return;
+  }
+
+  container.innerHTML=sales.map(s=>{
+    const dateStr=fullDate(s.date);
+    const returnedStyle=s.returned?'opacity-60 border-red-900/40 bg-red-950/10':'';
+    const isLocal=s.source==='local';
+    const hasCustomer = s.customerName;
+    const total = s.sellPrice*s.qty - (s.discount||0);
+    const payLabel = s.paymentStatus==='paid'?'✓ Tam':s.paymentStatus==='partial'?'◐ Qismən':'⚠ Borclu';
+    const payColor = s.paymentStatus==='paid'?'text-emerald-400':s.paymentStatus==='partial'?'text-amber-400':'text-red-400';
+
+    return `
+    <div class="glass p-3 rounded-xl text-xs ${returnedStyle}">
+      <div class="flex justify-between items-start gap-2">
+        <div class="space-y-0.5 min-w-0 flex-1">
+          ${hasCustomer?`<p class="font-bold text-blue-300 text-[11px] truncate cursor-pointer hover:text-blue-200" onclick="openCustomerDetail('${esc(s.customerName).replace(/'/g,"&#39;")}')"><i class="fa-solid fa-user text-[9px] mr-1"></i>${esc(s.customerName)}${s.customerPhone?` <span class="font-mono text-slate-400 font-normal text-[10px]">• ${esc(s.customerPhone)}</span>`:''}</p>`:''}
+          <p class="font-bold text-white truncate ${s.returned?'line-through text-slate-400':''}">${esc(s.code||'—')} <span class="text-slate-400 font-normal">(${esc(s.car)})</span></p>
+          <p class="text-[10px] text-slate-500"><i class="fa-regular fa-clock mr-1"></i>${dateStr} • ${s.qty} ədəd • <span class="${isLocal?'text-blue-400':'text-emerald-400'}">${isLocal?'Yerli':'Avtomobil'}</span></p>
+          <div class="flex items-center gap-2 flex-wrap">
+            ${!s.returned?`<span class="text-[10px] font-bold ${payColor}">${payLabel}</span>`:''}
+            ${!s.returned && s.dueAmount>0?`<span class="text-[10px] text-red-400 font-bold">Qalıq: ${fmt(s.dueAmount)}</span>`:''}
+            ${s.returned?`<span class="text-[10px] text-red-400 font-semibold"><i class="fa-solid fa-rotate-left mr-1"></i>Qaytarılıb${s.returnReason?` • ${esc(s.returnReason)}`:''}</span>`:''}
+          </div>
+        </div>
+        <div class="text-right flex-shrink-0 flex flex-col items-end gap-1">
+          <p class="font-black ${s.returned?'text-slate-500 line-through':'text-emerald-400'}">+${fmt(total)}</p>
+          ${!s.returned&&isLocal&&s.profit?`<p class="text-[10px] text-blue-400 font-semibold">Qazanc: +${fmt(s.profit)}</p>`:''}
+          ${!s.returned&&!isLocal?`<p class="text-[10px] text-amber-400 font-semibold">Mayaya</p>`:''}
+          <div class="flex gap-1">
+            ${!s.returned?`<button onclick="event.stopPropagation();activeReceiptSale=${JSON.stringify(s).replace(/"/g,'&quot;')};showReceipt(${JSON.stringify(s).replace(/"/g,'&quot;')})" class="bg-blue-900/60 hover:bg-blue-800 text-blue-200 text-[10px] px-2 py-0.5 rounded-md border border-blue-800/60 font-semibold"><i class="fa-solid fa-receipt"></i></button>`:''}
+            ${!s.returned?`<button onclick="returnSale('${s.id}')" class="bg-red-900/60 hover:bg-red-800 text-red-200 text-[10px] px-2 py-0.5 rounded-md border border-red-800/60 font-semibold"><i class="fa-solid fa-rotate-left"></i></button>`:''}
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ========================================================
+   PART MODAL (ADD / EDIT)
+======================================================== */
 function openAddModal(defaultSource){
   document.getElementById('partForm').reset();
   document.getElementById('partEditId').value='';
@@ -1526,8 +2657,10 @@ function openAddModal(defaultSource){
   document.getElementById('partModalTitle').innerHTML='<i class="fa-solid fa-box-open text-red-500"></i> Yeni Ehtiyat Hissəsi';
   document.getElementById('saveBtn').innerText='Stoka Əlavə Et';
   document.getElementById('partQuantity').value=1;
-  base64Image='';
-  document.getElementById('imgPreview').classList.add('hidden');
+  document.getElementById('partMinStock').value=1;
+  document.getElementById('partCondition').value='used';
+  base64Images=[];
+  renderPhotoGrid();
   document.getElementById('vehicleAutofillHint').innerText='';
   closeCategoryDropdown();
   populatePartVehicleSelect();
@@ -1535,7 +2668,6 @@ function openAddModal(defaultSource){
   document.getElementById('partModal').classList.remove('hidden');
 }
 
-// EDIT PART → requires code
 function openEditModal(id){
   requireCode('Detalı redaktə et', ()=>_doOpenEditModal(id));
 }
@@ -1555,9 +2687,10 @@ function _doOpenEditModal(id){
   document.getElementById('partBuyPrice').value=part.buyPrice||'';
   document.getElementById('partSellPrice').value=part.sellPrice||'';
   document.getElementById('partDescription').value=part.description||'';
-  base64Image=part.image||'';
-  const preview=document.getElementById('imgPreview');
-  if(base64Image){preview.src=base64Image;preview.classList.remove('hidden')}else preview.classList.add('hidden');
+  document.getElementById('partCondition').value=part.condition||'used';
+  document.getElementById('partMinStock').value=part.minStock||1;
+  base64Images = part.images ? [...part.images] : [];
+  renderPhotoGrid();
   closeCategoryDropdown();
   populatePartVehicleSelect();
   setPartSource(part.source||'vehicle');
@@ -1570,30 +2703,6 @@ function _doOpenEditModal(id){
 }
 
 function closePartModal(){closeCategoryDropdown();document.getElementById('partModal').classList.add('hidden')}
-
-function previewImage(event){
-  const file=event.target.files[0];
-  if(!file)return;
-  const img=new Image();
-  const reader=new FileReader();
-  reader.onload=(e)=>{
-    img.src=e.target.result;
-    img.onload=()=>{
-      const canvas=document.createElement('canvas');
-      const ctx=canvas.getContext('2d');
-      const maxDim=550;
-      let width=img.width,height=img.height;
-      if(width>height&&width>maxDim){height*=maxDim/width;width=maxDim}
-      else if(height>maxDim){width*=maxDim/height;height=maxDim}
-      canvas.width=width;canvas.height=height;
-      ctx.drawImage(img,0,0,width,height);
-      base64Image=canvas.toDataURL('image/jpeg',0.55);
-      const preview=document.getElementById('imgPreview');
-      preview.src=base64Image;preview.classList.remove('hidden');
-    };
-  };
-  reader.readAsDataURL(file);
-}
 
 async function savePart(e){
   e.preventDefault();
@@ -1618,7 +2727,9 @@ async function savePart(e){
     buyPrice:source==='local'?(parseFloat(document.getElementById('partBuyPrice').value)||0):0,
     sellPrice:parseFloat(document.getElementById('partSellPrice').value)||0,
     description:document.getElementById('partDescription').value.trim(),
-    image:base64Image,
+    images:[...base64Images],
+    condition:document.getElementById('partCondition').value,
+    minStock:parseInt(document.getElementById('partMinStock').value)||1,
     vehicleId:document.getElementById('partVehicleId').value||'',
     source:source
   };
@@ -1627,9 +2738,11 @@ async function savePart(e){
   if(editId){
     const part=db.parts.find(p=>p.id===editId);
     if(part)Object.assign(part,partData);
+    logActivity('Detal redaktə edildi', partData.code||partData.car);
     ok=await syncData('Yadda saxlanıldı ✓');
   }else{
     db.parts.unshift({id:Date.now().toString(),soldCount:0,createdAt:new Date().toISOString(),...partData});
+    logActivity('Yeni detal əlavə edildi', `${partData.code||'—'} • ${partData.car}`);
     ok=await syncData('Əlavə olundu ✓');
   }
   saveBtn.disabled=false;
@@ -1642,27 +2755,132 @@ function deletePart(id){
 }
 async function _doDeletePart(id){
   if(confirm('Bu ehtiyat hissəsini silməyə əminsiniz?')){
+    const part = db.parts.find(p=>p.id===id);
     const backup=db.parts;
     db.parts=db.parts.filter(p=>p.id!==id);
+    logActivity('Detal silindi', part ? (part.code||part.car) : '');
     const ok=await syncData('Silindi');
     if(!ok)db.parts=backup;
   }
 }
 
-// ===== CSV =====
+/* ========================================================
+   CONFIG / BACKUP / RESTORE
+======================================================== */
+function openConfigModal(bypass){
+  if(bypass){document.getElementById('configModal').classList.remove('hidden');return}
+  requireCode('Ayarları aç', ()=>{document.getElementById('configModal').classList.remove('hidden')});
+}
+function closeConfigModal(){if(!getMasterKey()||!getBinId())return;document.getElementById('configModal').classList.add('hidden')}
+function saveConfig(){
+  const key=document.getElementById('masterKeyInput').value.trim();
+  const bin=document.getElementById('binIdInput').value.trim();
+  const errEl=document.getElementById('configError');
+  if(!key||!bin){errEl.innerText='Hər iki xananı doldurun.';errEl.classList.remove('hidden');return}
+  errEl.classList.add('hidden');
+  localStorage.setItem('TL_MASTER_KEY',key);
+  localStorage.setItem('TL_BIN_ID',bin);
+  document.getElementById('configCloseBtn').classList.remove('hidden');
+  closeConfigModal();
+  loadData();
+}
+
+function backupData(){
+  const dataStr = JSON.stringify(db, null, 2);
+  const blob = new Blob([dataStr], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `TeslaLand_Backup_${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+  showToast('Backup yükləndi ✓');
+}
+
+function restoreData(event){
+  const file = event.target.files[0];
+  if(!file) return;
+  if(!confirm('Mövcud məlumatlar əvəz olunacaq. Davam edilsin?')){event.target.value='';return}
+  const reader = new FileReader();
+  reader.onload = async (e)=>{
+    try{
+      const data = JSON.parse(e.target.result);
+      if(!data.parts) throw new Error('Yanlış format');
+      db = {
+        parts: data.parts || [],
+        sales: data.sales || [],
+        vehicles: data.vehicles || [],
+        customCategories: data.customCategories || [],
+        customers: data.customers || [],
+        activityLog: data.activityLog || [],
+        settings: data.settings || {theme:'dark'}
+      };
+      logActivity('Backup bərpa edildi', file.name);
+      applyTheme();
+      await syncData('Bərpa edildi ✓');
+      showToast('Məlumatlar bərpa olundu ✓');
+    }catch(err){
+      showToast('Fayl xətalıdır!', true);
+    }
+  };
+  reader.readAsText(file);
+  event.target.value='';
+}
+
+/* ========================================================
+   POPULATE SELECTS
+======================================================== */
+function populateYearSelects(){
+  const current=new Date().getFullYear()+1;let opts='';
+  for(let y=current;y>=1980;y--)opts+=`<option value="${y}">${y}</option>`;
+  document.getElementById('partYear').innerHTML='<option value="">—</option>'+opts;
+  document.getElementById('vYearFrom').innerHTML='<option value="">Seçin...</option>'+opts;
+  document.getElementById('vYearTo').innerHTML='<option value="">—</option>'+opts;
+}
+function populateBrandDatalist(){
+  document.getElementById('brandDatalist').innerHTML=COMMON_BRANDS.map(b=>`<option value="${esc(b)}"></option>`).join('');
+}
+function populatePartVehicleSelect(){
+  const sel=document.getElementById('partVehicleSelect');
+  if(!sel) return;
+  const current=sel.value;
+  const list=[...(db.vehicles||[])].sort((a,b)=>vehicleLabel(a).localeCompare(vehicleLabel(b)));
+  sel.innerHTML='<option value="">— Seçin —</option>'+list.map(v=>`<option value="${v.id}">${esc(vehicleLabel(v))}</option>`).join('');
+  if(current&&list.some(v=>v.id===current))sel.value=current;
+}
+
+/* ========================================================
+   CSV EXPORT
+======================================================== */
 function exportCSV(){
-  let csv="data:text/csv;charset=utf-8,";
-  csv+="Detal Kodu,Kateqoriya,Menbe,Avtomobil,Marka Model,Muherrik,Istehsal Ili,Yurus,Stok Sayi,Alis Qiymeti,Satis Qiymeti,Satilan Say\n";
+  let csv="data:text/csv;charset=utf-8,\uFEFF";
+  csv+="Detal Kodu,Kateqoriya,Menbe,Veziyyet,Avtomobil,Marka Model,Muherrik,Istehsal Ili,Yurus,Stok Min,Stok Sayi,Alis Qiymeti,Satis Qiymeti,Satilan Say\n";
   db.parts.forEach(p=>{
     const v=p.vehicleId?(db.vehicles||[]).find(x=>x.id===p.vehicleId):null;
     const clean=x=>(x||'').toString().replace(/"/g,'""');
-    csv+=`"${clean(p.code)}","${clean(p.category)}","${p.source==='local'?'Yerli bazar':'Avtomobil'}","${clean(v?vehicleLabel(v):'')}","${clean(p.car)}","${clean(p.engine)}","${clean(p.year)}","${clean(p.mileage)}",${p.quantity},${p.buyPrice||0},${p.sellPrice||0},${p.soldCount||0}\n`;
+    const condMap = {new:'Yeni',used:'İşlənmiş',refurb:'Bərpa'};
+    csv+=`"${clean(p.code)}","${clean(p.category)}","${p.source==='local'?'Yerli bazar':'Avtomobil'}","${condMap[p.condition]||'İşlənmiş'}","${clean(v?vehicleLabel(v):'')}","${clean(p.car)}","${clean(p.engine)}","${clean(p.year)}","${clean(p.mileage)}",${p.minStock||1},${p.quantity},${p.buyPrice||0},${p.sellPrice||0},${p.soldCount||0}\n`;
   });
   const link=document.createElement("a");
   link.setAttribute("href",encodeURI(csv));
   link.setAttribute("download",`TeslaLand_Stok_${new Date().toISOString().slice(0,10)}.csv`);
   document.body.appendChild(link);link.click();document.body.removeChild(link);
+  showToast('CSV ixrac edildi ✓');
 }
+
+/* ========================================================
+   KEYBOARD SHORTCUTS
+======================================================== */
+document.addEventListener('keydown', (e)=>{
+  if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+  if(e.key === '/'){ e.preventDefault(); document.getElementById('searchInput')?.focus(); switchTab('inventory'); }
+  else if(e.key === 'n' || e.key === 'N'){ e.preventDefault(); openAddModal(); }
+  else if(e.key === 'Escape'){
+    document.querySelectorAll('.fixed.inset-0:not(.hidden)').forEach(el=>el.classList.add('hidden'));
+  }
+});
 </script>
 </body>
 </html>
