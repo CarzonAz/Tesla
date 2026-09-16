@@ -42,13 +42,14 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <main class="px-4 max-w-xl mx-auto space-y-4">
 
-<!-- ============ ANBAR ============ -->
+<!-- ===== ANBAR ===== -->
 <section id="section-inventory" class="space-y-3">
   <div class="space-y-2">
     <div class="relative">
       <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
-      <input type="text" id="searchInput" oninput="renderParts()" placeholder="Kod, Marka, Model, Mühərrik, İl, Açıqlama..." class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-red-500 text-white placeholder-slate-500 shadow-inner">
+      <input type="text" id="searchInput" oninput="renderParts()" placeholder="Elantra ön bufer, B48 mühərrik, 51117424683..." class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-red-500 text-white placeholder-slate-500 shadow-inner">
     </div>
+    <p class="text-[10px] text-slate-500 px-1"><i class="fa-solid fa-lightbulb text-amber-500 mr-1"></i>İpucu: Bir neçə söz yaza bilərsiniz — hamısı uyğun gəlməlidir</p>
     <div id="categoryFilters" class="flex gap-1.5 overflow-x-auto pb-1 text-xs no-scrollbar"></div>
   </div>
 
@@ -61,7 +62,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
   <div id="partsList" class="space-y-3"><div class="text-center py-12 text-slate-500 text-sm"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Yüklənir...</div></div>
 </section>
 
-<!-- ============ AVTOMOBİLLƏR ============ -->
+<!-- ===== AVTOMOBİLLƏR ===== -->
 <section id="section-vehicles" class="space-y-3 hidden">
   <div class="glass rounded-xl p-3 flex justify-between items-center">
     <div>
@@ -79,31 +80,24 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
   <div class="relative">
     <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
-    <input type="text" id="vehicleSearchInput" oninput="renderVehicles()" placeholder="Marka, model, nəsil, VIN, mühərrik..." class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-red-500 text-white placeholder-slate-500 shadow-inner">
+    <input type="text" id="vehicleSearchInput" oninput="renderVehicles()" placeholder="BMW G20, WBA12345..." class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-red-500 text-white placeholder-slate-500 shadow-inner">
   </div>
 
   <div id="vehiclesList" class="space-y-3"></div>
 </section>
 
-<!-- ============ ANALİTİKA ============ -->
+<!-- ===== ANALİTİKA ===== -->
 <section id="section-analytics" class="space-y-4 hidden">
   <div class="glass rounded-xl p-3 flex justify-between items-center">
     <span class="text-xs font-semibold text-slate-300"><i class="fa-solid fa-calendar-days text-red-500 mr-1.5"></i>Analiz Dövrü:</span>
     <select id="analyticsMonthSelect" onchange="renderAnalytics()" class="bg-slate-800 border border-slate-700 text-xs text-white rounded-lg p-1.5 focus:outline-none"></select>
   </div>
 
-  <!-- Overall business health -->
   <div class="glass rounded-xl p-4 border-l-4 border-l-red-500 space-y-3">
     <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-briefcase text-red-400"></i> Ümumi Biznes Vəziyyəti</h3>
     <div class="grid grid-cols-2 gap-2 text-xs">
-      <div class="bg-slate-950/60 rounded-lg p-2.5 border border-slate-800">
-        <p class="text-[10px] text-slate-500 uppercase">Ümumi Daxilolma</p>
-        <p id="businessRevenue" class="text-sm font-bold text-white">₼0</p>
-      </div>
-      <div class="bg-slate-950/60 rounded-lg p-2.5 border border-slate-800">
-        <p class="text-[10px] text-slate-500 uppercase">Ümumi Xərc</p>
-        <p id="businessCost" class="text-sm font-bold text-red-400">₼0</p>
-      </div>
+      <div class="bg-slate-950/60 rounded-lg p-2.5 border border-slate-800"><p class="text-[10px] text-slate-500 uppercase">Ümumi Daxilolma</p><p id="businessRevenue" class="text-sm font-bold text-white">₼0</p></div>
+      <div class="bg-slate-950/60 rounded-lg p-2.5 border border-slate-800"><p class="text-[10px] text-slate-500 uppercase">Ümumi Xərc</p><p id="businessCost" class="text-sm font-bold text-red-400">₼0</p></div>
       <div class="bg-slate-950/60 rounded-lg p-2.5 border border-slate-800 col-span-2">
         <p class="text-[10px] text-slate-500 uppercase">Real Xalis Qazanc</p>
         <p id="businessNet" class="text-base font-black text-emerald-400">₼0</p>
@@ -112,40 +106,23 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
     </div>
   </div>
 
-  <!-- Local market -->
   <div class="glass rounded-xl p-4 border-l-4 border-l-blue-500 space-y-3">
     <h3 class="text-xs font-bold text-blue-300 uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-shop text-blue-400"></i> Yerli Bazar Detalları</h3>
     <div class="grid grid-cols-3 gap-2 text-xs">
-      <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800">
-        <p class="text-[9px] text-slate-500 uppercase">Satış</p>
-        <p id="localRevenue" class="text-xs font-bold text-white">₼0</p>
-      </div>
-      <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800">
-        <p class="text-[9px] text-slate-500 uppercase">Maya</p>
-        <p id="localCost" class="text-xs font-bold text-red-400">₼0</p>
-      </div>
-      <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800">
-        <p class="text-[9px] text-slate-500 uppercase">Qazanc</p>
-        <p id="localProfit" class="text-xs font-bold text-emerald-400">₼0</p>
-      </div>
+      <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800"><p class="text-[9px] text-slate-500 uppercase">Satış</p><p id="localRevenue" class="text-xs font-bold text-white">₼0</p></div>
+      <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800"><p class="text-[9px] text-slate-500 uppercase">Maya</p><p id="localCost" class="text-xs font-bold text-red-400">₼0</p></div>
+      <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800"><p class="text-[9px] text-slate-500 uppercase">Qazanc</p><p id="localProfit" class="text-xs font-bold text-emerald-400">₼0</p></div>
     </div>
     <p id="localUnits" class="text-[10px] text-slate-500">0 ədəd satılıb</p>
   </div>
 
-  <!-- Vehicle parts -->
   <div class="glass rounded-xl p-4 border-l-4 border-l-emerald-500 space-y-3">
     <h3 class="text-xs font-bold text-emerald-300 uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-car text-emerald-400"></i> Avtomobil Detalları</h3>
     <div class="grid grid-cols-2 gap-2 text-xs">
-      <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800">
-        <p class="text-[9px] text-slate-500 uppercase">Satış Daxilolması</p>
-        <p id="vehRevenue" class="text-xs font-bold text-white">₼0</p>
-      </div>
-      <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800">
-        <p class="text-[9px] text-slate-500 uppercase">Satılan Ədəd</p>
-        <p id="vehUnits" class="text-xs font-bold text-white">0</p>
-      </div>
+      <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800"><p class="text-[9px] text-slate-500 uppercase">Satış Daxilolması</p><p id="vehRevenue" class="text-xs font-bold text-white">₼0</p></div>
+      <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800"><p class="text-[9px] text-slate-500 uppercase">Satılan Ədəd</p><p id="vehUnits" class="text-xs font-bold text-white">0</p></div>
     </div>
-    <p id="vehInvestNote" class="text-[10px] text-slate-500 italic">Avtomobil investisiyası avtomatik mayadır — hər satış birbaşa maya ödənişidir.</p>
+    <p id="vehInvestNote" class="text-[10px] text-slate-500 italic"></p>
   </div>
 
   <div class="glass rounded-xl p-4 space-y-3">
@@ -163,20 +140,37 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
   </div>
 </section>
 
-<!-- ============ TARİXÇƏ ============ -->
+<!-- ===== TARİXÇƏ ===== -->
 <section id="section-history" class="space-y-3 hidden">
-  <div class="flex justify-between items-center px-1">
-    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Son Satış Əməliyyatları</h3>
-    <span id="salesCountBadge" class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full">0 əməliyyat</span>
+  <!-- View toggle -->
+  <div class="glass rounded-xl p-1 flex gap-1">
+    <button onclick="setHistoryView('sales')" id="hViewSales" class="flex-1 py-2 rounded-lg text-[11px] font-bold transition-all bg-red-600 text-white">
+      <i class="fa-solid fa-receipt mr-1"></i>Əməliyyatlar
+    </button>
+    <button onclick="setHistoryView('customers')" id="hViewCustomers" class="flex-1 py-2 rounded-lg text-[11px] font-bold transition-all text-slate-400 hover:text-white">
+      <i class="fa-solid fa-users mr-1"></i>Müştərilər
+    </button>
   </div>
+
+  <div class="relative">
+    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+    <input type="text" id="historySearchInput" oninput="renderHistoryView()" placeholder="Ad, telefon, detal kodu, avtomobil..." class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-red-500 text-white placeholder-slate-500 shadow-inner">
+  </div>
+
+  <div class="flex justify-between items-center px-1">
+    <h3 id="historyTitle" class="text-xs font-bold text-slate-400 uppercase tracking-wider">Son Satış Əməliyyatları</h3>
+    <span id="salesCountBadge" class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full">0</span>
+  </div>
+
   <div id="salesHistoryList" class="space-y-2"></div>
+  <div id="customersList" class="space-y-2 hidden"></div>
 </section>
 
 </main>
 
 <button onclick="openAddModal()" class="fixed bottom-6 right-6 bg-gradient-to-r from-red-600 to-red-700 text-white w-14 h-14 rounded-full shadow-xl shadow-red-600/40 flex items-center justify-center text-xl hover:scale-105 active:scale-95 transition-all z-30"><i class="fa-solid fa-plus"></i></button>
 
-<!-- ============ PART MODAL ============ -->
+<!-- ===== PART MODAL ===== -->
 <div id="partModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
   <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-4 max-h-[92vh] overflow-y-auto">
     <div class="flex justify-between items-center border-b border-slate-800 pb-3">
@@ -188,26 +182,18 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
       <input type="hidden" id="partEditId" value="">
       <input type="hidden" id="partVehicleId" value="">
 
-      <!-- SOURCE PICKER -->
       <div class="bg-slate-950/70 border border-slate-800 rounded-xl p-1 flex gap-1">
-        <button type="button" id="srcVehicleBtn" onclick="setPartSource('vehicle')" class="flex-1 py-2 rounded-lg text-[11px] font-bold transition-all">
-          <i class="fa-solid fa-car-side mr-1"></i>Avtomobildən sökülüb
-        </button>
-        <button type="button" id="srcLocalBtn" onclick="setPartSource('local')" class="flex-1 py-2 rounded-lg text-[11px] font-bold transition-all">
-          <i class="fa-solid fa-shop mr-1"></i>Yerli bazardan
-        </button>
+        <button type="button" id="srcVehicleBtn" onclick="setPartSource('vehicle')" class="flex-1 py-2 rounded-lg text-[11px] font-bold transition-all"><i class="fa-solid fa-car-side mr-1"></i>Avtomobildən sökülüb</button>
+        <button type="button" id="srcLocalBtn" onclick="setPartSource('local')" class="flex-1 py-2 rounded-lg text-[11px] font-bold transition-all"><i class="fa-solid fa-shop mr-1"></i>Yerli bazardan</button>
       </div>
       <input type="hidden" id="partSource" value="vehicle">
 
-      <!-- VEHICLE PICKER (only for vehicle source) -->
       <div id="vehiclePickerWrap" class="bg-slate-950/70 border border-red-900/30 rounded-xl p-3 space-y-2">
         <div class="flex justify-between items-center">
           <label class="block text-red-300 font-bold text-[11px] uppercase tracking-wider"><i class="fa-solid fa-car-side mr-1"></i>Hansı avtomobildən? *</label>
           <button type="button" onclick="openVehicleModal(null, true)" class="text-[10px] bg-red-900/50 hover:bg-red-800 text-red-200 px-2 py-1 rounded-md border border-red-800/60 font-semibold"><i class="fa-solid fa-plus mr-1"></i>Yeni</button>
         </div>
-        <select id="partVehicleSelect" onchange="onPartVehicleChange()" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white text-xs focus:outline-none focus:border-red-500">
-          <option value="">— Seçin —</option>
-        </select>
+        <select id="partVehicleSelect" onchange="onPartVehicleChange()" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white text-xs focus:outline-none focus:border-red-500"><option value="">— Seçin —</option></select>
         <p id="vehicleAutofillHint" class="text-[10px] text-slate-500 italic"></p>
       </div>
 
@@ -220,7 +206,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
       <div class="grid grid-cols-2 gap-2">
         <div>
           <label class="block text-slate-400 mb-1">Detal Kodu *</label>
-          <input type="text" id="partCode" required placeholder="məs: 51117424683" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white font-mono uppercase">
+          <input type="text" id="partCode" required placeholder="51117424683" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white font-mono uppercase">
         </div>
         <div class="relative">
           <label class="block text-slate-400 mb-1">Kateqoriya *</label>
@@ -235,11 +221,11 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
       <div class="grid grid-cols-2 gap-2">
         <div>
           <label class="block text-slate-400 mb-1">Marka & Model *</label>
-          <input type="text" id="partCar" required placeholder="məs: BMW G20" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+          <input type="text" id="partCar" required placeholder="BMW G20 / Hyundai Elantra" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
         </div>
         <div>
           <label class="block text-slate-400 mb-1">Mühərrik</label>
-          <input type="text" id="partEngine" placeholder="məs: 2.0 B48" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+          <input type="text" id="partEngine" placeholder="2.0 B48" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
         </div>
       </div>
 
@@ -258,11 +244,10 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
         </div>
       </div>
 
-      <!-- LOCAL-ONLY: maya qiyməti -->
       <div id="buyPriceWrap" class="bg-blue-950/40 border border-blue-900/40 rounded-xl p-2.5 hidden">
         <label class="block text-blue-300 font-bold mb-1 text-[11px] uppercase tracking-wider"><i class="fa-solid fa-tag mr-1"></i>Maya / Alış qiyməti (₼) *</label>
         <input type="number" id="partBuyPrice" placeholder="0.00" step="0.01" min="0" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white font-semibold">
-        <p class="text-[10px] text-blue-300/70 mt-1 italic">Yerli bazardan aldığınız qiymət. Qazanc = satış − maya.</p>
+        <p class="text-[10px] text-blue-300/70 mt-1 italic">Qazanc = satış − maya.</p>
       </div>
 
       <div class="bg-emerald-950/40 border border-emerald-900/40 rounded-xl p-2.5">
@@ -273,7 +258,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
       <div>
         <label class="block text-slate-400 mb-1">Açıqlama / Yerləşdiyi Yer</label>
-        <textarea id="partDescription" rows="2" placeholder="məs: Şelf A-3" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></textarea>
+        <textarea id="partDescription" rows="2" placeholder="Şelf A-3" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></textarea>
       </div>
 
       <button type="submit" id="saveBtn" class="w-full bg-red-600 hover:bg-red-700 font-bold py-3 rounded-xl text-white transition-all text-sm shadow-lg shadow-red-600/30">Stoka Əlavə Et</button>
@@ -281,7 +266,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
   </div>
 </div>
 
-<!-- ============ VEHICLE MODAL ============ -->
+<!-- ===== VEHICLE MODAL ===== -->
 <div id="vehicleModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
   <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-4 max-h-[92vh] overflow-y-auto">
     <div class="flex justify-between items-center border-b border-slate-800 pb-3">
@@ -291,19 +276,17 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
     <form id="vehicleForm" onsubmit="saveVehicle(event)" class="space-y-3 text-xs">
       <input type="hidden" id="vehicleEditId" value="">
-
       <div class="grid grid-cols-2 gap-2">
         <div>
           <label class="block text-slate-400 mb-1">Marka *</label>
-          <input type="text" id="vBrand" required placeholder="məs: BMW" list="brandDatalist" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+          <input type="text" id="vBrand" required placeholder="BMW" list="brandDatalist" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
           <datalist id="brandDatalist"></datalist>
         </div>
         <div>
           <label class="block text-slate-400 mb-1">Model *</label>
-          <input type="text" id="vModel" required placeholder="məs: 3 Series" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+          <input type="text" id="vModel" required placeholder="3 Series" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
         </div>
       </div>
-
       <div class="grid grid-cols-2 gap-2">
         <div>
           <label class="block text-slate-400 mb-1">Nəsil / Kod</label>
@@ -314,7 +297,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
           <input type="text" id="vVin" placeholder="WBA..." class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white font-mono uppercase">
         </div>
       </div>
-
       <div class="grid grid-cols-2 gap-2">
         <div>
           <label class="block text-slate-400 mb-1">İl (dan) *</label>
@@ -325,7 +307,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
           <select id="vYearTo" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></select>
         </div>
       </div>
-
       <div class="grid grid-cols-2 gap-2">
         <div>
           <label class="block text-slate-400 mb-1">Mühərrik</label>
@@ -336,7 +317,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
           <input type="text" id="vEngineCode" placeholder="B48B20" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white font-mono">
         </div>
       </div>
-
       <div class="grid grid-cols-3 gap-2">
         <div>
           <label class="block text-slate-400 mb-1">Rəng</label>
@@ -347,12 +327,10 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
           <input type="text" id="vMileage" placeholder="45,000 mi" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
         </div>
         <div>
-          <label class="block text-slate-400 mb-1">Gəlmə tarixi</label>
+          <label class="block text-slate-400 mb-1">Gəlmə</label>
           <input type="date" id="vArrivalDate" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
         </div>
       </div>
-
-      <!-- FINANCIAL SECTION -->
       <div class="bg-amber-950/30 border border-amber-900/40 rounded-xl p-3 space-y-2">
         <p class="text-amber-300 font-bold text-[11px] uppercase tracking-wider"><i class="fa-solid fa-coins mr-1"></i>Maliyyə</p>
         <div class="grid grid-cols-2 gap-2">
@@ -365,46 +343,57 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
             <input type="number" id="vAdditionalCosts" placeholder="0" step="0.01" min="0" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white font-semibold">
           </div>
         </div>
-        <p class="text-[10px] text-amber-300/80 italic"><i class="fa-solid fa-info-circle mr-1"></i>Əlavə xərclər: çatdırılma, gömrük, sənədləşmə, təmir və s.</p>
         <div class="bg-slate-950/70 rounded-lg p-2 flex justify-between items-center border border-slate-800">
           <span class="text-[11px] text-amber-400 font-bold">ÜMUMİ İNVESTİSİYA</span>
           <span id="totalInvestPreview" class="text-sm font-black text-amber-400 font-mono">₼0</span>
         </div>
       </div>
-
       <div>
         <label class="block text-slate-400 mb-1">Qeyd</label>
-        <textarea id="vNotes" rows="2" placeholder="məs: Ön hissə zərbəli, arxa sağlam" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></textarea>
+        <textarea id="vNotes" rows="2" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></textarea>
       </div>
-
       <button type="submit" id="saveVehicleBtn" class="w-full bg-red-600 hover:bg-red-700 font-bold py-3 rounded-xl text-white transition-all text-sm shadow-lg shadow-red-600/30">Avtomobili Yadda Saxla</button>
     </form>
   </div>
 </div>
 
-<!-- VEHICLE DETAIL MODAL -->
+<!-- ===== VEHICLE DETAIL ===== -->
 <div id="vehicleDetailModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
   <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-4 max-h-[92vh] overflow-y-auto">
     <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-      <h3 id="vehicleDetailTitle" class="font-bold text-base text-white flex items-center gap-2 min-w-0">
-        <i class="fa-solid fa-car-side text-red-500 flex-shrink-0"></i><span class="truncate">Avtomobil Detalları</span>
-      </h3>
+      <h3 id="vehicleDetailTitle" class="font-bold text-base text-white flex items-center gap-2 min-w-0"><i class="fa-solid fa-car-side text-red-500 flex-shrink-0"></i><span class="truncate">Avtomobil</span></h3>
       <button onclick="closeVehicleDetail()" class="text-slate-400 text-lg flex-shrink-0"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div id="vehicleDetailBody" class="space-y-3"></div>
   </div>
 </div>
 
-<!-- SELL MODAL -->
+<!-- ===== SELL MODAL ===== -->
 <div id="sellModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
-  <div class="bg-slate-900 border border-slate-700 w-full max-w-sm rounded-2xl p-5 space-y-4">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-sm rounded-2xl p-5 space-y-4 max-h-[92vh] overflow-y-auto">
     <div class="flex justify-between items-center border-b border-slate-800 pb-2">
       <h3 class="font-bold text-sm text-white"><i class="fa-solid fa-cash-register text-emerald-400 mr-2"></i>Satış Əməliyyatı</h3>
       <button onclick="closeSellModal()" class="text-slate-400 text-sm"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <p id="sellModalPartTitle" class="text-xs text-slate-300 font-semibold truncate"></p>
     <p id="sellModalStockInfo" class="text-[10px] text-slate-500"></p>
+
     <div class="space-y-3 text-xs">
+      <!-- CUSTOMER -->
+      <div class="bg-blue-950/30 border border-blue-900/40 rounded-xl p-3 space-y-2">
+        <p class="text-blue-300 font-bold text-[11px] uppercase tracking-wider"><i class="fa-solid fa-user mr-1"></i>Müştəri</p>
+        <div class="relative">
+          <label class="block text-slate-400 mb-1 text-[10px]">Ad / Ləqəb</label>
+          <input type="text" id="sellCustomerName" placeholder="məs: El Ağabey" autocomplete="off" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white focus:outline-none focus:border-blue-500">
+          <div id="customerDropdown" class="absolute z-30 left-0 right-0 mt-1 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl shadow-black/60 max-h-48 overflow-y-auto hidden"></div>
+        </div>
+        <div>
+          <label class="block text-slate-400 mb-1 text-[10px]">Telefon</label>
+          <input type="tel" id="sellCustomerPhone" placeholder="050-123-45-67" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
+        </div>
+        <div id="customerHint" class="text-[10px] text-blue-300/80 italic hidden"></div>
+      </div>
+
       <div>
         <label class="block text-slate-400 mb-1">Faktiki Satış Qiyməti (₼)</label>
         <input type="number" id="sellActualPrice" step="0.01" min="0" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-emerald-400 font-bold text-base focus:outline-none focus:border-emerald-500">
@@ -414,27 +403,33 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
         <input type="number" id="sellActualQty" value="1" min="1" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white font-semibold">
       </div>
     </div>
+
     <div class="flex gap-2">
       <button onclick="confirmSale()" id="confirmSaleBtn" class="flex-1 bg-emerald-600 hover:bg-emerald-700 py-2.5 rounded-xl font-bold text-white text-xs shadow-lg shadow-emerald-600/20">Satışı Qeydə Al</button>
-      <button onclick="closeSellModal()" class="px-4 bg-slate-800 py-2.5 rounded-xl text-slate-400 text-xs">Ləğv Et</button>
+      <button onclick="closeSellModal()" class="px-4 bg-slate-800 py-2.5 rounded-xl text-slate-400 text-xs">Ləğv</button>
     </div>
   </div>
 </div>
 
-<!-- CONFIG MODAL -->
+<!-- ===== CUSTOMER DETAIL ===== -->
+<div id="customerDetailModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-4 max-h-[92vh] overflow-y-auto">
+    <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+      <h3 id="customerDetailTitle" class="font-bold text-base text-white flex items-center gap-2 min-w-0"><i class="fa-solid fa-user text-blue-500 flex-shrink-0"></i><span class="truncate">Müştəri</span></h3>
+      <button onclick="closeCustomerDetail()" class="text-slate-400 text-lg flex-shrink-0"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="customerDetailBody" class="space-y-3"></div>
+  </div>
+</div>
+
+<!-- ===== CONFIG ===== -->
 <div id="configModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
   <div class="bg-slate-900 border border-slate-700 w-full max-w-sm rounded-2xl p-5 space-y-4">
     <h3 class="font-bold text-base text-white">JSONBin.io Ayarları</h3>
     <p class="text-xs text-slate-400">Bin ID və X-Master-Key məlumatlarını <a href="https://jsonbin.io" target="_blank" class="text-red-400 underline">jsonbin.io</a> hesabınızdan tapa bilərsiniz.</p>
     <div class="space-y-3 text-xs">
-      <div>
-        <label class="block text-slate-400 mb-1">X-Master-Key</label>
-        <input type="password" id="masterKeyInput" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
-      </div>
-      <div>
-        <label class="block text-slate-400 mb-1">Bin ID</label>
-        <input type="text" id="binIdInput" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white">
-      </div>
+      <div><label class="block text-slate-400 mb-1">X-Master-Key</label><input type="password" id="masterKeyInput" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></div>
+      <div><label class="block text-slate-400 mb-1">Bin ID</label><input type="text" id="binIdInput" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></div>
     </div>
     <p id="configError" class="text-[11px] text-red-400 hidden"></p>
     <div class="flex gap-2">
@@ -447,15 +442,16 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 bg-slate-800 border border-slate-700 text-white text-xs px-4 py-2.5 rounded-xl shadow-xl z-50 hidden max-w-[90vw] text-center"></div>
 
 <script>
-let db = { parts: [], sales: [], vehicles: [], customCategories: [] };
+let db = { parts: [], sales: [], vehicles: [], customCategories: [], customers: [] };
 let currentCategory = 'ALL';
 let base64Image = '';
 let activeSellPartId = null;
 let syncing = false;
 let pendingVehicleReturn = false;
 let currentPartSource = 'vehicle';
+let historyView = 'sales';
 
-const DEFAULT_CATEGORIES = ['Mühərrik','Asqı & Şassi','Ban & Eksteryer','Elektrik & Elektronika','Salun & İnteryer','Parkradar','Digər'];
+const DEFAULT_CATEGORIES = ['Mühərrik','Asqı & Şassi','Ban & Eksteryer','Elektrik & Elektronika','Salun & İnteryer','Parkradar','Bufer','Digər'];
 const COMMON_BRANDS = ['BMW','Mercedes-Benz','Audi','Volkswagen','Toyota','Lexus','Tesla','Hyundai','Kia','Nissan','Ford','Chevrolet','Honda','Mazda','Land Rover','Porsche','Volvo','Renault','Peugeot','Skoda','Opel','Fiat','Mitsubishi','Subaru','Jeep','Dodge'];
 const M = '₼';
 
@@ -464,13 +460,21 @@ const getBinId = () => localStorage.getItem('TL_BIN_ID') || '';
 
 function esc(str){const d=document.createElement('div');d.innerText=str==null?'':str;return d.innerHTML}
 function fmt(n){return M + (Number(n)||0).toLocaleString('az-AZ',{maximumFractionDigits:2})}
-
 function showToast(msg,isError){
   const t=document.getElementById('toast');
   t.innerText=msg;
   t.className=`fixed bottom-24 left-1/2 -translate-x-1/2 text-white text-xs px-4 py-2.5 rounded-xl shadow-xl z-50 max-w-[90vw] text-center border ${isError?'bg-red-950 border-red-800 text-red-300':'bg-slate-800 border-slate-700'}`;
   clearTimeout(window._toastTimer);
   window._toastTimer=setTimeout(()=>t.classList.add('hidden'),2600);
+}
+
+// ===== SMART MULTI-WORD SEARCH =====
+function matchesQuery(query, fields){
+  const q = (query||'').toLowerCase().trim();
+  if(!q) return true;
+  const words = q.split(/\s+/).filter(w=>w.length>0);
+  const haystack = fields.filter(Boolean).map(f=>String(f).toLowerCase()).join(' ');
+  return words.every(w => haystack.includes(w));
 }
 
 // ===== CATEGORIES =====
@@ -488,6 +492,48 @@ function registerCategory(name){
   if(!getAllCategories().some(c=>c.toLowerCase()===lc))db.customCategories.push(trimmed);
 }
 
+// ===== CUSTOMER CORE =====
+function getAllCustomers(){
+  // returns [{name, phone}] unique by lowercase name
+  const map = new Map();
+  // from explicit customers
+  (db.customers||[]).forEach(c=>{
+    const k = c.name.toLowerCase();
+    if(!map.has(k)) map.set(k, {name:c.name, phone:c.phone||''});
+  });
+  // from sales
+  (db.sales||[]).forEach(s=>{
+    if(s.customerName){
+      const k = s.customerName.toLowerCase();
+      if(!map.has(k)) map.set(k, {name:s.customerName, phone:s.customerPhone||''});
+      else if(!map.get(k).phone && s.customerPhone) map.get(k).phone = s.customerPhone;
+    }
+  });
+  return Array.from(map.values()).sort((a,b)=>a.name.localeCompare(b.name));
+}
+function registerCustomer(name, phone){
+  if(!name) return;
+  const trimmed = name.trim();
+  if(!trimmed) return;
+  if(!db.customers) db.customers = [];
+  const lc = trimmed.toLowerCase();
+  const existing = db.customers.find(c=>c.name.toLowerCase()===lc);
+  if(existing){
+    if(phone && !existing.phone) existing.phone = phone;
+  } else {
+    db.customers.push({name:trimmed, phone:phone||'', createdAt:new Date().toISOString()});
+  }
+}
+function getCustomerStats(name){
+  if(!name) return null;
+  const lc = name.toLowerCase().trim();
+  const all = (db.sales||[]).filter(s=>s.customerName && s.customerName.toLowerCase().trim()===lc && !s.returned);
+  const total = all.reduce((s,x)=>s+x.sellPrice*x.qty,0);
+  const units = all.reduce((s,x)=>s+x.qty,0);
+  const lastDate = all.length>0 ? all.map(s=>s.date).sort().reverse()[0] : null;
+  return {count:all.length, units, total, lastDate};
+}
+
 // ===== CATEGORY AUTOCOMPLETE =====
 let categoryDropdownVisible=false;
 function buildCategoryDropdown(query){
@@ -502,9 +548,9 @@ function buildCategoryDropdown(query){
   const exactExists=q&&cats.some(c=>c.toLowerCase()===q);
   if(q&&!exactExists){
     const raw=document.getElementById('partCategory').value.trim();
-    html+=`<div class="cat-item px-3 py-2.5 hover:bg-red-900/40 cursor-pointer flex items-center gap-2 bg-slate-900/95 border-t-2 border-red-900/60" data-cat="${esc(raw)}" data-new="1"><span class="bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-plus text-[9px]"></i></span><span class="text-red-300 text-sm flex-1 truncate">Yeni yarat: <b class="text-white">${esc(raw)}</b></span></div>`;
+    html+=`<div class="cat-item px-3 py-2.5 hover:bg-red-900/40 cursor-pointer flex items-center gap-2 bg-slate-900/95 border-t-2 border-red-900/60" data-cat="${esc(raw)}" data-new="1"><span class="bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-plus text-[9px]"></i></span><span class="text-red-300 text-sm flex-1 truncate">Yeni: <b class="text-white">${esc(raw)}</b></span></div>`;
   }
-  if(!html)html=`<div class="px-3 py-4 text-slate-500 text-xs text-center italic">Heç nə tapılmadı</div>`;
+  if(!html)html=`<div class="px-3 py-4 text-slate-500 text-xs text-center italic">Tapılmadı</div>`;
   dd.innerHTML=html;
   dd.querySelectorAll('.cat-item').forEach(el=>{
     el.addEventListener('mousedown',ev=>{ev.preventDefault();pickCategory(el.dataset.cat,el.dataset.new==='1')});
@@ -530,6 +576,74 @@ function initCategoryAutocomplete(){
   input.addEventListener('input',openCategoryDropdown);
   input.addEventListener('keydown',e=>{if(e.key==='Escape')closeCategoryDropdown()});
   input.addEventListener('blur',()=>setTimeout(closeCategoryDropdown,120));
+}
+
+// ===== CUSTOMER AUTOCOMPLETE =====
+let customerDropdownVisible=false;
+function buildCustomerDropdown(query){
+  const dd=document.getElementById('customerDropdown');
+  const q=(query||'').toLowerCase().trim();
+  const customers=getAllCustomers();
+  const filtered = q ? customers.filter(c=>c.name.toLowerCase().includes(q)||(c.phone||'').includes(q)) : customers;
+  let html='';
+  if(filtered.length>0){
+    html += filtered.slice(0,20).map(c=>{
+      const stats = getCustomerStats(c.name);
+      const meta = stats ? `<span class="text-[10px] text-slate-500 flex-shrink-0">${stats.count}x • ${fmt(stats.total)}</span>` : '';
+      return `<div class="cust-item px-3 py-2.5 hover:bg-slate-700/80 cursor-pointer flex items-center gap-2 border-b border-slate-800/60" data-name="${esc(c.name)}" data-phone="${esc(c.phone||'')}">
+        <i class="fa-solid fa-user-circle text-blue-400 text-sm flex-shrink-0"></i>
+        <div class="flex-1 min-w-0">
+          <p class="text-white text-sm font-semibold truncate">${esc(c.name)}</p>
+          ${c.phone?`<p class="text-[10px] text-slate-400 font-mono">${esc(c.phone)}</p>`:''}
+        </div>
+        ${meta}
+      </div>`;
+    }).join('');
+  }
+  if(!html) html = `<div class="px-3 py-4 text-slate-500 text-xs text-center italic">Yeni müştəri — adı yazın</div>`;
+  dd.innerHTML=html;
+  dd.querySelectorAll('.cust-item').forEach(el=>{
+    el.addEventListener('mousedown',ev=>{
+      ev.preventDefault();
+      pickCustomer(el.dataset.name, el.dataset.phone);
+    });
+  });
+}
+function openCustomerDropdown(){
+  buildCustomerDropdown(document.getElementById('sellCustomerName').value);
+  document.getElementById('customerDropdown').classList.remove('hidden');
+  customerDropdownVisible=true;
+}
+function closeCustomerDropdown(){
+  document.getElementById('customerDropdown').classList.add('hidden');
+  customerDropdownVisible=false;
+}
+function pickCustomer(name, phone){
+  document.getElementById('sellCustomerName').value = name;
+  if(phone && !document.getElementById('sellCustomerPhone').value) document.getElementById('sellCustomerPhone').value = phone;
+  closeCustomerDropdown();
+  updateCustomerHint();
+}
+function updateCustomerHint(){
+  const name = document.getElementById('sellCustomerName').value.trim();
+  const hint = document.getElementById('customerHint');
+  if(!name){hint.classList.add('hidden');return}
+  const stats = getCustomerStats(name);
+  if(stats && stats.count>0){
+    const d = stats.lastDate ? new Date(stats.lastDate).toLocaleDateString('az-AZ') : '';
+    hint.innerHTML = `<i class="fa-solid fa-check-circle text-emerald-400 mr-1"></i>Bu müştəri <b>${stats.count}</b> dəfə alıb — cəmi <b>${fmt(stats.total)}</b>${d?` • son: ${d}`:''}`;
+    hint.classList.remove('hidden');
+  } else {
+    hint.innerHTML = `<i class="fa-solid fa-sparkles text-amber-400 mr-1"></i>Yeni müştəri olacaq`;
+    hint.classList.remove('hidden');
+  }
+}
+function initCustomerAutocomplete(){
+  const input=document.getElementById('sellCustomerName');
+  input.addEventListener('focus',openCustomerDropdown);
+  input.addEventListener('input',()=>{openCustomerDropdown();updateCustomerHint()});
+  input.addEventListener('keydown',e=>{if(e.key==='Escape')closeCustomerDropdown()});
+  input.addEventListener('blur',()=>setTimeout(closeCustomerDropdown,120));
 }
 
 // ===== VEHICLE HELPERS =====
@@ -577,6 +691,7 @@ window.onload=()=>{
   populateYearSelects();
   populateBrandDatalist();
   initCategoryAutocomplete();
+  initCustomerAutocomplete();
   initVehicleFinancePreview();
   if(!getMasterKey()||!getBinId()){
     document.getElementById('configCloseBtn').classList.add('hidden');
@@ -621,15 +736,16 @@ async function loadData(){
     if(!res.ok)throw new Error('HTTP '+res.status);
     const json=await res.json();
     if(Array.isArray(json.record)){
-      db={parts:json.record,sales:[],vehicles:[],customCategories:[]};
+      db={parts:json.record,sales:[],vehicles:[],customCategories:[],customers:[]};
     }else if(json.record&&json.record.parts){
       db={
         parts:json.record.parts||[],
         sales:json.record.sales||[],
         vehicles:json.record.vehicles||[],
-        customCategories:json.record.customCategories||[]
+        customCategories:json.record.customCategories||[],
+        customers:json.record.customers||[]
       };
-    }else db={parts:[],sales:[],vehicles:[],customCategories:[]};
+    }else db={parts:[],sales:[],vehicles:[],customCategories:[],customers:[]};
 
     db.parts.forEach(p=>{
       if(typeof p.soldCount!=='number')p.soldCount=0;
@@ -637,15 +753,16 @@ async function loadData(){
     });
     if(!db.vehicles)db.vehicles=[];
     if(!db.customCategories)db.customCategories=[];
+    if(!db.customers)db.customers=[];
 
     renderCategoryFilters();
     renderParts();
     renderVehicles();
     populatePartVehicleSelect();
     renderAnalyticsMonths();
-    renderSalesHistory();
+    renderHistoryView();
   }catch(err){
-    partsList.innerHTML=`<div class="text-center py-12 text-red-400 text-sm px-4">Xəta baş verdi. API Key və Bin ID düzgün olduğunu <button onclick="openConfigModal()" class="underline font-bold">bura basıb</button> yoxlayın.</div>`;
+    partsList.innerHTML=`<div class="text-center py-12 text-red-400 text-sm px-4">Xəta baş verdi. <button onclick="openConfigModal()" class="underline font-bold">Ayarları yoxla</button></div>`;
   }
 }
 
@@ -659,11 +776,11 @@ async function syncData(successMsg){
       body:JSON.stringify(db)
     });
     if(!res.ok)throw new Error('HTTP '+res.status);
-    renderCategoryFilters();renderParts();renderVehicles();populatePartVehicleSelect();renderAnalytics();renderSalesHistory();
+    renderCategoryFilters();renderParts();renderVehicles();populatePartVehicleSelect();renderAnalytics();renderHistoryView();
     if(successMsg)showToast(successMsg,false);
     return true;
   }catch(err){
-    showToast('Serverlə sinxronizasiyada xəta!',true);return false;
+    showToast('Sinxronizasiya xətası!',true);return false;
   }finally{syncing=false}
 }
 
@@ -676,7 +793,7 @@ function switchTab(tabName){
   document.getElementById(`section-${tabName}`).classList.remove('hidden');
   document.getElementById(`tab-${tabName}`).className='flex-1 py-2.5 rounded-xl text-[10px] sm:text-xs font-bold transition-all bg-red-600 text-white shadow-lg shadow-red-600/20';
   if(tabName==='analytics')renderAnalytics();
-  if(tabName==='history')renderSalesHistory();
+  if(tabName==='history')renderHistoryView();
   if(tabName==='vehicles')renderVehicles();
 }
 
@@ -694,14 +811,18 @@ function renderCategoryFilters(){
 }
 function setCategoryFilter(cat){currentCategory=cat;renderCategoryFilters();renderParts()}
 
-// ===== PARTS =====
+// ===== PARTS (with multi-word search) =====
 function renderParts(){
   const partsList=document.getElementById('partsList');
-  const search=document.getElementById('searchInput').value.toLowerCase();
+  const search=document.getElementById('searchInput').value;
+
   const filtered=db.parts.filter(item=>{
     const matchesCat=currentCategory==='ALL'||item.category===currentCategory;
-    const matchesSearch=(item.code||'').toLowerCase().includes(search)||(item.car||'').toLowerCase().includes(search)||(item.engine&&item.engine.toLowerCase().includes(search))||(item.year&&String(item.year).toLowerCase().includes(search))||(item.description&&item.description.toLowerCase().includes(search));
-    return matchesCat&&matchesSearch;
+    const matchesSearch = matchesQuery(search, [
+      item.code, item.car, item.engine, item.year, item.description,
+      item.category, item.mileage
+    ]);
+    return matchesCat && matchesSearch;
   });
 
   document.getElementById('statTotalItems').innerText=db.parts.length;
@@ -740,9 +861,7 @@ function renderParts(){
         </div>
         <p class="text-xs text-slate-300 line-clamp-2">${esc(item.description||'')}</p>
         <div class="flex justify-between items-center pt-2 border-t border-slate-800/80 gap-1">
-          <span class="text-xs font-bold whitespace-nowrap ${item.quantity>0?'text-emerald-400':'text-red-500'}">
-            ${item.quantity>0?`Stok: ${item.quantity} ədəd`:'STOKDA YOXDUR'}
-          </span>
+          <span class="text-xs font-bold whitespace-nowrap ${item.quantity>0?'text-emerald-400':'text-red-500'}">${item.quantity>0?`Stok: ${item.quantity} ədəd`:'STOKDA YOXDUR'}</span>
           <div class="flex gap-1.5 flex-shrink-0">
             <button onclick="promptSell('${item.id}')" ${item.quantity<=0?'disabled':''} class="bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 text-white text-xs px-2.5 py-1 rounded-lg font-bold shadow-md shadow-emerald-600/20 flex items-center gap-1"><i class="fa-solid fa-cart-shopping text-[10px]"></i> Satış</button>
             <button onclick="openEditModal('${item.id}')" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-2 py-1 rounded-lg border border-slate-700"><i class="fa-solid fa-pen text-[10px]"></i></button>
@@ -754,13 +873,12 @@ function renderParts(){
   }).join('');
 }
 
-// ===== VEHICLES =====
+// ===== VEHICLES (multi-word search) =====
 function renderVehicles(){
   const list=document.getElementById('vehiclesList');
-  const search=(document.getElementById('vehicleSearchInput').value||'').toLowerCase();
+  const search=document.getElementById('vehicleSearchInput').value;
   const vehicles=(db.vehicles||[]).filter(v=>{
-    const hay=`${v.brand} ${v.model} ${v.generation||''} ${v.vin||''} ${v.engine||''} ${v.engineCode||''} ${v.color||''}`.toLowerCase();
-    return hay.includes(search);
+    return matchesQuery(search, [v.brand, v.model, v.generation, v.vin, v.engine, v.engineCode, v.color, v.notes]);
   }).sort((a,b)=>vehicleLabel(a).localeCompare(vehicleLabel(b)));
 
   const totalInvestment=(db.vehicles||[]).reduce((s,v)=>s+vehicleTotalCost(v),0);
@@ -770,13 +888,12 @@ function renderVehicles(){
   document.getElementById('statVehicleRecovered').innerText=fmt(totalRecovered);
 
   if(vehicles.length===0){
-    list.innerHTML=`<div class="text-center py-12 text-slate-500 text-sm"><i class="fa-solid fa-car-side text-3xl mb-3 opacity-30 block"></i>Hələ avtomobil əlavə edilməyib.</div>`;
+    list.innerHTML=`<div class="text-center py-12 text-slate-500 text-sm"><i class="fa-solid fa-car-side text-3xl mb-3 opacity-30 block"></i>Avtomobil tapılmadı.</div>`;
     return;
   }
 
   list.innerHTML=vehicles.map(v=>{
     const vParts=db.parts.filter(p=>p.vehicleId===v.id&&p.source==='vehicle');
-    const vLocalParts=db.parts.filter(p=>p.vehicleId===v.id&&p.source==='local');
     const pCount=vParts.length;
     const qtySum=vParts.reduce((s,p)=>s+(p.quantity||0),0);
     const totalCost=vehicleTotalCost(v);
@@ -793,39 +910,17 @@ function renderVehicles(){
     if(totalCost>0){
       financialBlock=`
         <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3 space-y-2">
-          <div class="flex justify-between text-[11px]">
-            <span class="text-slate-500">Alış qiyməti:</span>
-            <span class="text-white font-mono">${fmt(v.purchasePrice)}</span>
-          </div>
-          ${(Number(v.additionalCosts)||0)>0?`<div class="flex justify-between text-[11px]">
-            <span class="text-slate-500">Əlavə xərclər:</span>
-            <span class="text-white font-mono">${fmt(v.additionalCosts)}</span>
-          </div>`:''}
-          <div class="flex justify-between text-[11px] border-t border-slate-800 pt-1.5">
-            <span class="text-amber-400 font-bold">Ümumi investisiya:</span>
-            <span class="text-amber-400 font-bold font-mono">${fmt(totalCost)}</span>
-          </div>
-
+          <div class="flex justify-between text-[11px]"><span class="text-slate-500">Alış:</span><span class="text-white font-mono">${fmt(v.purchasePrice)}</span></div>
+          ${(Number(v.additionalCosts)||0)>0?`<div class="flex justify-between text-[11px]"><span class="text-slate-500">Əlavə:</span><span class="text-white font-mono">${fmt(v.additionalCosts)}</span></div>`:''}
+          <div class="flex justify-between text-[11px] border-t border-slate-800 pt-1.5"><span class="text-amber-400 font-bold">İnvestisiya:</span><span class="text-amber-400 font-bold font-mono">${fmt(totalCost)}</span></div>
           <div class="pt-1.5">
-            <div class="flex justify-between text-[10px] mb-1">
-              <span class="text-slate-400">Maya ödənişi</span>
-              <span class="font-bold ${isPaidOff?'text-emerald-400':'text-amber-400'}">${fmt(recovered)} / ${fmt(totalCost)} (${pct.toFixed(1)}%)</span>
-            </div>
-            <div class="h-2 bg-slate-800 rounded-full overflow-hidden">
-              <div class="h-full progress-bar ${isPaidOff?'bg-gradient-to-r from-emerald-600 to-emerald-400':'bg-gradient-to-r from-amber-600 to-amber-400'}" style="width:${pct}%"></div>
-            </div>
+            <div class="flex justify-between text-[10px] mb-1"><span class="text-slate-400">Maya ödənişi</span><span class="font-bold ${isPaidOff?'text-emerald-400':'text-amber-400'}">${fmt(recovered)} / ${fmt(totalCost)} (${pct.toFixed(1)}%)</span></div>
+            <div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="h-full progress-bar ${isPaidOff?'bg-gradient-to-r from-emerald-600 to-emerald-400':'bg-gradient-to-r from-amber-600 to-amber-400'}" style="width:${pct}%"></div></div>
           </div>
-
           ${!isPaidOff?`
-            <div class="flex justify-between text-[11px] pt-1">
-              <span class="text-slate-400">Maya üçün qalıb:</span>
-              <span class="text-red-400 font-bold font-mono">${fmt(remaining)}</span>
-            </div>
-            ${estRemaining>0?`<div class="flex justify-between text-[11px]">
-              <span class="text-slate-400">Təxmini qalan detal:</span>
-              <span class="text-slate-300 font-mono">~${estRemaining} ədəd</span>
-            </div>
-            <p class="text-[9px] text-slate-600 italic">Orta satış qiymətinə əsasən (${fmt(avgPrice)})</p>`:''}
+            <div class="flex justify-between text-[11px] pt-1"><span class="text-slate-400">Qalıb:</span><span class="text-red-400 font-bold font-mono">${fmt(remaining)}</span></div>
+            ${estRemaining>0?`<div class="flex justify-between text-[11px]"><span class="text-slate-400">Təxmini qalan detal:</span><span class="text-slate-300 font-mono">~${estRemaining} ədəd</span></div>
+            <p class="text-[9px] text-slate-600 italic">Orta satış: ${fmt(avgPrice)}</p>`:''}
           `:`
             <div class="bg-emerald-950/40 border border-emerald-800/40 rounded-lg p-2 mt-1">
               <p class="text-emerald-400 font-bold text-[11px]"><i class="fa-solid fa-check-circle mr-1"></i>Maya ödəndi!</p>
@@ -852,15 +947,12 @@ function renderVehicles(){
           <button onclick="deleteVehicle('${v.id}')" class="text-slate-500 hover:text-red-400 p-1.5 text-xs"><i class="fa-solid fa-trash"></i></button>
         </div>
       </div>
-
       ${financialBlock}
-
       <div class="grid grid-cols-3 gap-1.5 text-center">
         <div class="bg-slate-950/60 rounded-lg p-1.5 border border-slate-800"><p class="text-[9px] text-slate-500 uppercase">Detal</p><p class="text-xs font-bold text-white">${pCount}</p></div>
         <div class="bg-slate-950/60 rounded-lg p-1.5 border border-slate-800"><p class="text-[9px] text-slate-500 uppercase">Stok</p><p class="text-xs font-bold text-emerald-400">${qtySum} ədəd</p></div>
         <div class="bg-slate-950/60 rounded-lg p-1.5 border border-slate-800"><p class="text-[9px] text-slate-500 uppercase">Satılıb</p><p class="text-xs font-bold text-blue-400">${soldUnits}</p></div>
       </div>
-
       <div class="flex gap-2 pt-1">
         <button onclick="openVehicleDetail('${v.id}')" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white text-xs py-2 rounded-lg font-semibold border border-slate-700"><i class="fa-solid fa-list mr-1"></i>Detallar (${pCount})</button>
         <button onclick="openAddModalForVehicle('${v.id}')" class="flex-1 bg-red-600 hover:bg-red-700 text-white text-xs py-2 rounded-lg font-semibold shadow-md shadow-red-600/20"><i class="fa-solid fa-plus mr-1"></i>Detal</button>
@@ -873,10 +965,9 @@ function openVehicleModal(id,fromPartModal){
   pendingVehicleReturn=!!fromPartModal;
   document.getElementById('vehicleForm').reset();
   document.getElementById('vehicleEditId').value=id||'';
-  document.getElementById('vehicleModalTitle').innerHTML=id?'<i class="fa-solid fa-pen text-red-500"></i> Avtomobili Redaktə Et':'<i class="fa-solid fa-car-side text-red-500"></i> Yeni Avtomobil';
+  document.getElementById('vehicleModalTitle').innerHTML=id?'<i class="fa-solid fa-pen text-red-500"></i> Redaktə Et':'<i class="fa-solid fa-car-side text-red-500"></i> Yeni Avtomobil';
   document.getElementById('saveVehicleBtn').innerText=id?'Dəyişiklikləri Yadda Saxla':'Avtomobili Yadda Saxla';
   document.getElementById('totalInvestPreview').innerText=M+'0';
-
   if(id){
     const v=(db.vehicles||[]).find(x=>x.id===id);
     if(v){
@@ -908,7 +999,6 @@ async function saveVehicle(e){
   const btn=document.getElementById('saveVehicleBtn');
   const editId=document.getElementById('vehicleEditId').value;
   btn.disabled=true;btn.innerText='Yadda saxlanılır...';
-
   const data={
     brand:document.getElementById('vBrand').value.trim(),
     model:document.getElementById('vModel').value.trim(),
@@ -925,7 +1015,6 @@ async function saveVehicle(e){
     purchasePrice:parseFloat(document.getElementById('vPurchasePrice').value)||0,
     additionalCosts:parseFloat(document.getElementById('vAdditionalCosts').value)||0
   };
-
   let newId=editId;let ok;
   if(editId){
     const v=db.vehicles.find(x=>x.id===editId);
@@ -943,10 +1032,7 @@ async function saveVehicle(e){
     if(pendingVehicleReturn&&!editId){
       const source=currentPartSource;
       openAddModal(source);
-      setTimeout(()=>{
-        const sel=document.getElementById('partVehicleSelect');
-        if(sel){sel.value=newId;onPartVehicleChange()}
-      },50);
+      setTimeout(()=>{const sel=document.getElementById('partVehicleSelect');if(sel){sel.value=newId;onPartVehicleChange()}},50);
     }
   }
 }
@@ -954,13 +1040,13 @@ async function saveVehicle(e){
 async function deleteVehicle(id){
   const vParts=db.parts.filter(p=>p.vehicleId===id);
   let msg='Bu avtomobili silməyə əminsiniz?';
-  if(vParts.length>0)msg=`Bu avtomobilə bağlı ${vParts.length} detal var. Silinsin? (Detallar silinməyəcək.)`;
+  if(vParts.length>0)msg=`${vParts.length} detal var. Silinsin?`;
   if(!confirm(msg))return;
   const backupVehicles=db.vehicles;
   const backupPartsLinks=db.parts.map(p=>p.vehicleId);
   db.vehicles=db.vehicles.filter(v=>v.id!==id);
   db.parts.forEach(p=>{if(p.vehicleId===id)p.vehicleId=''});
-  const ok=await syncData('Avtomobil silindi');
+  const ok=await syncData('Silindi');
   if(!ok){db.vehicles=backupVehicles;db.parts.forEach((p,i)=>p.vehicleId=backupPartsLinks[i])}
 }
 
@@ -996,9 +1082,8 @@ function openVehicleDetail(id){
 
   document.getElementById('vehicleDetailTitle').innerHTML=`<i class="fa-solid fa-car-side text-red-500 flex-shrink-0"></i><span class="truncate">${esc(vehicleLabel(v))}</span>`;
 
-  const rowsHtml=vParts.length===0
-    ?`<p class="text-center text-slate-500 text-xs py-6">Bu avtomobilə hələ detal əlavə edilməyib.</p>`
-    :vParts.map(p=>`
+  const rowsHtml=vParts.length===0?`<p class="text-center text-slate-500 text-xs py-6">Detal yoxdur.</p>`:
+    vParts.map(p=>`
       <div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2.5 flex justify-between items-start gap-2">
         <div class="min-w-0">
           <p class="font-bold text-white text-xs truncate">${esc(p.code)} <span class="text-slate-500 font-normal">• ${esc(p.category)}</span></p>
@@ -1018,22 +1103,18 @@ function openVehicleDetail(id){
         <div class="flex justify-between text-[11px] border-t border-amber-900/40 pt-1.5"><span class="text-amber-400 font-bold">İnvestisiya:</span><span class="text-amber-400 font-bold font-mono">${fmt(totalCost)}</span></div>
         <div class="flex justify-between text-[11px]"><span class="text-slate-400">Satışdan:</span><span class="text-emerald-400 font-bold font-mono">${fmt(recovered)}</span></div>
         <div class="pt-1.5">
-          <div class="h-2 bg-slate-800 rounded-full overflow-hidden">
-            <div class="h-full progress-bar ${isPaidOff?'bg-gradient-to-r from-emerald-600 to-emerald-400':'bg-gradient-to-r from-amber-600 to-amber-400'}" style="width:${pct}%"></div>
-          </div>
+          <div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="h-full progress-bar ${isPaidOff?'bg-gradient-to-r from-emerald-600 to-emerald-400':'bg-gradient-to-r from-amber-600 to-amber-400'}" style="width:${pct}%"></div></div>
           <p class="text-[10px] text-slate-400 mt-1 text-center">${pct.toFixed(1)}% ödənilib</p>
         </div>
-        ${isPaidOff
-          ? `<div class="bg-emerald-950/40 border border-emerald-800/40 rounded-lg p-2 text-center"><p class="text-emerald-400 font-bold text-[11px]"><i class="fa-solid fa-check-circle mr-1"></i>Maya ödəndi</p><p class="text-[11px] text-emerald-300 mt-0.5">Xalis qazanc: <b class="font-mono">+${fmt(profit)}</b></p></div>`
-          : `<div class="flex justify-between text-[11px]"><span class="text-slate-400">Qalıb:</span><span class="text-red-400 font-bold font-mono">${fmt(remaining)}</span></div>
-             ${estRemaining>0?`<div class="flex justify-between text-[11px]"><span class="text-slate-400">Təxmini qalan detal:</span><span class="text-slate-300 font-mono">~${estRemaining} ədəd</span></div>`:''}`}
+        ${isPaidOff?`<div class="bg-emerald-950/40 border border-emerald-800/40 rounded-lg p-2 text-center"><p class="text-emerald-400 font-bold text-[11px]"><i class="fa-solid fa-check-circle mr-1"></i>Maya ödəndi</p><p class="text-[11px] text-emerald-300 mt-0.5">Xalis qazanc: <b class="font-mono">+${fmt(profit)}</b></p></div>`
+        :`<div class="flex justify-between text-[11px]"><span class="text-slate-400">Qalıb:</span><span class="text-red-400 font-bold font-mono">${fmt(remaining)}</span></div>${estRemaining>0?`<div class="flex justify-between text-[11px]"><span class="text-slate-400">Təxmini qalan:</span><span class="text-slate-300 font-mono">~${estRemaining} ədəd</span></div>`:''}`}
       </div>`;
   }
 
   document.getElementById('vehicleDetailBody').innerHTML=`
     <div class="grid grid-cols-2 gap-2 text-xs">
       ${v.vin?`<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2 col-span-2"><p class="text-[9px] text-slate-500 uppercase">VIN</p><p class="font-mono text-white text-[11px] break-all">${esc(v.vin)}</p></div>`:''}
-      ${v.engine?`<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2"><p class="text-[9px] text-slate-500 uppercase">Mühərrik</p><p class="text-white text-[11px]">${esc(v.engine)}${v.engineCode?` <span class="text-slate-400 font-mono">(${esc(v.engineCode)})</span>`:''}</p></div>`:''}
+      ${v.engine?`<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2"><p class="text-[9px] text-slate-500 uppercase">Mühərrik</p><p class="text-white text-[11px]">${esc(v.engine)}${v.engineCode?` (${esc(v.engineCode)})`:''}</p></div>`:''}
       ${v.color?`<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2"><p class="text-[9px] text-slate-500 uppercase">Rəng</p><p class="text-white text-[11px]">${esc(v.color)}</p></div>`:''}
       ${v.mileage?`<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2"><p class="text-[9px] text-slate-500 uppercase">Yürüş</p><p class="text-white text-[11px]">${esc(v.mileage)}</p></div>`:''}
       ${v.arrivalDate?`<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2"><p class="text-[9px] text-slate-500 uppercase">Gəlmə</p><p class="text-white text-[11px]">${esc(v.arrivalDate)}</p></div>`:''}
@@ -1076,18 +1157,16 @@ function setPartSource(source){
     lBtn.className='flex-1 py-2 rounded-lg text-[11px] font-bold transition-all text-slate-400 hover:text-white';
     document.getElementById('vehiclePickerWrap').classList.remove('hidden');
     document.getElementById('buyPriceWrap').classList.add('hidden');
-    document.getElementById('partVehicleSelect').required=true;
-    document.getElementById('sellHint').innerText='Bu satış birbaşa avtomobilin maya ödənişinə gedir.';
+    document.getElementById('sellHint').innerText='Bu satış avtomobilin maya ödənişinə gedir.';
   }else{
     vBtn.className='flex-1 py-2 rounded-lg text-[11px] font-bold transition-all text-slate-400 hover:text-white';
     lBtn.className='flex-1 py-2 rounded-lg text-[11px] font-bold transition-all bg-blue-600 text-white shadow-md shadow-blue-600/20';
     document.getElementById('vehiclePickerWrap').classList.add('hidden');
     document.getElementById('buyPriceWrap').classList.remove('hidden');
-    document.getElementById('partVehicleSelect').required=false;
     document.getElementById('partVehicleSelect').value='';
     document.getElementById('partVehicleId').value='';
     document.getElementById('vehicleAutofillHint').innerText='';
-    document.getElementById('sellHint').innerText='Qazanc = satış qiyməti − maya qiyməti. Avtomobil mayasına təsir etmir.';
+    document.getElementById('sellHint').innerText='Qazanc = satış − maya. Avtomobil mayasına təsir etmir.';
   }
 }
 
@@ -1097,19 +1176,26 @@ function promptSell(partId){
   if(!part)return;
   activeSellPartId=partId;
   document.getElementById('sellModalPartTitle').innerText=`${part.code} — ${part.car}`;
-  document.getElementById('sellModalStockInfo').innerText=`Stokda: ${part.quantity} ədəd • ${part.source==='local'?'Yerli bazar':'Avtomobil detalı'}`;
+  document.getElementById('sellModalStockInfo').innerText=`Stok: ${part.quantity} ədəd • ${part.source==='local'?'Yerli bazar':'Avtomobil detalı'}`;
   document.getElementById('sellActualPrice').value=part.sellPrice||0;
   document.getElementById('sellActualQty').value=1;
   document.getElementById('sellActualQty').max=part.quantity;
+  document.getElementById('sellCustomerName').value='';
+  document.getElementById('sellCustomerPhone').value='';
+  document.getElementById('customerHint').classList.add('hidden');
+  closeCustomerDropdown();
   document.getElementById('sellModal').classList.remove('hidden');
 }
-function closeSellModal(){document.getElementById('sellModal').classList.add('hidden');activeSellPartId=null}
+function closeSellModal(){document.getElementById('sellModal').classList.add('hidden');activeSellPartId=null;closeCustomerDropdown()}
 
 async function confirmSale(){
   const part=db.parts.find(p=>p.id===activeSellPartId);
   if(!part)return;
   const price=parseFloat(document.getElementById('sellActualPrice').value)||0;
   const qty=parseInt(document.getElementById('sellActualQty').value)||1;
+  const customerName=document.getElementById('sellCustomerName').value.trim();
+  const customerPhone=document.getElementById('sellCustomerPhone').value.trim();
+
   if(qty>part.quantity){showToast('Stokda olan miqdardan çox satış qeyd edilə bilməz!',true);return}
   if(qty<1){showToast('Say ən az 1 olmalıdır.',true);return}
 
@@ -1132,10 +1218,14 @@ async function confirmSale(){
     date:new Date().toISOString(),
     returned:false,
     source:part.source,
-    vehicleId:part.vehicleId||''
+    vehicleId:part.vehicleId||'',
+    customerName:customerName,
+    customerPhone:customerPhone
   };
   if(!db.sales)db.sales=[];
   db.sales.unshift(saleRecord);
+
+  if(customerName) registerCustomer(customerName, customerPhone);
 
   const ok=await syncData('Satış qeydə alındı ✓');
   if(!ok){part.quantity+=qty;part.soldCount-=qty;db.sales.shift()}
@@ -1146,12 +1236,12 @@ async function confirmSale(){
 async function returnSale(saleId){
   const sale=db.sales.find(s=>s.id===saleId);
   if(!sale||sale.returned)return;
-  if(!confirm(`"${sale.code}" — ${sale.qty} ədəd satışı geri qaytarmaq istəyirsiniz?\nStok bərpa olunacaq.`))return;
+  if(!confirm(`"${sale.code}" — ${sale.qty} ədəd satışı geri qaytarmaq istəyirsiniz?`))return;
   const part=db.parts.find(p=>p.id===sale.partId);
   const backup={partQty:part?part.quantity:null,partSold:part?part.soldCount:null,returned:sale.returned,returnedAt:sale.returnedAt};
   if(part){part.quantity=(part.quantity||0)+sale.qty;part.soldCount=Math.max(0,(part.soldCount||0)-sale.qty)}
   sale.returned=true;sale.returnedAt=new Date().toISOString();
-  const ok=await syncData('Satış geri qaytarıldı ✓');
+  const ok=await syncData('Geri qaytarıldı ✓');
   if(!ok){
     if(part){part.quantity=backup.partQty;part.soldCount=backup.partSold}
     sale.returned=backup.returned;
@@ -1174,8 +1264,6 @@ function renderAnalyticsMonths(){
 function renderAnalytics(){
   const selectedMonth=document.getElementById('analyticsMonthSelect').value||new Date().toISOString().slice(0,7);
   const monthlySales=(db.sales||[]).filter(s=>s.date&&s.date.startsWith(selectedMonth)&&!s.returned);
-
-  // Split
   const localSales=monthlySales.filter(s=>s.source==='local');
   const vehSales=monthlySales.filter(s=>s.source==='vehicle');
 
@@ -1187,17 +1275,6 @@ function renderAnalytics(){
   const vehRev=vehSales.reduce((s,x)=>s+x.sellPrice*x.qty,0);
   const vehUnits=vehSales.reduce((s,x)=>s+x.qty,0);
 
-  const totalRev=localRev+vehRev;
-
-  // For the month: total real cost = local buy costs + portion of vehicle cost for units sold (only if not paid off)
-  // Simpler approach: total cost = all vehicle total cost (all-time) + all local buy cost (all-time, but that's more accurate as it's per-sale)
-  // Actually, since we're showing monthly, let's show month's real profit:
-  // - local: sellPrice*qty - buyPrice*qty
-  // - vehicle: sellPrice*qty (this goes to vehicle cost recovery, but from a "cash in month" perspective it's revenue)
-  // Net profit for month = totalRev - localCost - vehicleInvestedInMonth (not tracked)
-  // Let's do: netProfit = localProfit + vehRev (revenue from vehicle parts)
-  
-  // Better: overall (not just month) totals
   const totalLocalRev=(db.sales||[]).filter(s=>!s.returned&&s.source==='local').reduce((s,x)=>s+x.sellPrice*x.qty,0);
   const totalLocalCost=(db.sales||[]).filter(s=>!s.returned&&s.source==='local').reduce((s,x)=>s+(x.buyPrice||0)*x.qty,0);
   const totalVehRev=(db.sales||[]).filter(s=>!s.returned&&s.source==='vehicle').reduce((s,x)=>s+x.sellPrice*x.qty,0);
@@ -1207,26 +1284,22 @@ function renderAnalytics(){
   const allTimeNet=allTimeRevenue-allTimeCost;
   const netPct=allTimeRevenue>0?(allTimeNet/allTimeRevenue*100):0;
 
-  // Business panel (all-time)
   document.getElementById('businessRevenue').innerText=fmt(allTimeRevenue);
   document.getElementById('businessCost').innerText=fmt(allTimeCost);
   document.getElementById('businessNet').innerText=fmt(allTimeNet);
   document.getElementById('businessNet').className=`text-base font-black ${allTimeNet>=0?'text-emerald-400':'text-red-400'}`;
   document.getElementById('businessNetPct').innerText=`Marja: ${netPct.toFixed(1)}%`;
 
-  // Local panel (monthly)
   document.getElementById('localRevenue').innerText=fmt(localRev);
   document.getElementById('localCost').innerText=fmt(localCost);
   document.getElementById('localProfit').innerText=fmt(localProfit);
   document.getElementById('localProfit').className=`text-xs font-bold ${localProfit>=0?'text-emerald-400':'text-red-400'}`;
   document.getElementById('localUnits').innerText=`${localUnits} ədəd satılıb`;
 
-  // Vehicle panel (monthly)
   document.getElementById('vehRevenue').innerText=fmt(vehRev);
   document.getElementById('vehUnits').innerText=`${vehUnits} ədəd`;
-  document.getElementById('vehInvestNote').innerText=`Bütün avtomobil investisiyası: ${fmt(totalVehInvestment)} • Ümumi daxilolma: ${fmt(totalVehRev)}`;
+  document.getElementById('vehInvestNote').innerText=`Avtomobil investisiyası: ${fmt(totalVehInvestment)} • Daxilolma: ${fmt(totalVehRev)}`;
 
-  // Top 5
   const sortedTop=[...db.parts].filter(p=>(p.soldCount||0)>0).sort((a,b)=>(b.soldCount||0)-(a.soldCount||0)).slice(0,5);
   document.getElementById('topSoldList').innerHTML=sortedTop.length?sortedTop.map((item,idx)=>{
     const isLocal=item.source==='local';
@@ -1252,36 +1325,166 @@ function renderAnalytics(){
     </div>`).join(''):`<p class="text-slate-500 text-center py-4">Stokda hissə yoxdur.</p>`;
 }
 
-// ===== HISTORY =====
+// ===== HISTORY (with sales/customers view) =====
+function setHistoryView(view){
+  historyView = view;
+  const salesBtn = document.getElementById('hViewSales');
+  const custBtn = document.getElementById('hViewCustomers');
+  const salesList = document.getElementById('salesHistoryList');
+  const custList = document.getElementById('customersList');
+  const title = document.getElementById('historyTitle');
+
+  if(view==='sales'){
+    salesBtn.className = 'flex-1 py-2 rounded-lg text-[11px] font-bold transition-all bg-red-600 text-white';
+    custBtn.className = 'flex-1 py-2 rounded-lg text-[11px] font-bold transition-all text-slate-400 hover:text-white';
+    salesList.classList.remove('hidden');
+    custList.classList.add('hidden');
+    title.innerText = 'Satış Əməliyyatları';
+  } else {
+    salesBtn.className = 'flex-1 py-2 rounded-lg text-[11px] font-bold transition-all text-slate-400 hover:text-white';
+    custBtn.className = 'flex-1 py-2 rounded-lg text-[11px] font-bold transition-all bg-blue-600 text-white';
+    salesList.classList.add('hidden');
+    custList.classList.remove('hidden');
+    title.innerText = 'Müştərilər';
+  }
+  renderHistoryView();
+}
+
+function renderHistoryView(){
+  if(historyView==='sales') renderSalesHistory();
+  else renderCustomers();
+}
+
 function renderSalesHistory(){
   const container=document.getElementById('salesHistoryList');
-  const sales=db.sales||[];
-  document.getElementById('salesCountBadge').innerText=`${sales.length} əməliyyat`;
+  const search=document.getElementById('historySearchInput').value;
+  const sales=(db.sales||[]).filter(s=>{
+    return matchesQuery(search, [s.code, s.car, s.category, s.customerName, s.customerPhone]);
+  });
+  document.getElementById('salesCountBadge').innerText=`${sales.length} / ${(db.sales||[]).length}`;
+
   if(sales.length===0){
-    container.innerHTML=`<div class="text-center py-10 text-slate-500 text-xs">Hələ ki heç bir satış qeydə alınmayıb.</div>`;
+    container.innerHTML=`<div class="text-center py-10 text-slate-500 text-xs">${(db.sales||[]).length===0?'Hələ satış qeydə alınmayıb.':'Uyğun nəticə yoxdur.'}</div>`;
     return;
   }
+
   container.innerHTML=sales.map(s=>{
     const d=new Date(s.date);
     const dateStr=`${d.getDate().toString().padStart(2,'0')}.${(d.getMonth()+1).toString().padStart(2,'0')}.${d.getFullYear()} ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;
     const returnedStyle=s.returned?'opacity-60 border-red-900/40 bg-red-950/10':'';
     const isLocal=s.source==='local';
+    const hasCustomer = s.customerName;
     return `
-    <div class="glass p-3 rounded-xl flex justify-between items-center text-xs gap-2 ${returnedStyle}">
-      <div class="space-y-0.5 min-w-0 flex-1">
-        <p class="font-bold text-white truncate ${s.returned?'line-through text-slate-400':''}">${esc(s.code)} <span class="text-slate-400 font-normal">(${esc(s.car)})</span></p>
-        <p class="text-[10px] text-slate-500"><i class="fa-regular fa-clock mr-1"></i>${dateStr} • ${s.qty} ədəd • <span class="${isLocal?'text-blue-400':'text-emerald-400'}">${isLocal?'Yerli bazar':'Avtomobil'}</span></p>
-        ${s.returned?`<p class="text-[10px] text-red-400 font-semibold"><i class="fa-solid fa-rotate-left mr-1"></i>Geri qaytarılıb</p>`:''}
-      </div>
-      <div class="text-right flex-shrink-0 flex flex-col items-end gap-1">
-        <p class="font-black ${s.returned?'text-slate-500 line-through':'text-emerald-400'}">+${fmt(s.sellPrice*s.qty)}</p>
-        ${!s.returned&&isLocal&&s.profit?`<p class="text-[10px] text-blue-400 font-semibold">Qazanc: +${fmt(s.profit)}</p>`:''}
-        ${!s.returned&&!isLocal?`<p class="text-[10px] text-amber-400 font-semibold">Mayaya gedir</p>`:''}
-        ${!s.returned?`<button onclick="returnSale('${s.id}')" class="bg-red-900/60 hover:bg-red-800 text-red-200 text-[10px] px-2 py-0.5 rounded-md border border-red-800/60 font-semibold"><i class="fa-solid fa-rotate-left mr-1"></i>Qaytar</button>`:''}
+    <div class="glass p-3 rounded-xl text-xs ${returnedStyle}">
+      <div class="flex justify-between items-start gap-2">
+        <div class="space-y-0.5 min-w-0 flex-1">
+          ${hasCustomer?`<p class="font-bold text-blue-300 text-[11px] truncate"><i class="fa-solid fa-user text-[9px] mr-1"></i>${esc(s.customerName)}${s.customerPhone?` <span class="font-mono text-slate-400 font-normal text-[10px]">• ${esc(s.customerPhone)}</span>`:''}</p>`:''}
+          <p class="font-bold text-white truncate ${s.returned?'line-through text-slate-400':''}">${esc(s.code)} <span class="text-slate-400 font-normal">(${esc(s.car)})</span></p>
+          <p class="text-[10px] text-slate-500"><i class="fa-regular fa-clock mr-1"></i>${dateStr} • ${s.qty} ədəd • <span class="${isLocal?'text-blue-400':'text-emerald-400'}">${isLocal?'Yerli':'Avtomobil'}</span></p>
+          ${s.returned?`<p class="text-[10px] text-red-400 font-semibold mt-0.5"><i class="fa-solid fa-rotate-left mr-1"></i>Geri qaytarılıb</p>`:''}
+        </div>
+        <div class="text-right flex-shrink-0 flex flex-col items-end gap-1">
+          <p class="font-black ${s.returned?'text-slate-500 line-through':'text-emerald-400'}">+${fmt(s.sellPrice*s.qty)}</p>
+          ${!s.returned&&isLocal&&s.profit?`<p class="text-[10px] text-blue-400 font-semibold">Qazanc: +${fmt(s.profit)}</p>`:''}
+          ${!s.returned&&!isLocal?`<p class="text-[10px] text-amber-400 font-semibold">Mayaya gedir</p>`:''}
+          ${!s.returned?`<button onclick="returnSale('${s.id}')" class="bg-red-900/60 hover:bg-red-800 text-red-200 text-[10px] px-2 py-0.5 rounded-md border border-red-800/60 font-semibold"><i class="fa-solid fa-rotate-left mr-1"></i>Qaytar</button>`:''}
+        </div>
       </div>
     </div>`;
   }).join('');
 }
+
+function renderCustomers(){
+  const container=document.getElementById('customersList');
+  const search=document.getElementById('historySearchInput').value;
+  const customers = getAllCustomers().filter(c=>matchesQuery(search,[c.name,c.phone]));
+
+  document.getElementById('salesCountBadge').innerText=`${customers.length} müştəri`;
+
+  if(customers.length===0){
+    container.innerHTML=`<div class="text-center py-10 text-slate-500 text-xs">Hələ müştəri qeydə alınmayıb.</div>`;
+    return;
+  }
+
+  const enriched = customers.map(c=>{
+    const stats = getCustomerStats(c.name);
+    return {...c, stats};
+  }).filter(c=>c.stats && c.stats.count>0)
+    .sort((a,b)=>b.stats.total - a.stats.total);
+
+  container.innerHTML = enriched.map(c=>{
+    const d = c.stats.lastDate ? new Date(c.stats.lastDate) : null;
+    const dateStr = d ? `${d.getDate().toString().padStart(2,'0')}.${(d.getMonth()+1).toString().padStart(2,'0')}.${d.getFullYear()}` : '';
+    return `
+      <div class="glass rounded-xl p-3 border border-slate-800 hover:border-blue-900/50 transition-all cursor-pointer" onclick="openCustomerDetail('${esc(c.name).replace(/'/g,"&#39;")}')">
+        <div class="flex justify-between items-start gap-2">
+          <div class="min-w-0 flex-1">
+            <p class="font-bold text-white text-sm truncate"><i class="fa-solid fa-user-circle text-blue-400 mr-1.5"></i>${esc(c.name)}</p>
+            ${c.phone?`<p class="text-[11px] text-slate-400 font-mono mt-0.5"><i class="fa-solid fa-phone text-[9px] mr-1"></i>${esc(c.phone)}</p>`:''}
+            <div class="flex flex-wrap gap-x-3 gap-y-0.5 text-[10px] text-slate-500 mt-1">
+              <span><i class="fa-solid fa-cart-shopping mr-1"></i>${c.stats.count} alış</span>
+              <span><i class="fa-solid fa-cubes mr-1"></i>${c.stats.units} ədəd</span>
+              ${dateStr?`<span><i class="fa-regular fa-clock mr-1"></i>${dateStr}</span>`:''}
+            </div>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <p class="font-black text-emerald-400 text-sm">${fmt(c.stats.total)}</p>
+            <p class="text-[9px] text-slate-500 uppercase mt-0.5">cəmi</p>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function openCustomerDetail(name){
+  const stats = getCustomerStats(name);
+  if(!stats) return;
+  const customer = getAllCustomers().find(c=>c.name.toLowerCase()===name.toLowerCase());
+  const sales = (db.sales||[]).filter(s=>s.customerName && s.customerName.toLowerCase()===name.toLowerCase());
+
+  document.getElementById('customerDetailTitle').innerHTML = `<i class="fa-solid fa-user text-blue-500 flex-shrink-0"></i><span class="truncate">${esc(name)}</span>`;
+
+  const salesHtml = sales.map(s=>{
+    const d = new Date(s.date);
+    const ds = `${d.getDate().toString().padStart(2,'0')}.${(d.getMonth()+1).toString().padStart(2,'0')}.${d.getFullYear()}`;
+    const isLocal = s.source==='local';
+    const ret = s.returned ? 'line-through opacity-50' : '';
+    return `<div class="bg-slate-950/60 border border-slate-800 rounded-lg p-2.5 flex justify-between items-start gap-2">
+      <div class="min-w-0">
+        <p class="font-bold text-white text-xs ${ret} truncate">${esc(s.code)} <span class="text-slate-500 font-normal">(${esc(s.car)})</span></p>
+        <p class="text-[10px] text-slate-500 mt-0.5">${ds} • ${s.qty} ədəd • <span class="${isLocal?'text-blue-400':'text-emerald-400'}">${isLocal?'Yerli':'Avtomobil'}</span>${s.returned?' • <span class="text-red-400">Qaytarılıb</span>':''}</p>
+      </div>
+      <p class="text-xs font-bold ${s.returned?'text-slate-500 line-through':'text-emerald-400'} flex-shrink-0">${fmt(s.sellPrice*s.qty)}</p>
+    </div>`;
+  }).join('');
+
+  document.getElementById('customerDetailBody').innerHTML = `
+    ${customer && customer.phone ? `<div class="bg-blue-950/30 border border-blue-900/40 rounded-lg p-2.5">
+      <p class="text-[9px] text-blue-400 uppercase mb-1">Telefon</p>
+      <a href="tel:${esc(customer.phone)}" class="text-blue-200 font-mono text-sm"><i class="fa-solid fa-phone mr-1.5"></i>${esc(customer.phone)}</a>
+    </div>`:''}
+    <div class="grid grid-cols-3 gap-1.5 text-center">
+      <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800">
+        <p class="text-[9px] text-slate-500 uppercase">Alış</p>
+        <p class="text-sm font-bold text-white">${stats.count}</p>
+      </div>
+      <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800">
+        <p class="text-[9px] text-slate-500 uppercase">Ədəd</p>
+        <p class="text-sm font-bold text-emerald-400">${stats.units}</p>
+      </div>
+      <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800">
+        <p class="text-[9px] text-slate-500 uppercase">Cəmi</p>
+        <p class="text-sm font-bold text-amber-400">${fmt(stats.total).replace(M,'')}</p>
+      </div>
+    </div>
+    <div class="border-t border-slate-800 pt-2">
+      <p class="text-[10px] uppercase text-slate-500 font-bold tracking-wider mb-2">Bütün alışları</p>
+      <div class="space-y-1.5 max-h-[50vh] overflow-y-auto pr-1">${salesHtml || '<p class="text-slate-500 text-xs text-center py-4">Satış yoxdur.</p>'}</div>
+    </div>
+  `;
+  document.getElementById('customerDetailModal').classList.remove('hidden');
+}
+function closeCustomerDetail(){document.getElementById('customerDetailModal').classList.add('hidden')}
 
 // ===== PART MODAL =====
 function openAddModal(defaultSource){
@@ -1304,7 +1507,7 @@ function openEditModal(id){
   const part=db.parts.find(p=>p.id===id);
   if(!part)return;
   document.getElementById('partEditId').value=id;
-  document.getElementById('partModalTitle').innerHTML='<i class="fa-solid fa-pen text-red-500"></i> Ehtiyat Hissəsini Redaktə Et';
+  document.getElementById('partModalTitle').innerHTML='<i class="fa-solid fa-pen text-red-500"></i> Redaktə Et';
   document.getElementById('saveBtn').innerText='Dəyişiklikləri Yadda Saxla';
   document.getElementById('partCode').value=part.code||'';
   document.getElementById('partCategory').value=part.category||'';
@@ -1319,7 +1522,6 @@ function openEditModal(id){
   base64Image=part.image||'';
   const preview=document.getElementById('imgPreview');
   if(base64Image){preview.src=base64Image;preview.classList.remove('hidden')}else preview.classList.add('hidden');
-
   closeCategoryDropdown();
   populatePartVehicleSelect();
   setPartSource(part.source||'vehicle');
@@ -1327,9 +1529,6 @@ function openEditModal(id){
     document.getElementById('partVehicleSelect').value=part.vehicleId;
     document.getElementById('partVehicleId').value=part.vehicleId;
     document.getElementById('vehicleAutofillHint').innerText='Bu detal bir avtomobilə bağlıdır.';
-  }else{
-    document.getElementById('partVehicleSelect').value='';
-    document.getElementById('partVehicleId').value='';
   }
   document.getElementById('partModal').classList.remove('hidden');
 }
@@ -1365,18 +1564,13 @@ async function savePart(e){
   const saveBtn=document.getElementById('saveBtn');
   const editId=document.getElementById('partEditId').value;
   const source=document.getElementById('partSource').value;
-
-  // Validate
   if(source==='vehicle'){
     const vId=document.getElementById('partVehicleId').value;
     if(!vId){showToast('Avtomobil seçilməlidir!',true);return}
   }
-
   saveBtn.disabled=true;
   saveBtn.innerText=editId?'Yadda saxlanılır...':'Stoka əlavə edilir...';
-
   const catValue=document.getElementById('partCategory').value.trim()||'Digər';
-
   const partData={
     code:document.getElementById('partCode').value.trim().toUpperCase(),
     category:catValue,
@@ -1392,17 +1586,15 @@ async function savePart(e){
     vehicleId:document.getElementById('partVehicleId').value||'',
     source:source
   };
-
   registerCategory(catValue);
-
   let ok;
   if(editId){
     const part=db.parts.find(p=>p.id===editId);
     if(part)Object.assign(part,partData);
-    ok=await syncData('Dəyişikliklər yadda saxlanıldı ✓');
+    ok=await syncData('Yadda saxlanıldı ✓');
   }else{
     db.parts.unshift({id:Date.now().toString(),soldCount:0,createdAt:new Date().toISOString(),...partData});
-    ok=await syncData('Ehtiyat hissəsi stoka əlavə olundu ✓');
+    ok=await syncData('Əlavə olundu ✓');
   }
   saveBtn.disabled=false;
   saveBtn.innerText=editId?'Dəyişiklikləri Yadda Saxla':'Stoka Əlavə Et';
