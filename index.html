@@ -33,6 +33,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
 .kpi-card{background:linear-gradient(135deg,rgba(30,41,59,.6),rgba(15,23,42,.85));border:1px solid rgba(255,255,255,.06);transition:all .2s}
 .kpi-card:hover{border-color:rgba(239,68,68,.3);transform:translateY(-2px)}
 .chart-wrap{position:relative;height:220px;width:100%}
+.chart-wrap-lg{position:relative;height:280px;width:100%}
 ::-webkit-scrollbar{width:6px;height:6px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:rgba(148,163,184,.3);border-radius:3px}
@@ -65,14 +66,23 @@ input,textarea{-webkit-user-select:text;user-select:text}
 .keypad-btn:active{transform:scale(.95);background:rgba(239,68,68,.4)}
 .code-dot{width:3rem;height:3.5rem;border-radius:.75rem;border:2px solid rgba(100,116,139,.5);background:rgba(15,23,42,.6);display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:700;transition:all .15s}
 .code-dot.filled{border-color:#dc2626;background:rgba(127,29,29,.3);color:#fff}
+.code-dot.success{border-color:#10b981;background:rgba(16,185,129,.2);color:#10b981}
 .code-dot.error{border-color:#ef4444;background:rgba(239,68,68,.2);animation:shake .4s ease}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
-@keyframes flashGreen{0%{background:rgba(16,185,129,.3)}100%{background:transparent}}
 .flash-success{animation:flashGreen 1s ease}
+@keyframes flashGreen{0%{background:rgba(16,185,129,.3)}100%{background:transparent}}
 .ai-btn{background:linear-gradient(135deg,#8b5cf6,#6d28d9);box-shadow:0 4px 12px rgba(139,92,246,.3)}
 .ai-btn:hover{background:linear-gradient(135deg,#a78bfa,#7c3aed)}
 .wave{display:inline-block;animation:wave 1.5s infinite}
 @keyframes wave{0%,60%,100%{transform:rotate(0)}10%,30%{transform:rotate(14deg)}20%{transform:rotate(-8deg)}}
+/* Desktop refinement */
+@media(min-width:1024px){
+  .chart-wrap{height:280px}
+  .chart-wrap-lg{height:340px}
+}
+@media(min-width:1280px){
+  .kpi-card{padding:1rem}
+}
 </style>
 </head>
 <body class="pb-24">
@@ -111,7 +121,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
   </div>
 </nav>
 
-<main class="px-3 max-w-7xl mx-auto space-y-4 pt-2">
+<main class="px-3 lg:px-6 max-w-7xl mx-auto space-y-4 pt-2">
 
 <!-- ============ DASHBOARD ============ -->
 <section id="section-dashboard" class="space-y-4">
@@ -119,7 +129,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
     <div class="absolute -top-8 -right-8 w-40 h-40 bg-red-600/10 rounded-full blur-3xl"></div>
     <div class="relative">
       <p class="text-[10px] text-red-400 font-bold uppercase tracking-widest">REAL XALİS QAZANC</p>
-      <p id="dashNetProfit" class="text-4xl font-black text-white mt-1 tracking-tight">₼0</p>
+      <p id="dashNetProfit" class="text-4xl lg:text-5xl font-black text-white mt-1 tracking-tight">₼0</p>
       <div class="flex flex-wrap gap-3 mt-2 text-[11px]">
         <span class="text-slate-400">Marja: <b id="dashMarginPct" class="text-emerald-400">0%</b></span>
         <span class="text-slate-400">ROI: <b id="dashRoi" class="text-blue-400">0%</b></span>
@@ -221,7 +231,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
 
   <div class="glass rounded-2xl p-4">
     <h3 class="text-xs font-bold text-white uppercase tracking-wider mb-3"><i class="fa-solid fa-trophy text-amber-400 mr-1.5"></i>Avtomobil ROI Müqayisəsi</h3>
-    <div class="chart-wrap" style="height:280px"><canvas id="chartVehicleROI"></canvas></div>
+    <div class="chart-wrap-lg"><canvas id="chartVehicleROI"></canvas></div>
   </div>
 
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
@@ -351,7 +361,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
       <h3 class="text-xs font-bold text-white uppercase tracking-wider"><i class="fa-solid fa-coins text-amber-400 mr-1.5"></i>Xərc Bölgüsü</h3>
       <button onclick="openExpenseModal()" class="text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-1 rounded-lg font-bold border border-slate-700"><i class="fa-solid fa-plus mr-1"></i>Xərc</button>
     </div>
-    <div class="chart-wrap" style="height:200px"><canvas id="chartExpenses"></canvas></div>
+    <div class="chart-wrap" style="height:220px"><canvas id="chartExpenses"></canvas></div>
   </div>
 
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
@@ -387,9 +397,9 @@ input,textarea{-webkit-user-select:text;user-select:text}
 
 <button onclick="openAddModal()" class="fixed bottom-6 right-6 bg-gradient-to-br from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white w-14 h-14 rounded-full shadow-xl shadow-red-600/50 flex items-center justify-center text-xl hover:scale-105 active:scale-95 transition-all z-30 premium-glow"><i class="fa-solid fa-plus"></i></button>
 
-<!-- ============ CODE MODAL (FIXED - KEYPAD) ============ -->
+<!-- ============ CODE MODAL ============ -->
 <div id="codeModal" class="fixed inset-0 bg-black/95 z-[80] hidden flex items-center justify-center p-4">
-  <div class="bg-slate-900 border border-slate-700 w-full max-w-xs rounded-2xl p-5 space-y-4 scale-in">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-xs sm:max-w-sm rounded-2xl p-5 space-y-4 scale-in">
     <div class="text-center">
       <div class="inline-flex bg-red-950 text-red-400 w-12 h-12 rounded-full items-center justify-center text-xl border border-red-800/50 mb-2"><i class="fa-solid fa-lock"></i></div>
       <h3 class="font-bold text-white text-sm">Təhlükəsizlik Kodu</h3>
@@ -419,9 +429,9 @@ input,textarea{-webkit-user-select:text;user-select:text}
   </div>
 </div>
 
-<!-- ============ AI PROMPT MODAL ============ -->
+<!-- ============ AI PROMPT MODAL (WIDER ON DESKTOP) ============ -->
 <div id="aiModal" class="fixed inset-0 bg-black/90 z-[75] hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-  <div class="bg-slate-900 border border-purple-800/50 w-full max-w-lg rounded-t-2xl sm:rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
+  <div class="bg-slate-900 border border-purple-800/50 w-full max-w-lg sm:max-w-xl lg:max-w-3xl rounded-t-2xl sm:rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
     <div class="flex justify-between items-center border-b border-slate-800 pb-3">
       <h3 class="font-bold text-base text-white flex items-center gap-2">
         <i class="fa-solid fa-wand-magic-sparkles text-purple-400 wave"></i>
@@ -434,31 +444,33 @@ input,textarea{-webkit-user-select:text;user-select:text}
       <button onclick="setAITemplate('instagram')" id="aiTplInstagram" class="flex-shrink-0 px-3 py-1.5 rounded-lg text-[10px] font-bold bg-purple-600 text-white">📸 Instagram</button>
       <button onclick="setAITemplate('facebook')" id="aiTplFacebook" class="flex-shrink-0 px-3 py-1.5 rounded-lg text-[10px] font-bold bg-slate-800 text-slate-300">📘 Facebook</button>
       <button onclick="setAITemplate('tiktok')" id="aiTplTiktok" class="flex-shrink-0 px-3 py-1.5 rounded-lg text-[10px] font-bold bg-slate-800 text-slate-300">🎵 TikTok</button>
+      <button onclick="setAITemplate('tapaz')" id="aiTplTapaz" class="flex-shrink-0 px-3 py-1.5 rounded-lg text-[10px] font-bold bg-slate-800 text-slate-300">🏷️ Tap.az</button>
       <button onclick="setAITemplate('whatsapp')" id="aiTplWhatsapp" class="flex-shrink-0 px-3 py-1.5 rounded-lg text-[10px] font-bold bg-slate-800 text-slate-300">💬 WhatsApp</button>
-      <button onclick="setAITemplate('seo')" id="aiTplSeo" class="flex-shrink-0 px-3 py-1.5 rounded-lg text-[10px] font-bold bg-slate-800 text-slate-300">🔍 SEO/Açar söz</button>
+      <button onclick="setAITemplate('seo')" id="aiTplSeo" class="flex-shrink-0 px-3 py-1.5 rounded-lg text-[10px] font-bold bg-slate-800 text-slate-300">🔍 SEO</button>
     </div>
 
     <div id="aiPartPreview" class="bg-slate-950/60 border border-slate-800 rounded-xl p-3 text-xs space-y-1"></div>
 
-    <div>
-      <div class="flex justify-between items-center mb-1.5">
-        <label class="text-[11px] text-slate-400 font-bold uppercase tracking-wider">Prompt:</label>
-        <span id="aiPromptLen" class="text-[10px] text-slate-500"></span>
+    <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-3">
+      <div>
+        <div class="flex justify-between items-center mb-1.5">
+          <label class="text-[11px] text-slate-400 font-bold uppercase tracking-wider">Prompt:</label>
+          <span id="aiPromptLen" class="text-[10px] text-slate-500"></span>
+        </div>
+        <textarea id="aiPromptText" rows="12" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-slate-200 font-mono leading-relaxed focus:outline-none focus:border-purple-500 resize-none"></textarea>
       </div>
-      <textarea id="aiPromptText" rows="12" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-slate-200 font-mono leading-relaxed focus:outline-none focus:border-purple-500 resize-none"></textarea>
+      <div class="flex lg:flex-col gap-2 lg:gap-3 lg:w-40">
+        <button onclick="copyAIPrompt()" class="flex-1 lg:flex-none bg-purple-600 hover:bg-purple-500 text-white py-3 rounded-xl font-bold text-xs shadow-lg shadow-purple-600/30">
+          <i class="fa-solid fa-copy mr-1"></i>Kopyala
+        </button>
+        <button onclick="openAIChat()" id="aiOpenBtn" class="flex-1 lg:flex-none bg-gradient-to-br from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white py-3 rounded-xl font-bold text-xs shadow-lg shadow-emerald-600/30">
+          <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>Chat aç
+        </button>
+      </div>
     </div>
 
     <div id="aiChatUrlWarn" class="hidden bg-amber-950/30 border border-amber-900/40 rounded-lg p-2.5 text-[11px] text-amber-300">
-      <i class="fa-solid fa-circle-exclamation mr-1"></i>Chat linki təyin edilməyib. Ayarlar → Mağaza & AI bölməsində qeyd edin.
-    </div>
-
-    <div class="grid grid-cols-2 gap-2">
-      <button onclick="copyAIPrompt()" class="bg-purple-600 hover:bg-purple-500 text-white py-3 rounded-xl font-bold text-xs shadow-lg shadow-purple-600/30">
-        <i class="fa-solid fa-copy mr-1"></i>Kopyala
-      </button>
-      <button onclick="openAIChat()" id="aiOpenBtn" class="bg-gradient-to-br from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white py-3 rounded-xl font-bold text-xs shadow-lg shadow-emerald-600/30">
-        <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>Chat aç
-      </button>
+      <i class="fa-solid fa-circle-exclamation mr-1"></i><span id="aiChatUrlWarnText">Chat linki təyin edilməyib. Ayarlar → Mağaza & AI bölməsində qeyd edin.</span>
     </div>
 
     <div class="grid grid-cols-3 gap-2">
@@ -487,9 +499,9 @@ input,textarea{-webkit-user-select:text;user-select:text}
   <div id="lightboxCaption" class="absolute top-6 left-1/2 -translate-x-1/2 bg-white/10 px-4 py-1.5 rounded-full text-white text-xs backdrop-blur max-w-[80vw] truncate"></div>
 </div>
 
-<!-- ============ PART MODAL ============ -->
+<!-- ============ PART MODAL (WIDER ON DESKTOP) ============ -->
 <div id="partModal" class="fixed inset-0 bg-black/85 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-  <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-md sm:max-w-lg rounded-t-2xl sm:rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
     <div class="flex justify-between items-center border-b border-slate-800 pb-3">
       <h3 id="partModalTitle" class="font-bold text-base text-white flex items-center gap-2"><i class="fa-solid fa-box-open text-red-500"></i> Yeni Ehtiyat Hissəsi</h3>
       <button onclick="closePartModal()" class="text-slate-400 text-lg"><i class="fa-solid fa-xmark"></i></button>
@@ -584,7 +596,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
 
 <!-- ============ VEHICLE MODAL ============ -->
 <div id="vehicleModal" class="fixed inset-0 bg-black/85 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-  <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-md sm:max-w-lg rounded-t-2xl sm:rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
     <div class="flex justify-between items-center border-b border-slate-800 pb-3">
       <h3 id="vehicleModalTitle" class="font-bold text-base text-white flex items-center gap-2"><i class="fa-solid fa-car-side text-red-500"></i> Yeni Avtomobil</h3>
       <button onclick="closeVehicleModal()" class="text-slate-400 text-lg"><i class="fa-solid fa-xmark"></i></button>
@@ -628,7 +640,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
 
 <!-- ============ SELL MODAL ============ -->
 <div id="sellModal" class="fixed inset-0 bg-black/85 z-50 hidden flex items-center justify-center p-4">
-  <div class="bg-slate-900 border border-slate-700 w-full max-w-sm rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-sm sm:max-w-md rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
     <div class="flex justify-between items-center border-b border-slate-800 pb-2">
       <h3 class="font-bold text-sm text-white"><i class="fa-solid fa-cash-register text-emerald-400 mr-2"></i>Satış</h3>
       <button onclick="closeSellModal()" class="text-slate-400 text-sm"><i class="fa-solid fa-xmark"></i></button>
@@ -672,7 +684,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
 
 <!-- ============ PART DETAIL ============ -->
 <div id="partDetailModal" class="fixed inset-0 bg-black/85 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-  <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-md sm:max-w-lg rounded-t-2xl sm:rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
     <div class="flex justify-between items-center border-b border-slate-800 pb-3">
       <h3 id="partDetailTitle" class="font-bold text-base text-white flex items-center gap-2 min-w-0"><i class="fa-solid fa-box text-red-500 flex-shrink-0"></i><span class="truncate">Detal</span></h3>
       <button onclick="closePartDetail()" class="text-slate-400 text-lg flex-shrink-0"><i class="fa-solid fa-xmark"></i></button>
@@ -683,7 +695,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
 
 <!-- ============ VEHICLE DETAIL ============ -->
 <div id="vehicleDetailModal" class="fixed inset-0 bg-black/85 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-  <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-md sm:max-w-lg rounded-t-2xl sm:rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
     <div class="flex justify-between items-center border-b border-slate-800 pb-3">
       <h3 id="vehicleDetailTitle" class="font-bold text-base text-white flex items-center gap-2 min-w-0"><i class="fa-solid fa-car-side text-red-500 flex-shrink-0"></i><span class="truncate">Avtomobil</span></h3>
       <button onclick="closeVehicleDetail()" class="text-slate-400 text-lg flex-shrink-0"><i class="fa-solid fa-xmark"></i></button>
@@ -694,7 +706,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
 
 <!-- ============ CUSTOMER DETAIL ============ -->
 <div id="customerDetailModal" class="fixed inset-0 bg-black/85 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-  <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-md sm:max-w-lg rounded-t-2xl sm:rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
     <div class="flex justify-between items-center border-b border-slate-800 pb-3">
       <h3 id="customerDetailTitle" class="font-bold text-base text-white flex items-center gap-2 min-w-0"><i class="fa-solid fa-user text-blue-500 flex-shrink-0"></i><span class="truncate">Müştəri</span></h3>
       <button onclick="closeCustomerDetail()" class="text-slate-400 text-lg flex-shrink-0"><i class="fa-solid fa-xmark"></i></button>
@@ -752,11 +764,11 @@ input,textarea{-webkit-user-select:text;user-select:text}
   </div>
 </div>
 
-<!-- ============ CONFIG ============ -->
+<!-- ============ CONFIG (WIDER ON DESKTOP) ============ -->
 <div id="configModal" class="fixed inset-0 bg-black/85 z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
-  <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-2xl p-5 space-y-3 my-8 scale-in">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-md sm:max-w-lg lg:max-w-2xl rounded-2xl p-5 space-y-3 my-8 scale-in">
     <h3 class="font-bold text-base text-white flex items-center gap-2"><i class="fa-solid fa-gear text-red-500"></i>Ayarlar</h3>
-    <div class="space-y-3 text-xs">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 text-xs">
 
       <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3 space-y-2">
         <p class="text-[11px] font-bold text-slate-300 uppercase tracking-wider">JSONBin Bağlantı</p>
@@ -765,18 +777,21 @@ input,textarea{-webkit-user-select:text;user-select:text}
         <p id="configError" class="text-[11px] text-red-400 hidden"></p>
       </div>
 
-      <div class="bg-purple-950/30 border border-purple-900/40 rounded-xl p-3 space-y-2">
+      <div class="bg-purple-950/30 border border-purple-900/40 rounded-xl p-3 space-y-2 lg:col-span-2">
         <p class="text-[11px] font-bold text-purple-300 uppercase tracking-wider"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Mağaza & AI</p>
-        <div><label class="block text-slate-400 mb-1 text-[10px]">Mağaza adı</label><input type="text" id="storeNameInput" placeholder="TeslaLand" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></div>
-        <div><label class="block text-slate-400 mb-1 text-[10px]">Ünvan / Yerləşmə</label><input type="text" id="storeLocationInput" placeholder="Bakı, Binəqədi..." class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></div>
-        <div class="grid grid-cols-2 gap-2">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <div><label class="block text-slate-400 mb-1 text-[10px]">Mağaza adı</label><input type="text" id="storeNameInput" placeholder="TeslaLand" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></div>
+          <div><label class="block text-slate-400 mb-1 text-[10px]">Ünvan / Yerləşmə</label><input type="text" id="storeLocationInput" placeholder="Bakı, Binəqədi..." class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <div><label class="block text-slate-400 mb-1 text-[10px]">Telefon</label><input type="tel" id="storePhoneInput" placeholder="050-XXX-XX-XX" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></div>
           <div><label class="block text-slate-400 mb-1 text-[10px]">WhatsApp</label><input type="tel" id="storeWhatsappInput" placeholder="994XXXXXXXXX" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white"></div>
         </div>
         <div>
           <label class="block text-slate-400 mb-1 text-[10px]">AI Chat linki (ChatGPT / Gemini)</label>
-          <input type="url" id="aiChatUrlInput" placeholder="https://chat.openai.com/  və ya  https://gemini.google.com/app" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white text-[11px]">
-          <p class="text-[10px] text-purple-300/70 mt-1">ChatGPT: chat.openai.com | Gemini: gemini.google.com/app</p>
+          <input type="text" id="aiChatUrlInput" placeholder="gemini.google.com/app/xxxxx  və ya  https://chat.openai.com/" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white text-[11px] font-mono">
+          <p id="aiUrlStatus" class="text-[10px] mt-1 hidden"></p>
+          <p class="text-[10px] text-purple-300/70 mt-1">💡 Nümunə: <b>gemini.google.com/app/8f2a1b3c</b> — https:// avtomatik əlavə olunur</p>
         </div>
       </div>
 
@@ -800,7 +815,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
         <button onclick="openActivityLog()" class="w-full bg-slate-700 hover:bg-slate-600 text-white py-2 rounded-lg font-bold text-[11px]"><i class="fa-solid fa-list mr-1"></i>Jurnalı aç</button>
       </div>
 
-      <div class="bg-red-950/30 border border-red-900/40 rounded-xl p-3 space-y-2">
+      <div class="bg-red-950/30 border border-red-900/40 rounded-xl p-3 space-y-2 lg:col-span-2">
         <p class="text-[11px] font-bold text-red-300 uppercase tracking-wider">Təhlükəli Zona</p>
         <button onclick="clearAllData()" class="w-full bg-red-900/60 hover:bg-red-800 text-red-200 py-2 rounded-lg font-bold text-[11px] border border-red-800/50"><i class="fa-solid fa-trash mr-1"></i>Bütün məlumatları sil</button>
       </div>
@@ -854,7 +869,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
 
 <!-- ============ ACTIVITY LOG ============ -->
 <div id="activityModal" class="fixed inset-0 bg-black/85 z-[70] hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-  <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-md sm:max-w-lg rounded-t-2xl sm:rounded-2xl p-5 space-y-3 max-h-[92vh] overflow-y-auto scale-in">
     <div class="flex justify-between items-center border-b border-slate-800 pb-3">
       <h3 class="font-bold text-base text-white flex items-center gap-2"><i class="fa-solid fa-list text-blue-500"></i>Fəaliyyət Jurnalı</h3>
       <button onclick="closeActivityLog()" class="text-slate-400 text-lg"><i class="fa-solid fa-xmark"></i></button>
@@ -899,11 +914,10 @@ let currentPaymentStatus='paid';
 let lightboxImages=[], lightboxIndex=0, lightboxCaption='';
 let codeInputValue='';
 let codeCallback=null;
-let codeLocked=false; // prevent double-trigger
+let codeLocked=false;
 let activeAIPartId=null;
 let currentAITemplate='instagram';
 let chartSales30, chartCategories, chartDaily, chartMonthly, chartVehicleROI, chartExpenses;
-let commandItems=[];
 
 const DEFAULT_CATEGORIES = ['Mühərrik','Asqı & Şassi','Ban & Eksteryer','Elektrik & Elektronika','Salun & İnteryer','Parkradar','Bufer','İşıq','Sükan','Əyləc','Digər'];
 const COMMON_BRANDS = ['BMW','Mercedes-Benz','Audi','Volkswagen','Toyota','Lexus','Tesla','Hyundai','Kia','Nissan','Ford','Chevrolet','Honda','Mazda','Land Rover','Porsche','Volvo','Renault','Peugeot','Skoda','Opel','Fiat','Mitsubishi','Subaru','Jeep','Dodge','Lada'];
@@ -948,6 +962,35 @@ function getConditionText(cond){
 }
 
 /* ============================================
+   URL NORMALIZATION - KEY FIX
+============================================ */
+function normalizeUrl(url){
+  if(!url) return '';
+  let u = String(url).trim();
+  if(!u) return '';
+  // Remove any spaces inside URL
+  u = u.replace(/\s+/g, '');
+  // Add https:// if missing
+  if(!/^https?:\/\//i.test(u)){
+    u = 'https://' + u;
+  }
+  // Basic validation
+  try{
+    const test = new URL(u);
+    return test.href;
+  }catch(e){
+    return '';
+  }
+}
+
+function validateUrl(url){
+  if(!url) return {valid:false, msg:'Boş'};
+  const normalized = normalizeUrl(url);
+  if(!normalized) return {valid:false, msg:'Yanlış URL formatı'};
+  return {valid:true, msg:'✓ Uğurlu', url:normalized};
+}
+
+/* ============================================
    THEME
 ============================================ */
 function applyTheme(){
@@ -957,7 +1000,7 @@ function applyTheme(){
 }
 
 /* ============================================
-   CODE MODAL - FIXED
+   CODE MODAL
 ============================================ */
 const getSecretCode = () => (db.settings && db.settings.secretCode) || '0990';
 
@@ -978,11 +1021,15 @@ function closeCodeModal(){
   codeLocked = false;
 }
 
-function renderCodeDigits(error){
+function renderCodeDigits(errorState, successState){
   const wrap = document.getElementById('codeDigitsWrap');
   wrap.innerHTML = [0,1,2,3].map(i=>{
     const filled = i < codeInputValue.length;
-    return `<div class="code-dot ${filled?'filled':''} ${error?'error':''}">${filled?'•':''}</div>`;
+    let cls = 'code-dot';
+    if(filled) cls += ' filled';
+    if(successState) cls += ' success';
+    if(errorState) cls += ' error';
+    return `<div class="${cls}">${filled?'•':''}</div>`;
   }).join('');
 }
 
@@ -992,7 +1039,6 @@ function appendCodeDigit(d){
   codeInputValue += d;
   renderCodeDigits();
   if(codeInputValue.length === 4){
-    // Wait a tick to let UI update, then verify
     setTimeout(()=>verifyCode(), 150);
   }
 }
@@ -1013,9 +1059,8 @@ function verifyCode(){
   if(codeLocked) return;
   const secret = getSecretCode();
   if(codeInputValue === secret){
-    // SUCCESS
     codeLocked = true;
-    renderCodeDigits(false);
+    renderCodeDigits(false, true);
     const cb = codeCallback;
     codeCallback = null;
     setTimeout(()=>{
@@ -1023,17 +1068,16 @@ function verifyCode(){
       codeInputValue = '';
       codeLocked = false;
       if(cb) cb();
-    }, 180);
+    }, 200);
   } else {
-    // ERROR
     codeLocked = true;
-    renderCodeDigits(true);
+    renderCodeDigits(true, false);
     document.getElementById('codeError').classList.remove('hidden');
     if(navigator.vibrate) navigator.vibrate([100,50,100]);
     setTimeout(()=>{
       codeInputValue = '';
       codeLocked = false;
-      renderCodeDigits(false);
+      renderCodeDigits(false, false);
       document.getElementById('codeError').classList.add('hidden');
     }, 900);
   }
@@ -1052,7 +1096,6 @@ function changeSecretCode(){
   syncData('Kod dəyişdirildi ✓');
 }
 
-// Physical keyboard support for code
 document.addEventListener('keydown',(e)=>{
   const codeModal = document.getElementById('codeModal');
   if(codeModal.classList.contains('hidden')) return;
@@ -1085,7 +1128,7 @@ function setAITemplate(tpl){
   buildAIPromptUI();
 }
 function updateAITemplateButtons(){
-  const tpls = ['instagram','facebook','tiktok','whatsapp','seo'];
+  const tpls = ['instagram','facebook','tiktok','tapaz','whatsapp','seo'];
   tpls.forEach(t=>{
     const btn = document.getElementById('aiTpl'+t.charAt(0).toUpperCase()+t.slice(1));
     if(!btn) return;
@@ -1198,6 +1241,66 @@ ${p.description ? '• ' + p.description : ''}
 Sadəcə skript, başqa izahat yox. Başla!`;
   }
 
+  else if(currentAITemplate === 'tapaz'){
+    prompt = `Salam! Mən "${storeName}" ehtiyat hissəsi mağazasından yazıram. Aşağıdakı detalı tap.az saytında elan kimi yerləşdirmək üçün peşəkar mətn hazırlamağını xahiş edirəm.
+
+📦 DETAL MƏLUMATLARI:
+━━━━━━━━━━━━━━━━━━━━
+• Kateqoriya: ${p.category}
+• Avtomobil: ${p.car}
+${p.engine ? '• Mühərrik: ' + p.engine : ''}
+${p.year ? '• İstehsal ili: ' + p.year : ''}
+• Vəziyyət: ${getConditionText(p.condition)}
+${p.code ? '• Orijinal kod: ' + p.code : ''}
+${p.description ? '• Texniki qeyd: ' + p.description : ''}
+
+🏪 MAĞAZA MƏLUMATLARI:
+━━━━━━━━━━━━━━━━━━━━
+• Ad: ${storeName}
+${storeLocation ? '• Yerləşmə: ' + storeLocation : ''}
+${storePhone ? '• Əlaqə: ' + storePhone : ''}
+
+🎯 TAP.AZ ÜÇÜN TƏLƏBLƏR:
+━━━━━━━━━━━━━━━━━━━━
+
+1️⃣ **BAŞLIQ** (60 simvola qədər):
+   - Aydın, texniki, açar sözlərlə
+   - Format: "[Marka Model] [İl] [Detal adı] — [Vəziyyət]"
+   - Nümunə: "Hyundai Elantra 2020 Ön Bufer — Orijinal"
+
+2️⃣ **TƏSVİR** (elan mətni, 3-5 cümlə):
+   - Peşəkar, dürüst, texniki ton
+   - Detalın vəziyyəti, orijinallığı haqqında məlumat
+   - Nə üçün satıldığını izah etmə (anbarda artıq olduğu üçün)
+   - Müştəriyə zəmanət vədini qeyd et
+
+3️⃣ **TEXNİKİ XÜSUSİYYƏTLƏR** (sətir-sətir):
+   - Marka / Model
+   ${p.year ? '• İl: ' + p.year : '• İl: [boş]'}
+   ${p.engine ? '• Mühərrik: ' + p.engine : ''}
+   ${p.code ? '• Orijinal kod: ' + p.code : ''}
+   • Vəziyyət: ${getConditionText(p.condition)}
+   • Orijinallıq: Orijinal
+   • Zəmanət: Var
+
+4️⃣ **SATICI QEYDİ**:
+   - Etibarlı satıcı vurğusu
+   - Əlaqə üçün nömrə/qeyd yeri
+
+5️⃣ **HASHTAG / AÇAR SÖZLƏR** (tap.az-da tapılmaq üçün):
+   - 10-15 açar söz (Azərbaycan dilində)
+   - Nümunə: ehtiyat hissə, avto hissə, bufer, orijinal detal...
+
+⚠️ VACİB:
+- **Qiymət QEYD ETMƏ** (bunu özüm qoyacam)
+- **Yürüş/kilo qeyd etmə**
+- Dürüst, professional ton
+- Emoji istifadə etmə (tap.az üçün uyğun deyil)
+- Azərbaycan dilində, savadlı yaz
+
+Sadəcə hazır elan mətnini ver, izahat yazma. Başla!`;
+  }
+
   else if(currentAITemplate === 'whatsapp'){
     prompt = `Müştəri üçün WhatsApp mesajı hazırla. Qısa, satış yönümlü, mehriban.
 
@@ -1231,7 +1334,7 @@ ${p.description ? '• ' + p.description : ''}
 
 🎯 TƏLƏBLƏR:
 1. 15-20 açar söz (Azərbaycan dilində, axtarış üçün real istifadə olunan)
-2. Google/Instagram/TikTok axtarışında tapılma ehtimalı yüksək sözlər
+2. Google/Instagram/TikTok/tap.az axtarışında tapılma ehtimalı yüksək sözlər
 3. Uzun quyruqlu (long-tail) 5 açar ifadə
 4. İngilis dilində 5-7 əlavə açar söz (beynəlxalq müştəri üçün)
 5. Title tag (60 simvol)
@@ -1244,15 +1347,26 @@ Sadəcə siyahı şəklində ver. Başla!`;
   document.getElementById('aiPromptText').value = prompt;
   document.getElementById('aiPromptLen').innerText = prompt.length + ' simvol';
 
-  const chatUrl = (db.settings && db.settings.aiChatUrl) || '';
-  if(!chatUrl){
-    document.getElementById('aiChatUrlWarn').classList.remove('hidden');
-    document.getElementById('aiOpenBtn').disabled = true;
-    document.getElementById('aiOpenBtn').classList.add('opacity-50');
+  // ====== CRITICAL FIX: Better URL validation ======
+  const rawChatUrl = (db.settings && db.settings.aiChatUrl) || '';
+  const normalized = normalizeUrl(rawChatUrl);
+  const chatUrl = normalized || rawChatUrl;
+  const warn = document.getElementById('aiChatUrlWarn');
+  const openBtn = document.getElementById('aiOpenBtn');
+
+  console.log('[AI] rawChatUrl:', rawChatUrl, '| normalized:', normalized);
+
+  if(!rawChatUrl || !normalized){
+    warn.classList.remove('hidden');
+    document.getElementById('aiChatUrlWarnText').innerText = rawChatUrl 
+      ? 'Chat linkinin formatı yanlışdır. Ayarlar → Mağaza & AI bölməsində düzəldin. (məsələn: gemini.google.com/app/xxxxx)' 
+      : 'Chat linki təyin edilməyib. Ayarlar → Mağaza & AI bölməsində qeyd edin.';
+    openBtn.disabled = true;
+    openBtn.classList.add('opacity-50');
   } else {
-    document.getElementById('aiChatUrlWarn').classList.add('hidden');
-    document.getElementById('aiOpenBtn').disabled = false;
-    document.getElementById('aiOpenBtn').classList.remove('opacity-50');
+    warn.classList.add('hidden');
+    openBtn.disabled = false;
+    openBtn.classList.remove('opacity-50');
   }
 }
 
@@ -1261,26 +1375,49 @@ async function copyAIPrompt(){
   try{
     await navigator.clipboard.writeText(text);
     showToast('<i class="fa-solid fa-check mr-1 text-emerald-400"></i>Prompt kopyalandı!');
+    return true;
   }catch(e){
     const ta = document.getElementById('aiPromptText');
     ta.select();
-    document.execCommand('copy');
-    showToast('<i class="fa-solid fa-check mr-1 text-emerald-400"></i>Kopyalandı!');
+    try{
+      document.execCommand('copy');
+      showToast('<i class="fa-solid fa-check mr-1 text-emerald-400"></i>Kopyalandı!');
+      return true;
+    }catch(err){
+      showToast('Kopyalama alınmadı', true);
+      return false;
+    }
   }
 }
 
 async function copyAIPromptAndOpen(){
-  await copyAIPrompt();
+  const ok = await copyAIPrompt();
+  if(!ok) return;
   setTimeout(()=>openAIChat(), 400);
 }
 
 function openAIChat(){
-  const chatUrl = (db.settings && db.settings.aiChatUrl) || '';
-  if(!chatUrl){showToast('Əvvəlcə Ayarlar → AI Chat linki təyin edin', true); return;}
+  const rawChatUrl = (db.settings && db.settings.aiChatUrl) || '';
+  if(!rawChatUrl){
+    showToast('Əvvəlcə Ayarlar → AI Chat linki təyin edin', true); 
+    return;
+  }
+  const normalized = normalizeUrl(rawChatUrl);
+  if(!normalized){
+    showToast('Chat linkinin formatı yanlışdır. Ayarları yoxla.', true);
+    return;
+  }
+  
   // Copy prompt first
   copyAIPrompt();
+  
   setTimeout(()=>{
-    window.open(chatUrl, '_blank');
+    try{
+      const w = window.open(normalized, '_blank', 'noopener,noreferrer');
+      if(!w) showToast('Popup bloklandı. İcazə verin.', true);
+    }catch(e){
+      showToast('Link açılmadı: ' + e.message, true);
+    }
   }, 300);
 }
 
@@ -1425,7 +1562,6 @@ function registerCustomer(name, phone){
 function getCustomerStats(name){
   if(!name)return null;
   const lc=name.toLowerCase().trim();
-  // ALL sales including returned
   const allSales=(db.sales||[]).filter(s=>s.customerName && s.customerName.toLowerCase().trim()===lc);
   const activeSales=allSales.filter(s=>!s.returned);
   const returnedSales=allSales.filter(s=>s.returned);
@@ -1583,7 +1719,6 @@ function updateCustomerHint(){
   const stats=getCustomerStats(name);
   const tier=getCustomerTier(name);
   if(stats && stats.count>0){
-    const d=stats.lastDate?shortDate(stats.lastDate):'';
     hint.innerHTML=`<i class="fa-solid fa-check-circle text-emerald-400 mr-1"></i>${stats.count} alış • ${fmt(stats.total)} • <span class="text-[9px] font-bold px-1.5 py-0.5 rounded ${tier.cls}">${tier.label}</span>${stats.credit>0?` • <span class="text-amber-400">Borc: ${fmt(stats.credit)}</span>`:''}${stats.returnedCount>0?` • <span class="text-red-400">${stats.returnedCount} qaytarma</span>`:''}`;
   } else {
     hint.innerHTML=`<i class="fa-solid fa-sparkles text-amber-400 mr-1"></i>Yeni müştəri`;
@@ -1724,6 +1859,7 @@ window.onload = () => {
   initCustomerAutocomplete();
   initVehicleFinancePreview();
   initSaleCalculator();
+  initAIUrlListener();
   if(!getMasterKey() || !getBinId()){
     document.getElementById('configCloseBtn').classList.add('hidden');
     document.getElementById('configModal').classList.remove('hidden');
@@ -1735,6 +1871,29 @@ window.onload = () => {
   switchTab('dashboard');
   initKeyboardShortcuts();
 };
+
+function initAIUrlListener(){
+  const el = document.getElementById('aiChatUrlInput');
+  if(!el) return;
+  el.addEventListener('input', ()=>{
+    const val = el.value.trim();
+    const status = document.getElementById('aiUrlStatus');
+    if(!val){
+      status.classList.add('hidden');
+      return;
+    }
+    const normalized = normalizeUrl(val);
+    if(normalized){
+      status.className = 'text-[10px] mt-1 text-emerald-400';
+      status.innerHTML = `✓ Qəbul edildi: <span class="font-mono text-slate-400">${esc(normalized)}</span>`;
+      status.classList.remove('hidden');
+    } else {
+      status.className = 'text-[10px] mt-1 text-red-400';
+      status.innerText = '✗ Yanlış URL formatı';
+      status.classList.remove('hidden');
+    }
+  });
+}
 
 function initVehicleFinancePreview(){
   ['vPurchasePrice','vAdditionalCosts'].forEach(id=>{
@@ -1815,6 +1974,9 @@ async function loadData(){
     document.getElementById('storePhoneInput').value = db.settings.storePhone || '';
     document.getElementById('storeWhatsappInput').value = db.settings.storeWhatsapp || '';
     document.getElementById('aiChatUrlInput').value = db.settings.aiChatUrl || '';
+    // Trigger URL validation display
+    const urlInput = document.getElementById('aiChatUrlInput');
+    if(urlInput && urlInput.value) urlInput.dispatchEvent(new Event('input'));
     applyTheme();
     renderAll();
   } catch(err) {
@@ -1970,7 +2132,6 @@ function renderParts(){
     const stockColor = isOut ? 'text-red-500' : isLow ? 'text-amber-400' : 'text-emerald-400';
     const daysOld = daysBetween(item.createdAt);
     const isDead = daysOld >= DEAD_STOCK_DAYS && (item.soldCount||0)===0 && item.quantity>0;
-    const salesCount = (db.sales||[]).filter(s=>s.partId===item.id && !s.returned).reduce((s,x)=>s+x.qty,0);
 
     return `
     <div class="glass glass-hover rounded-xl p-3 flex gap-3 relative ${isOut?'border-red-900/40 bg-red-950/5':''}">
@@ -2747,7 +2908,7 @@ function renderDashboard(){
   const monthExpenseCount = (db.expenses||[]).filter(e=>e.date && e.date.startsWith(thisMonth)).length;
 
   document.getElementById('dashNetProfit').innerText = (fin.netProfit>=0?'+':'') + fmt(fin.netProfit);
-  document.getElementById('dashNetProfit').className = `text-4xl font-black mt-1 tracking-tight ${fin.netProfit>=0?'text-white':'text-red-400'}`;
+  document.getElementById('dashNetProfit').className = `text-4xl lg:text-5xl font-black mt-1 tracking-tight ${fin.netProfit>=0?'text-white':'text-red-400'}`;
   document.getElementById('dashMarginPct').innerText = fin.margin.toFixed(1) + '%';
   document.getElementById('dashRoi').innerText = fin.roi.toFixed(1) + '%';
 
@@ -3044,7 +3205,7 @@ function renderDeadStock(){
 }
 
 /* ============================================
-   CUSTOMERS TAB - FIXED
+   CUSTOMERS TAB
 ============================================ */
 function renderCustomersTab(){
   const container=document.getElementById('customersGrid');
@@ -3052,7 +3213,6 @@ function renderCustomersTab(){
   const search=document.getElementById('customerSearchInput').value;
   const customers=getAllCustomers().filter(c=>matchesQuery(search,[c.name,c.phone]));
 
-  // Stats
   const allStats = getAllCustomers().map(c=>({...c, stats:getCustomerStats(c.name)})).filter(c=>c.stats);
   const totalCredit = allStats.reduce((s,c)=>s+(c.stats.credit||0),0);
   const vipCount = allStats.filter(c=>c.stats.total>=2000).length;
@@ -3068,14 +3228,12 @@ function renderCustomersTab(){
     return;
   }
 
-  // FIX: Include customers with only returned sales
   const enriched=customers.map(c=>{
     const stats=getCustomerStats(c.name);
     const tier=getCustomerTier(c.name);
     return {...c, stats, tier};
   }).filter(c=>c.stats && (c.stats.count>0 || c.stats.returnedCount>0))
     .sort((a,b)=>{
-      // Sort by total desc, but returned-only customers go below
       if(a.stats.total !== b.stats.total) return b.stats.total - a.stats.total;
       return b.stats.returnedCount - a.stats.returnedCount;
     });
@@ -3119,7 +3277,6 @@ function openCustomerDetail(name){
   if(!stats) return;
   const customer=getAllCustomers().find(c=>c.name.toLowerCase()===name.toLowerCase());
   const tier=getCustomerTier(name);
-  // ALL sales including returned — sorted newest first
   const sales=(db.sales||[]).filter(s=>s.customerName && s.customerName.toLowerCase()===name.toLowerCase())
     .sort((a,b)=>new Date(b.date)-new Date(a.date));
 
@@ -3152,10 +3309,10 @@ function openCustomerDetail(name){
         <span class="text-[10px] font-bold px-2 py-0.5 rounded ${tier.cls} inline-block mt-1">${tier.label} Müştəri</span>
       </div>
     </div>
-    ${customer && customer.phone ? `<div class="bg-blue-950/30 border border-blue-900/40 rounded-lg p-2.5 flex justify-between items-center">
-      <a href="tel:${esc(customer.phone)}" class="text-blue-200 font-mono text-sm flex-1"><i class="fa-solid fa-phone mr-1.5"></i>${esc(customer.phone)}</a>
-      <a href="tel:${esc(customer.phone)}" class="bg-blue-600 hover:bg-blue-500 text-white text-[10px] px-3 py-1.5 rounded-lg font-bold"><i class="fa-solid fa-phone mr-1"></i>Zəng</a>
-      <a href="https://wa.me/${(customer.phone||'').replace(/[^0-9]/g,'')}" target="_blank" class="bg-green-600 hover:bg-green-500 text-white text-[10px] px-3 py-1.5 rounded-lg font-bold ml-1"><i class="fa-brands fa-whatsapp"></i></a>
+    ${customer && customer.phone ? `<div class="bg-blue-950/30 border border-blue-900/40 rounded-lg p-2.5 flex justify-between items-center gap-2">
+      <a href="tel:${esc(customer.phone)}" class="text-blue-200 font-mono text-sm flex-1 truncate"><i class="fa-solid fa-phone mr-1.5"></i>${esc(customer.phone)}</a>
+      <a href="tel:${esc(customer.phone)}" class="bg-blue-600 hover:bg-blue-500 text-white text-[10px] px-2.5 py-1.5 rounded-lg font-bold flex-shrink-0"><i class="fa-solid fa-phone"></i></a>
+      <a href="https://wa.me/${(customer.phone||'').replace(/[^0-9]/g,'')}" target="_blank" class="bg-green-600 hover:bg-green-500 text-white text-[10px] px-2.5 py-1.5 rounded-lg font-bold flex-shrink-0"><i class="fa-brands fa-whatsapp"></i></a>
     </div>`:''}
     <div class="grid grid-cols-4 gap-1.5 text-center">
       <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800"><p class="text-[9px] text-slate-500 uppercase">Alış</p><p class="text-sm font-bold text-white">${stats.count}</p></div>
@@ -3408,38 +3565,90 @@ async function saveTarget(){
 }
 
 /* ============================================
-   CONFIG
+   CONFIG - CRITICAL FIX
 ============================================ */
 function openConfigModal(bypass){
-  if(bypass){document.getElementById('configModal').classList.remove('hidden');return}
+  if(bypass){
+    // Prefill inputs
+    document.getElementById('storeNameInput').value = (db.settings&&db.settings.storeName)||'';
+    document.getElementById('storeLocationInput').value = (db.settings&&db.settings.storeLocation)||'';
+    document.getElementById('storePhoneInput').value = (db.settings&&db.settings.storePhone)||'';
+    document.getElementById('storeWhatsappInput').value = (db.settings&&db.settings.storeWhatsapp)||'';
+    document.getElementById('aiChatUrlInput').value = (db.settings&&db.settings.aiChatUrl)||'';
+    const urlInput = document.getElementById('aiChatUrlInput');
+    if(urlInput) urlInput.dispatchEvent(new Event('input'));
+    document.getElementById('configModal').classList.remove('hidden');
+    return;
+  }
   requireCode('Ayarları aç', ()=>{
     document.getElementById('storeNameInput').value = (db.settings&&db.settings.storeName)||'';
     document.getElementById('storeLocationInput').value = (db.settings&&db.settings.storeLocation)||'';
     document.getElementById('storePhoneInput').value = (db.settings&&db.settings.storePhone)||'';
     document.getElementById('storeWhatsappInput').value = (db.settings&&db.settings.storeWhatsapp)||'';
     document.getElementById('aiChatUrlInput').value = (db.settings&&db.settings.aiChatUrl)||'';
+    const urlInput = document.getElementById('aiChatUrlInput');
+    if(urlInput) urlInput.dispatchEvent(new Event('input'));
     document.getElementById('configModal').classList.remove('hidden');
   });
 }
 function closeConfigModal(){if(!getMasterKey()||!getBinId()) return; document.getElementById('configModal').classList.add('hidden')}
-function saveConfig(){
+
+// FIXED: saveConfig now syncs to server BEFORE closing, does not call loadData
+async function saveConfig(){
   const key=document.getElementById('masterKeyInput').value.trim();
   const bin=document.getElementById('binIdInput').value.trim();
   const errEl=document.getElementById('configError');
-  if(!key||!bin){errEl.innerText='Hər iki xananı doldurun.';errEl.classList.remove('hidden');return}
+  
+  // Validate JSONBin credentials
+  if(!key||!bin){
+    errEl.innerText='JSONBin: Hər iki xananı doldurun.';errEl.classList.remove('hidden');
+    return;
+  }
   errEl.classList.add('hidden');
+  
+  // Save credentials to localStorage
   localStorage.setItem('TL_MASTER_KEY',key);
   localStorage.setItem('TL_BIN_ID',bin);
-  // Save settings
+  
+  // ====== CRITICAL FIX: Prepare settings ======
   if(!db.settings) db.settings={};
   db.settings.storeName = document.getElementById('storeNameInput').value.trim() || 'TeslaLand';
   db.settings.storeLocation = document.getElementById('storeLocationInput').value.trim();
   db.settings.storePhone = document.getElementById('storePhoneInput').value.trim();
   db.settings.storeWhatsapp = document.getElementById('storeWhatsappInput').value.trim();
-  db.settings.aiChatUrl = document.getElementById('aiChatUrlInput').value.trim();
-  document.getElementById('configCloseBtn').classList.remove('hidden');
-  closeConfigModal();
-  loadData();
+  
+  // Normalize AI URL
+  const rawUrl = document.getElementById('aiChatUrlInput').value.trim();
+  const normalizedUrl = normalizeUrl(rawUrl);
+  
+  if(rawUrl && !normalizedUrl){
+    errEl.innerText = 'AI Chat linki yanlışdır. Format: gemini.google.com/app/xxxxx və ya https://chat.openai.com/';
+    errEl.classList.remove('hidden');
+    return;
+  }
+  
+  db.settings.aiChatUrl = rawUrl;  // Save raw; normalization happens when used
+  // Also update the input to normalized version for user to see
+  document.getElementById('aiChatUrlInput').value = rawUrl;
+  
+  // ====== CRITICAL FIX: Sync to server FIRST ======
+  const btn = event.target;
+  const originalText = btn ? btn.innerText : 'Yadda Saxla';
+  if(btn) { btn.disabled = true; btn.innerText = 'Yadda saxlanılır...'; }
+  
+  const ok = await syncData('Ayarlar yadda saxlanıldı ✓');
+  
+  if(btn) { btn.disabled = false; btn.innerText = originalText; }
+  
+  if(ok){
+    document.getElementById('configCloseBtn').classList.remove('hidden');
+    document.getElementById('configModal').classList.add('hidden');
+    // Do NOT call loadData() — it would fetch and possibly overwrite the just-saved data
+    // Our db object is already up to date
+  } else {
+    errEl.innerText = 'Serverlə sinxronizasiya alınmadı. Yenidən cəhd edin.';
+    errEl.classList.remove('hidden');
+  }
 }
 
 function backupData(){
@@ -3585,7 +3794,6 @@ function handleCmdKey(e){
 ============================================ */
 function initKeyboardShortcuts(){
   document.addEventListener('keydown',(e)=>{
-    // Skip code modal
     if(!document.getElementById('codeModal').classList.contains('hidden')) return;
     if((e.ctrlKey||e.metaKey) && e.key==='k'){
       e.preventDefault();
@@ -3598,7 +3806,7 @@ function initKeyboardShortcuts(){
     else if(e.key==='Escape'){
       document.querySelectorAll('.fixed.inset-0:not(.hidden)').forEach(el=>{
         if(el.id==='lightbox') closeLightbox();
-        else if(el.id==='codeModal'){/* don't close code modal via escape? actually close */ closeCodeModal();}
+        else if(el.id==='codeModal') closeCodeModal();
         else el.classList.add('hidden');
       });
       closeCommandPalette();
